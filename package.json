@@ -4,12 +4,16 @@
   "description": "The Official Voltage Arc Website",
   "main": "src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx @11ty/eleventy --serve $PORT",
+    "build": "npx @11ty/eleventy"
   },
   "repository": {
     "type": "git",
     "url": "https://www.github.com/theCubix/highvoltage-v3-2"
   },
   "author": "Timon Forrer",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0"
+  }
 }
