@@ -4,7 +4,8 @@ module.exports = function(config) {
 
   config.addFilter('log', (value) => console.log(value));
 
-  config.addFilter('renderText', (value) => PrismicDOM.RichText.asHtml(value));
+  config.addFilter('renderAsHTML', (value) => PrismicDOM.RichText.asHtml(value));
+  config.addFilter('renderAsText', (value) => PrismicDOM.RichText.asText(value));
 
   config.addFilter('localeToPrefix', (value) => {
     let mainLocale = value.substring(0,2);
