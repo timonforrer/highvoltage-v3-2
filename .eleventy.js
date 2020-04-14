@@ -1,6 +1,6 @@
 module.exports = function(config) {
   config.addFilter('localeToPrefix', (value) => {
-    let mainLocale = value.substring(0,1);
+    let mainLocale = value.substring(0,2);
     if (mainLocale === 'de') {
       return '';
     } else {
