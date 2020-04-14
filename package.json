@@ -15,10 +15,10 @@
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^0.10.0",
-    "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.8",
-    "apollo-link-prismic": "^1.0.7",
-    "curl-request": "^1.1.1",
-    "graphql-tag": "^2.10.3"
+    "prismic-javascript": "^2.7.1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "prismic-dom": "^2.1.0"
   }
 }
