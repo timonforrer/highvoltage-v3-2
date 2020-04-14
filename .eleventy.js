@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const PrismicDOM = require('prismic-dom');
 
 module.exports = function(config) {
