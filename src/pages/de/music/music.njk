@@ -1,0 +1,10 @@
+---
+pagination:
+  data: music.DE
+  size: 1
+  alias: music
+permalink: /musik/{{ music.uid }}/index.html
+---
+
+{% set ctn = music %}
+{% extends 'layouts/music.njk' %}
