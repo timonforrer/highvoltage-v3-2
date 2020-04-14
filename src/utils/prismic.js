@@ -1,20 +1,8 @@
-var InMemoryCache = require('apollo-cache-inmemory').InMemoryCache;
-var ApolloClient = require('apollo-client').ApolloClient;
-var gql = require('graphql-tag');
-var PrismicLink = require('apollo-link-prismic').PrismicLink;
+const Prismic = require('prismic-javascript');
 
-const client = new ApolloClient({
-  link: PrismicLink({
-    uri: 'https://voltagearc.prismic.io/graphql'
-  }),
-  cache: new InMemoryCache()
-});
+const prismicQuery = async (documentType) => {
+  let api = await Prismic.getApi('https://voltagearc.prismic.io/api/v2');
+  return (await api.query(Prismic.Predicates.at('document.type', documentType))).results;
+};
 
-const fetchByQuery = async (query) => {
-  const result = await client.query({
-    query: gql`query ${query}`
-  });
-  return result;
-}
-
-module.exports = { fetchByQuery };
+module.exports = { prismicQuery };
