@@ -3,7 +3,7 @@ pagination:
   data: allHomes
   size: 1
   alias: home
-permalink: /{{ home.lang }}/index.html
+permalink: /{{ home.lang | localeToPrefix }}/index.html
 ---
 
 {{ home.title }} {{ home.lang }}
