@@ -15,8 +15,11 @@
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^0.10.0",
+    "airtable": "^0.8.1",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.7.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
