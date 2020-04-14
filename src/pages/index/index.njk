@@ -6,4 +6,7 @@ pagination:
 permalink: /{{ home.lang | localeToPrefix }}/index.html
 ---
 
-{{ home.title }} {{ home.lang }}
+{% set data = home.data %}
+
+{{ data.hero_title | renderText | safe }}
+{{ data.hero_introduction | renderText | safe }}
