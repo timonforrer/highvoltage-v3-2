@@ -1,0 +1,21 @@
+---
+permalink: /konzerte/index.html
+---
+
+<h1>Konzerte</h1>
+
+<h2>Bevorstehende</h2>
+
+<ul>
+  {% for gig in gigs.upcoming %}
+  <li><a href="/konzerte/{{ gig.slug }}">{{ gig.title }}</a></li>
+  {% endfor %}
+</ul>
+
+<h2>Vergangene</h2>
+
+<ul>
+  {% for gig in gigs.past %}
+  <li><a href="/konzerte/{{ gig.slug }}">{{ gig.title }}</a></li>
+  {% endfor %}
+</ul>
