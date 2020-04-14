@@ -6,7 +6,14 @@ pagination:
 permalink: /{{ home.lang | localeToPrefix }}/index.html
 ---
 
+{% set lang = home.lang %}
+{% extends 'layouts/base.njk' %}
+
 {% set data = home.data %}
 
-{{ data.hero_title | renderText | safe }}
-{{ data.hero_introduction | renderText | safe }}
+{% block content %}
+<main>
+  {{ data.hero_title | renderAsHTML | safe }}
+  {{ data.hero_introduction | renderAsHTML | safe }}
+</main>
+{% endblock content %}
