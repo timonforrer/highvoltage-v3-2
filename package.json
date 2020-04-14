@@ -4,7 +4,7 @@
   "description": "The Official Voltage Arc Website",
   "main": "src/index.html",
   "scripts": {
-    "dev": "npx @11ty/eleventy --serve $PORT",
+    "dev": "npx @11ty/eleventy --serve --port $PORT",
     "build": "npx @11ty/eleventy"
   },
   "repository": {
@@ -14,6 +14,11 @@
   "author": "Timon Forrer",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^0.10.0"
+    "@11ty/eleventy": "^0.10.0",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-prismic": "^1.0.7",
+    "curl-request": "^1.1.1",
+    "graphql-tag": "^2.10.3"
   }
 }
