@@ -24,6 +24,7 @@ const getAllGigs = async () => {
   const past = allGigsFormatted.filter((item) => new Date(item.start) <= new Date());
 
   return {
+    allGigsFormatted,
     upcoming,
     past
   }
