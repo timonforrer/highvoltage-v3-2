@@ -19,12 +19,12 @@
       {
         "index": 3,
         "text": "Musik",
-        "href": "#"
+        "href": "/musik/"
       },
       {
         "index": 4,
         "text": "Videos",
-        "href": "#"
+        "href": "/videos/"
       },
       {
         "index": 5,
@@ -61,7 +61,7 @@
       {
         "index": 3,
         "text": "Music",
-        "href": "#"
+        "href": "/music/"
       },
       {
         "index": 4,
