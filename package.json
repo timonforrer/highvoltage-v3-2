@@ -16,6 +16,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.10.0",
     "airtable": "^0.8.1",
+    "node-fetch": "^2.6.0",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.7.1"
   },
