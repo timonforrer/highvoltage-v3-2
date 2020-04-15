@@ -13,9 +13,9 @@ const getAllGigs = async () => {
       doors: data['Türöffnung'],
       start: data.Start,
       end: data.End,
-      price_pre_sale: data['Ticket Preis (Vorverkauf)'],
-      price_box_office: data['Ticket Preis (Abendkasse)'],
-      ticket_url: data['Ticket URL'],
+      pricePreSale: data['Ticket Preis (Vorverkauf)'],
+      priceBoxOffice: data['Ticket Preis (Abendkasse)'],
+      ticketUrl: data['Ticket URL'],
       slug: data.Slug
     };
   });
