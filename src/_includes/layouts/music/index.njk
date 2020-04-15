@@ -1,0 +1,12 @@
+{% extends 'layouts/base.njk' %}
+
+{% block content %}
+<main>
+  <h1>{{ title }}</h1>
+  <ul>
+  {% for item in content %}
+  <li><a href="{{ page.url }}{{ item.uid }}">{{ item.data.title | renderAsText }}</a></li>
+  {% endfor %}
+  </ul>
+</main>
+{% endblock %}
