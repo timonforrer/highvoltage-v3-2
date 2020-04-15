@@ -1,13 +1,15 @@
 ---
 permalink: /konzerte/index.html
 ---
+{% extends 'layouts/tour/index.njk' %}
 
+{% set content %}
 <h1>Konzerte</h1>
 
 <h2>Bevorstehende</h2>
 
 <ul>
-  {% for gig in gigs.upcoming %}
+  {% for gig in gigsAirtable.upcoming %}
   <li><a href="/konzerte/{{ gig.slug }}">{{ gig.title }}</a></li>
   {% endfor %}
 </ul>
@@ -15,7 +17,8 @@ permalink: /konzerte/index.html
 <h2>Vergangene</h2>
 
 <ul>
-  {% for gig in gigs.past %}
+  {% for gig in gigsAirtable.past %}
   <li><a href="/konzerte/{{ gig.slug }}">{{ gig.title }}</a></li>
   {% endfor %}
 </ul>
+{% endset %}
