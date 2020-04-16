@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const saveSeed = require('../../utils/saveSeed.js');
 
 const getAllYoutubeVideos = async () => {
   const url = `https://www.googleapis.com/youtube/v3/playlistItems?playlistId=UUdARchfQvlOBcMNZynTPRCg&key=${process.env.YOUTUBE_API_KEY}&part=snippet&maxResults=50`
@@ -15,6 +16,8 @@ const getAllYoutubeVideos = async () => {
       thumbnails: { ...data.thumbnails }
     };
   });
+
+  saveSeed(JSON.stringify(formattedVideos), `${__dirname}/../dev/youtubeVideos.json`);
   return formattedVideos;
 }
 

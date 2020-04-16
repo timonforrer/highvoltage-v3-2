@@ -4,8 +4,9 @@
   "description": "The Official Voltage Arc Website",
   "main": "src/index.html",
   "scripts": {
-    "dev": "npx @11ty/eleventy --serve --port $PORT",
-    "build": "npx @11ty/eleventy"
+    "dev": "ELEVENTY_ENV=dev npx @11ty/eleventy --serve --port $PORT",
+    "build": "ELEVENTY_ENV=prod npx @11ty/eleventy",
+    "seed": "ELEVENTY_ENV=seed npx @11ty/eleventy"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
-const base = require('../utils/airtable.js');
-const fetchData = require('../utils/airtableDataController.js');
+const base = require('../../utils/airtable.js');
+const fetchData = require('../../utils/airtableDataController.js');
+const saveSeed = require('../../utils/saveSeed.js');
 
 const getAllGigs = async () => {
 
@@ -23,11 +24,14 @@ const getAllGigs = async () => {
   const upcoming = allGigsFormatted.filter((item) => new Date(item.start) >= new Date());
   const past = allGigsFormatted.filter((item) => new Date(item.start) <= new Date());
 
-  return {
+  const returnObject = {
     allGigsFormatted,
     upcoming,
     past
   }
+
+  saveSeed(JSON.stringify(returnObject), `${__dirname}/../dev/gigsAirtable.json`);
+  return returnObject
 };
 
 module.exports = getAllGigs;
