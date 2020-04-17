@@ -1,0 +1,12 @@
+---
+pagination:
+  data: tour.subPagesAirtable
+  size: 1
+  alias: localisedPage
+permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ localisedPage.slug }}/index.html"
+---
+
+{% block content %}
+  <h1>{{ localisedPage.title }}</h1>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
