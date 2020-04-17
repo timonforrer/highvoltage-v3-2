@@ -18,5 +18,15 @@
       "pathPrefix": "/galerie",
       "title": "Galerie"
     }
+  },
+  "tour": {
+    "en-gb": {
+      "pathPrefix": "/en/tour",
+      "title": "Tour"
+    },
+    "de-ch": {
+      "pathPrefix": "/konzerte",
+      "title": "Konzerte"
+    }
   }
 }
