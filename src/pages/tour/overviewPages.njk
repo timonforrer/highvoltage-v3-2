@@ -1,0 +1,12 @@
+---
+pagination:
+  data: tour.overviewPages
+  size: 1
+  alias: localisedPage
+permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/index.html"
+---
+
+{% block content %}
+  {{ localisedPage.data.page_title | renderAsHTML | safe }}
+{% endblock %}
+{% extends 'layouts/base.njk' %}
