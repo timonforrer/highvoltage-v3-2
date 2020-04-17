@@ -1,0 +1,39 @@
+---
+pagination:
+  data: gallery.overviewPages
+  size: 1
+  alias: localisedPage
+permalink: "{{ nav.gallery[localisedPage.lang].pathPrefix }}/index.html"
+---
+
+
+{% block content %}
+  <style>
+  ul.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+  ul.gallery > li {
+    flex-basis: 30rem;
+    flex-grow: 1;
+  }
+  img {
+    display: block;
+    height: 25rem;
+    width: 100%;
+    object-fit: cover;
+  }
+  </style>
+  {{ localisedPage.data.page_title | renderAsHTML | safe }}
+  {{ localisedPage.data.introduction | renderAsHTML | safe }}
+  <ul class="gallery">
+  {% for image in localisedPage.data.images %}
+    <li><img src="{{ image.image.url }}" /></li>
+  {% endfor %}
+  </ul>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
