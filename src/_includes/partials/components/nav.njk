@@ -1,7 +1,7 @@
 <nav>
   <ul>
-    {% for link in site.nav[locale] %}
-    <li><a href="{{ link.href }}">{{ link.text }}</a></li>
+    {% for key, link in nav %}
+    <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
     {% endfor %}
   </ul>
 </nav>
