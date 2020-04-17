@@ -8,5 +8,12 @@ permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/index.html"
 
 {% block content %}
   {{ localisedPage.data.page_title | renderAsHTML | safe }}
+  <ul>
+    {% for page in tour.subPagesAirtable %}
+      {% if page.lang === localisedPage.lang %}
+      <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
