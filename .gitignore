@@ -3,4 +3,3 @@ node_modules
 dist
 .now
 .env
-src/_data/dev
