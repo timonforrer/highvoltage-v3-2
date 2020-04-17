@@ -5,4 +5,4 @@ module.exports = async () => {
   const response = await fetchData('home');
   saveSeed(response, `${__dirname}/../../dev/home/overviewPages.json`);
   return response;
-}
+};
