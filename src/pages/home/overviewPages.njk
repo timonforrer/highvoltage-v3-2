@@ -1,0 +1,12 @@
+---
+pagination:
+  data: home.overviewPages
+  size: 1
+  alias: localisedPage
+permalink: "{{ nav.home[localisedPage.lang].pathPrefix }}/index.html"
+---
+
+{% block content %}
+ {{ localisedPage.data.hero_title | renderAsHTML | safe }}
+{% endblock %}
+{% extends 'layouts/base.njk' %}
