@@ -8,5 +8,14 @@ permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ localisedPage.slug 
 
 {% block content %}
   <h1>{{ localisedPage.title }}</h1>
+  {% for prismicContent in tour.subPagesPrismic %}
+  {% if prismicContent.uid == localisedPage.slug and prismicContent.lang == localisedPage.lang %}
+    <ul>
+    {% for sliceItem in prismicContent.data.body %}
+      <li>{{ sliceItem.slice_type }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endfor %}
 {% endblock %}
 {% extends 'layouts/base.njk' %}
