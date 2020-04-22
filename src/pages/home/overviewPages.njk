@@ -3,7 +3,9 @@ pagination:
   data: home.overviewPages
   size: 1
   alias: localisedPage
+  addAllPagesToCollections: true
 permalink: "{{ nav.home[localisedPage.lang].pathPrefix }}/index.html"
+translationKey: "homePage"
 ---
 
 {% block content %}

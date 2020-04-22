@@ -1,0 +1,14 @@
+---
+pagination:
+  data: contact.overviewPages
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ nav.contact[localisedPage.lang].pathPrefix }}/index.html"
+translationKey: "contactPage"
+---
+
+{% block content %}
+  {{ localisedPage.data.page_title | renderAsHTML | safe }}
+{% endblock %}
+{% extends 'layouts/base.njk' %}

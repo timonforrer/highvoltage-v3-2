@@ -3,7 +3,9 @@ pagination:
   data: tour.overviewPages
   size: 1
   alias: localisedPage
+  addAllPagesToCollections: true
 permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/index.html"
+translationKey: "tourPage"
 ---
 
 {% block content %}

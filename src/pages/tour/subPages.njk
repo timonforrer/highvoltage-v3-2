@@ -3,7 +3,10 @@ pagination:
   data: tour.subPagesAirtable
   size: 1
   alias: localisedPage
+  addAllPagesToCollections: true
 permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ localisedPage.slug }}/index.html"
+eleventyComputed:
+  translationKey: "{{ localisedPage.slug }}"
 ---
 
 {% block content %}
