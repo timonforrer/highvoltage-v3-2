@@ -28,5 +28,15 @@
       "pathPrefix": "/konzerte",
       "title": "Konzerte"
     }
+  },
+  "contact": {
+    "en-gb": {
+      "pathPrefix": "/en/contact",
+      "title": "Contact"
+    },
+    "de-ch": {
+      "pathPrefix": "/kontakt",
+      "title": "Kontakt"
+    }
   }
 }
