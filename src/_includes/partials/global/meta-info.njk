@@ -1,0 +1,25 @@
+{#
+
+  Parts of the code are kindly borrowed from Andy Bells 'Hebra' Starter Kit
+  https://github.com/hankchizljaw/hebra/blob/master/src/_includes/partials/global/meta-info.njk
+
+#}
+
+{% set pageTitle = title + ' – ' + site.name %}
+{% set siteTitle = site.name %}
+{% set currentUrl = site.url + page.url %}
+
+<title>{{ pageTitle }}</title>
+
+<meta property="og:site_name" content="{{ siteTitle }}" />
+<meta property="og:title" content="{{ pageTitle }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ currentUrl }}" />
+
+{% if metaDescription %}
+  <meta name="description" content="{{ metaDescription }}" />
+  <meta name="twitter:description" content="{{ metaDescription }}" />
+  <meta property="og:description" content="{{ metaDescription }}" />
+{% endif %}
+
+{# Todo: automatic social images #}
