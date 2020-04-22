@@ -9,7 +9,9 @@ translationKey: "homePage"
 eleventyComputed:
   title: "{{ localisedPage.data.meta_title }}"
   metaDescription: "{{ localisedPage.data.meta_description }}"
+  lastMod: "{{ localisedPage.last_publication_date }}"
 ---
+
 
 {% block content %}
  {{ localisedPage.data.hero_title | renderAsHTML | safe }}
