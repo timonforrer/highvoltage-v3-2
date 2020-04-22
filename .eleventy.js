@@ -8,6 +8,9 @@ module.exports = function(config) {
 
   config.addFilter('renderAsHTML', (value) => PrismicDOM.RichText.asHtml(value));
   config.addFilter('renderAsText', (value) => PrismicDOM.RichText.asText(value));
+  config.addFilter('htmlDate', (value) => {
+    return new Date(value).toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' });
+  });
 
   env = (env=='seed') ? 'prod' : env
 
