@@ -6,7 +6,6 @@ module.exports = function(config) {
 
   let env = process.env.ELEVENTY_ENV;
 
-  config.addFilter('log', (value) => console.log(value));
   config.addFilter('renderAsHTML', (value) => PrismicDOM.RichText.asHtml(value));
   config.addFilter('renderAsText', (value) => PrismicDOM.RichText.asText(value));
 
