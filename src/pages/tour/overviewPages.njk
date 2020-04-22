@@ -6,6 +6,9 @@ pagination:
   addAllPagesToCollections: true
 permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/index.html"
 translationKey: "tourPage"
+eleventyComputed:
+  title: "{{ localisedPage.data.meta_title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
 ---
 
 {% block content %}

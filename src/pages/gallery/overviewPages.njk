@@ -6,6 +6,9 @@ pagination:
   addAllPagesToCollections: true
 permalink: "{{ nav.gallery[localisedPage.lang].pathPrefix }}/index.html"
 translationKey: "galleryPage"
+eleventyComputed:
+  title: "{{ localisedPage.data.meta_title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
 ---
 
 

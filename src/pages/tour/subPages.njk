@@ -7,6 +7,7 @@ pagination:
 permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ localisedPage.slug }}/index.html"
 eleventyComputed:
   translationKey: "{{ localisedPage.slug }}"
+  title: "{{ localisedPage.title }}"
 ---
 
 {% block content %}
