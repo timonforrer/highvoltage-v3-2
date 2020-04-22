@@ -1,88 +1,14 @@
 {
-  "nav": {
-    "de": [
-      {
-        "index": 0,
-        "text": "Home",
-        "href": "/"
-      },
-      {
-        "index": 1,
-        "text": "Biographie",
-        "href": "#"
-      },
-      {
-        "index": 2,
-        "text": "Konzerte",
-        "href": "/konzerte/"
-      },
-      {
-        "index": 3,
-        "text": "Musik",
-        "href": "/musik/"
-      },
-      {
-        "index": 4,
-        "text": "Videos",
-        "href": "/videos/"
-      },
-      {
-        "index": 5,
-        "text": "Galerie",
-        "href": "#"
-      },
-      {
-        "index": 6,
-        "text": "Shop",
-        "href": "#"
-      },
-      {
-        "index": 7,
-        "text": "Kontakt",
-        "href": "#"
-      }
-    ],
-    "en": [
-      {
-        "index": 0,
-        "text": "Home",
-        "href": "/en/"
-      },
-      {
-        "index": 1,
-        "text": "Biography",
-        "href": "#"
-      },
-      {
-        "index": 2,
-        "text": "Tour",
-        "href": "#"
-      },
-      {
-        "index": 3,
-        "text": "Music",
-        "href": "/en/music/"
-      },
-      {
-        "index": 4,
-        "text": "Videos",
-        "href": "#"
-      },
-      {
-        "index": 5,
-        "text": "Gallery",
-        "href": "#"
-      },
-      {
-        "index": 6,
-        "text": "Shop",
-        "href": "#"
-      },
-      {
-        "index": 7,
-        "text": "Contact",
-        "href": "#"
-      }
-    ]
-  }
+  "languages": [
+    {
+      "label": "English",
+      "code": "en-gb",
+      "pathPrefix": "/en/"
+    },
+    {
+      "label": "Deutsch",
+      "code": "de-ch",
+      "pathPrefix": "/"
+    }
+  ]
 }
