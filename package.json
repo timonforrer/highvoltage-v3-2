@@ -17,7 +17,13 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0-beta.3",
     "airtable": "^0.8.1",
+    "cssnano": "^4.1.10",
     "node-fetch": "^2.6.0",
+    "postcss": "^7.0.27",
+    "postcss-color-mix": "^1.1.0",
+    "postcss-import": "^12.0.1",
+    "postcss-mixins": "^6.2.3",
+    "precss": "^4.0.0",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.7.1"
   },
