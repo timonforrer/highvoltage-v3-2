@@ -9,16 +9,6 @@
       "title": "Home"
     }
   },
-  "gallery": {
-    "en-gb": {
-      "pathPrefix": "/en/gallery",
-      "title": "Gallery"
-    },
-    "de-ch": {
-      "pathPrefix": "/galerie",
-      "title": "Galerie"
-    }
-  },
   "tour": {
     "en-gb": {
       "pathPrefix": "/en/tour",
@@ -27,6 +17,16 @@
     "de-ch": {
       "pathPrefix": "/konzerte",
       "title": "Konzerte"
+    }
+  },
+  "gallery": {
+    "en-gb": {
+      "pathPrefix": "/en/gallery",
+      "title": "Gallery"
+    },
+    "de-ch": {
+      "pathPrefix": "/galerie",
+      "title": "Galerie"
     }
   },
   "contact": {
