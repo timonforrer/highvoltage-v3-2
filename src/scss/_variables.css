@@ -1,0 +1,81 @@
+/*
+------------
+    Colours
+------------
+*/
+
+/* Background */
+$c_bg_1: #0E0E0E;
+$c_bg_2: #1C1C1C;
+$c_bg_3: #333333;
+
+/* Foreground */
+$c_fg_1: #FAFAFA;
+$c_fg_2: #FFFFFF;
+
+/* Main */
+$c_main_0: #f54942;
+$c_main_1: #C80900;
+$c_main_2: #B1130C;
+$c_main_3: #A01812;
+$c_main_4: #921913;
+$c_main_5: #891813;
+
+
+/*
+------------
+    Typopraphy
+------------
+*/
+
+/* Font Families */
+
+$f_f_headline: 'Barlow', sans-serif;
+$f_f_body: 'IBM-Plex-Sans', sans-serif;
+
+/* Font Weights */
+
+$f_w_headline: 900;
+$f_w_body: 400;
+$f_w_body_bold: 600;
+
+/* Font Sizes */
+
+$f_s_desktop_h1: 84;
+$f_s_mobile_h1: 60;
+$f_s_desktop_h2: 60;
+$f_s_mobile_h2: 48;
+$f_s_desktop_h3: 36;
+$f_s_mobile_h3: 24;
+$f_s_desktop_h4: 24;
+$f_s_mobile_h4: 20;
+$f_s_desktop_body: 24;
+$f_s_mobile_body: 20;
+$f_s_desktop_lead: 24;
+$f_s_mobile_lead: 20;
+
+/* Line Height */
+
+$f_lh_body: 180%;
+$f_lh_lead: 180%;
+
+/*
+------------
+    Sizes
+------------
+*/
+
+$s_max_vw: 1368;
+$s_min_vw: 320;
+
+/*
+------------
+    Effects
+------------
+*/
+
+$s_t: 0px 10px 20px rgba(0, 0, 0, 0.5);
+$s: 0px 20px 20px rgba(#000000, 0.1);
+$s_text: 0px 0 20px rgba(#000000, 0.5);
+$s_strong: 0px 20px 20px #000000;
+$s_subtle: 0px 20px 20px rgba(#000000, 0.25)
