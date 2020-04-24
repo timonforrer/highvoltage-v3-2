@@ -12,6 +12,13 @@ module.exports = function(config) {
     return new Date(value).toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' });
   });
 
+  config.addWatchTarget('./src/scss/');
+
+  config.setTemplateFormats([
+    'njk',
+    '11ty.js'
+  ]);
+
   env = (env=='seed') ? 'prod' : env
 
   return {
