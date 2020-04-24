@@ -10,12 +10,14 @@ eleventyExcludeFromCollections: true
     {% if item.data.lastMod != undefined %}
     <lastmod>{{ item.data.lastMod | htmlDate }}</lastmod>
     {% endif %}
-    {# {% if item.changeFreq %}
+    {% if item.changeFreq %}
     <changefreq>{{ item.data.changeFreq }}</changefreq>
     {% endif %}
     {% if item.priority %}
     <priority>{{ item.data.priority }}</priority>
-    {% endif %} #}
+    {% endif %}
+
+    {# Todo: add images #}
   </url>
 {% endfor %}
 </urlset>
