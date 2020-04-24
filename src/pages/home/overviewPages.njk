@@ -4,16 +4,33 @@ pagination:
   size: 1
   alias: localisedPage
   addAllPagesToCollections: true
-permalink: "{{ nav.home[localisedPage.lang].pathPrefix }}/index.html"
-translationKey: "homePage"
 eleventyComputed:
   title: "{{ localisedPage.data.meta_title }}"
   metaDescription: "{{ localisedPage.data.meta_description }}"
   lastMod: "{{ localisedPage.last_publication_date }}"
+permalink: "{{ nav.home[localisedPage.lang].pathPrefix }}/index.html"
+translationKey: "homePage"
 ---
 
+{% set data = localisedPage.data %}
 
 {% block content %}
- {{ localisedPage.data.hero_title | renderAsHTML | safe }}
+<section class="hero">
+  <div class="hero__text">
+    {{ data.hero_title | renderAsHTML | safe }}
+    {{ data.hero_introduction | renderAsHTML | safe }}
+  </div>
+  <div class="hero__background">
+    <video
+      {# autoplay #}
+      playsinline
+      loop
+      muted
+      poster="{{ data.hero_image.Tablet.url }}"
+      src="{{ data.hero_video.url }}"
+    >
+    </video>
+  </div>
+</section>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
