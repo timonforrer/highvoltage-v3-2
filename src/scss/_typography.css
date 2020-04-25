@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: local('Barlow Black'), local('Barlow-Black'), url('/fonts/Barlow-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('IBM Plex Sans Regular'), local('IBM-Plex-Sans-Regular'), url('/fonts/IBMPlexSans-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('IBM Plex Sans Bold'), local('IBM-Plex-Sans-Bold'), url('/fonts/IBMPlexSans-Bold.woff') format('woff');
+}
+
+html {
+  font-family: $f_f_body;
+  font-size: calc(0.333vw + 1rem);
+  font-weight: 400;
+}
+
+b, strong { font-weight: 600; }
+
+.small { font-size: 0.8rem; }
+.large { font-size: 2rem; }
+
+.lead {
+  font-size: calc(0.25vw + 1rem);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Barlow';
+  font-weight: 900;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-size: calc(3vw + 1.75rem);
+  line-height: 2.75rem;
+  line-height: calc(3vw + 2rem);
+}
+
+h2 {
+  font-size: 2rem;
+  font-size: calc(2.5vw + 1.5rem);
+  line-height: 2.25rem;
+  line-height: calc(2.5vw + 1.75rem);
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-size: calc(2vw + 1rem);
+  line-height: 1.75rem;
+  line-height: calc(2vw + 1.25rem);
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-size: calc(1.5vw + .75rem);
+  line-height: 1.5rem;
+  line-height: calc(1.5vw + 1rem);
+}

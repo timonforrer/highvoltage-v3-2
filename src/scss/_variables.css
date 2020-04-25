@@ -31,28 +31,13 @@ $c_main_5: #891813;
 /* Font Families */
 
 $f_f_headline: 'Barlow', sans-serif;
-$f_f_body: 'IBM-Plex-Sans', sans-serif;
+$f_f_body: 'IBM Plex Sans', sans-serif;
 
 /* Font Weights */
 
 $f_w_headline: 900;
 $f_w_body: 400;
 $f_w_body_bold: 600;
-
-/* Font Sizes */
-
-$f_s_desktop_h1: 84;
-$f_s_mobile_h1: 60;
-$f_s_desktop_h2: 60;
-$f_s_mobile_h2: 48;
-$f_s_desktop_h3: 36;
-$f_s_mobile_h3: 24;
-$f_s_desktop_h4: 24;
-$f_s_mobile_h4: 20;
-$f_s_desktop_body: 24;
-$f_s_mobile_body: 20;
-$f_s_desktop_lead: 24;
-$f_s_mobile_lead: 20;
 
 /* Line Height */
 

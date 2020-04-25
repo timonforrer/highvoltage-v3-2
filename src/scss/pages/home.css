@@ -1,0 +1,8 @@
+.hero {
+  &__text {
+    & p {
+      max-width: 100%;
+      width: 28ch;
+    }
+  }
+}
