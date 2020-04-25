@@ -1,0 +1,10 @@
+.cover {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & > * {
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+}

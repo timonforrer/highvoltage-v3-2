@@ -1,8 +1,16 @@
 .hero {
+  position: relative;
+
   &__text {
+    z-index: 1;
+
     & p {
       max-width: 100%;
       width: 28ch;
     }
+  }
+
+  &__background {
+    width: 100%;
   }
 }

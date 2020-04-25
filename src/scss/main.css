@@ -3,4 +3,7 @@
 @import 'global.css';
 @import 'typography.css';
 
+@import 'components/cover.css';
+@import 'components/stack.css';
+
 @import 'pages/home.css';
