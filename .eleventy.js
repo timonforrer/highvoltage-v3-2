@@ -13,6 +13,7 @@ module.exports = function(config) {
   });
 
   config.addWatchTarget('./src/scss/');
+  config.addPassthroughCopy('./src/fonts');
 
   config.setTemplateFormats([
     'njk',
