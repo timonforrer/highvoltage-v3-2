@@ -16,9 +16,13 @@ translationKey: "homePage"
 
 {% block content %}
 <section class="hero">
-  <div class="hero__text container">
-    {{ data.hero_title | renderAsHTML | safe }}
-    <p class="lead">{{ data.hero_introduction | renderAsText | safe }}</p>
+  <div class="hero__text pin">
+    <div class="container cover">
+      <div class="stack stack--2">
+        {{ data.hero_title | renderAsHTML | safe }}
+        <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
+      </div>
+    </div>
   </div>
   <div class="hero__background">
     <video
