@@ -1,10 +1,18 @@
 ---
+localisedPage:
+  lang: 'en-gb'
+title: Typography
 permalink: "/typography/index.html"
 ---
 
-<h1>A single title</h1>
-<h2>A single title</h2>
-<h3>A single title</h3>
-<h4>A single title</h4>
-
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium dignissimos possimus ducimus ut neque in dicta esse, totam libero! Optio perferendis delectus distinctio quaerat, assumenda voluptatibus ad quam incidunt inventore.</p>
+{% block content %}
+<main class="container">
+  <h1>A single title</h1>
+  <h2>A single title</h2>
+  <h3>A single title</h3>
+  <h4>A single title</h4>
+  <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam laborum suscipit, consectetur officiis nulla iusto reprehenderit, doloremque illum odit possimus et beatae! Dolorum, eveniet illo deserunt aspernatur saepe, suscipit beatae eligendi soluta dicta dolores autem eius accusamus ipsa nobis doloremque animi! Dolorum voluptas consequuntur esse itaque modi deserunt error amet optio ad distinctio alias quo eligendi tenetur labore minima laboriosam ea sint pariatur dolorem exercitationem, laudantium obcaecati! Ut nulla natus, neque impedit distinctio doloribus maxime similique accusantium dolorum quidem laboriosam adipisci quas porro pariatur earum quasi ipsa consequuntur minus. Ad dignissimos odit consectetur eveniet vel earum aut saepe nisi, vero illum consequuntur nostrum ipsum reprehenderit iste atque voluptates cum? Sequi magni laborum voluptas asperiores quidem rem cumque nostrum officia dolorem, obcaecati harum quia nesciunt dicta ipsum esse maxime animi provident beatae itaque ab sed atque pariatur. Soluta eaque tempora porro. Distinctio, vitae neque explicabo sit cumque, reprehenderit fugit exercitationem hic obcaecati maiores quis aperiam? Repellendus eius neque placeat esse voluptatum omnis atque minima. Voluptate ipsa magnam illum tenetur, neque iusto laudantium non quibusdam consequuntur adipisci dolore necessitatibus voluptatum quod quae labore ipsum tempora, reiciendis amet quo molestiae rem esse! Doloremque dolor, quibusdam fugiat architecto dignissimos non sit alias quidem maiores.</p>
+  <p>Lorem <b>ipsum</b>, dolor <strong>sit amet</strong> consectetur adipisicing elit. Accusantium dignissimos possimus ducimus ut neque in dicta esse, totam libero! Optio perferendis delectus distinctio quaerat, assumenda voluptatibus ad quam incidunt inventore.</p>
+</main>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
