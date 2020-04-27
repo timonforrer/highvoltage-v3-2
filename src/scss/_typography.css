@@ -33,6 +33,12 @@ b, strong { font-weight: 600; }
 .small { font-size: 0.8rem; }
 .large { font-size: 2rem; }
 
+.uppercase {
+  font-size: 0.7rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
 .lead {
   font-size: calc(0.25vw + 1rem);
   font-weight: 600;
