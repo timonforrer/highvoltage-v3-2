@@ -1,0 +1,10 @@
+{% macro button(text, href=false, inverted=false, id=false) %}
+  {% if href != false %}
+    {% set tag = 'a' %}
+  {% else %}
+    {% set tag = 'button' %}
+  {% endif %}
+  <{{ tag }} class="button{% if inverted %} button--inverted{% endif %} uppercase" {%- if id %}id="{{ id }}"{% endif %} {% if href %}href="{{ href }}"{% endif %}>
+  {{- text -}}
+  </{{ tag }}>
+{% endmacro %}
