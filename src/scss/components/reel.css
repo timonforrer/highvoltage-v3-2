@@ -1,0 +1,21 @@
+.reel {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-color: $c_bg_2 $c_fg_1;
+
+  &::-webkit-scrollbar {
+    height: 1rem;
+    height: calc(1vw + 0.5rem);
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $c_bg_2;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $c_bg_2;
+    background-image: linear-gradient($c_bg_2 0, $c_bg_2 0.25rem, $c_fg_1 0.25rem, $c_fg_1 0.75rem, $c_bg_2 0.75rem);
+  }
+
+  > * {
+    padding: 1rem 1.5rem;
+  }
+}

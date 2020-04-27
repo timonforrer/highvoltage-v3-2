@@ -1,24 +1,36 @@
-<nav>
-  <ul>
-    {% for key, link in nav %}
-    <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
-    {% endfor %}
-  </ul>
-</nav>
+<header>
+  <div class="container header__outer-container">
 
-{% for language in site.languages %}
-  
-  {# set fallback to homepage #}
-  {% set translatedUrl = language.pathPrefix %}
-  
-  {# loop through all sites #}
-  {% for item in collections.all %}
-    {% if item.data.translationKey == translationKey and item.data.localisedPage.lang == language.code %}
-      {% set translatedUrl = item.url %}
-    {% endif %}
-  {% endfor %}
+    <div class="header__logo">
+      {% include 'assets/logo.svg' %}
+    </div>
 
-  <a href="{{ translatedUrl }}">{{ language.label }}</a>
+    <ul class="header__language-switcher">
+    {%- for language in site.languages -%}
+      
+      {# set fallback to homepage #}
+      {% set translatedUrl = language.pathPrefix %}
+      
+      {# loop through all sites #}
+      {%-for item in collections.all -%}
+        {% if item.data.translationKey == translationKey and item.data.localisedPage.lang == language.code %}
+          {% set translatedUrl = item.url %}
+        {% endif %}
+      {%- endfor -%}
 
-{% endfor %}
+      <li><a href="{{ translatedUrl }}">{{ language.label }}</a></li>
 
+    {%- endfor -%}
+    </ul>
+  </div>
+
+  <nav>
+    <div class="container container--full-width">
+      <ul class="reel">
+        {% for key, link in nav %}
+        <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</header>
