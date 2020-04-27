@@ -4,13 +4,36 @@
   &__text {
     z-index: 1;
 
-    & p {
+    p {
       max-width: 100%;
       width: 28ch;
     }
   }
 
   &__background {
-    width: 100%;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: -webkit-gradient(linear,left top,left bottom,from(rgba(14,14,14,0)),color-stop(72.79%,rgba(14,14,14,.72)),to(#0e0e0e));
+      background: linear-gradient(180deg,rgba(14,14,14,0),rgba(14,14,14,.72) 72.79%,#0e0e0e);
+      display: block;
+      z-index: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .hero {
+    > * ~ * {
+      margin-top: 1.5rem;
+    }
+
+    &__text.pin { position: relative; }
   }
 }
