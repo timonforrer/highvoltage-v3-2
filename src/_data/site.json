@@ -3,14 +3,14 @@
   "url": "https://www.voltagearc.com",
   "languages": [
     {
-      "label": "English",
-      "code": "en-gb",
-      "pathPrefix": "/en/"
-    },
-    {
-      "label": "Deutsch",
+      "label": "DE",
       "code": "de-ch",
       "pathPrefix": "/"
+    },
+    {
+      "label": "EN",
+      "code": "en-gb",
+      "pathPrefix": "/en/"
     }
   ]
 }
