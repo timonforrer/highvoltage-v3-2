@@ -11,7 +11,15 @@
     width: 15rem;
 
     svg {
-      margin-left: -1rem;
+      transform: translateX(-7%);
+    }
+  }
+
+  .reel {
+    > * { padding: 0; }
+    a {
+      display: block;
+      padding: 1rem 1.5rem;
     }
   }
 
