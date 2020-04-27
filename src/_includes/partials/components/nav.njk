@@ -1,9 +1,9 @@
-<header>
+<header class="header">
   <div class="container header__outer-container">
 
-    <div class="header__logo">
+    <a class="header__logo" href="{{ nav.home[localisedPage.lang].pathPrefix }}">
       {% include 'assets/logo.svg' %}
-    </div>
+    </a>
 
     <ul class="header__language-switcher">
     {%- for language in site.languages -%}
@@ -13,9 +13,9 @@
       
       {# loop through all sites #}
       {%-for item in collections.all -%}
-        {% if item.data.translationKey == translationKey and item.data.localisedPage.lang == language.code %}
+        {%- if item.data.translationKey == translationKey and item.data.localisedPage.lang == language.code -%}
           {% set translatedUrl = item.url %}
-        {% endif %}
+        {%- endif -%}
       {%- endfor -%}
 
       <li><a href="{{ translatedUrl }}">{{ language.label }}</a></li>
@@ -24,7 +24,7 @@
     </ul>
   </div>
 
-  <nav>
+  <nav class="main-nav" id="main-nav">
     <div class="container container--full-width">
       <ul class="reel">
         {% for key, link in nav %}
