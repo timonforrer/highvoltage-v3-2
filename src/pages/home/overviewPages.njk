@@ -16,17 +16,10 @@ translationKey: "homePage"
 
 {% block content %}
 <section class="hero">
-  <div class="hero__text pin">
-    <div class="container cover">
-      <div class="stack stack--2">
-        {{ data.hero_title | renderAsHTML | safe }}
-        <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
-      </div>
-    </div>
-  </div>
+
   <div class="hero__background">
     <video
-      {# autoplay #}
+      autoplay
       playsinline
       loop
       muted
@@ -35,6 +28,16 @@ translationKey: "homePage"
     >
     </video>
   </div>
+
+  <div class="hero__text pin">
+    <div class="container cover">
+      <div class="stack stack--2">
+        {{ data.hero_title | renderAsHTML | safe }}
+        <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
+      </div>
+    </div>
+  </div>
+
 </section>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
