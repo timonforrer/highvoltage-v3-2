@@ -11,15 +11,17 @@ eleventyComputed:
 ---
 
 {% block content %}
-  <h1>{{ localisedPage.title }}</h1>
-  {% for prismicContent in tour.subPagesPrismic %}
-  {% if prismicContent.uid == localisedPage.slug and prismicContent.lang == localisedPage.lang %}
-    <ul>
-    {% for sliceItem in prismicContent.data.body %}
-      <li>{{ sliceItem.slice_type }}</li>
+  <div class="container">
+    <h1>{{ localisedPage.title }}</h1>
+    {% for prismicContent in tour.subPagesPrismic %}
+    {% if prismicContent.uid == localisedPage.slug and prismicContent.lang == localisedPage.lang %}
+      <ul>
+      {% for sliceItem in prismicContent.data.body %}
+        <li>{{ sliceItem.slice_type }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
     {% endfor %}
-    </ul>
-  {% endif %}
-  {% endfor %}
+  </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}

@@ -13,6 +13,8 @@ eleventyComputed:
 ---
 
 {% block content %}
-  {{ localisedPage.data.page_title | renderAsHTML | safe }}
+  <div class="container">
+    {{ localisedPage.data.page_title | renderAsHTML | safe }}
+  </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}

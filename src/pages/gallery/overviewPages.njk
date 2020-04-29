@@ -24,22 +24,30 @@ eleventyComputed:
     padding: 0;
   }
   ul.gallery > li {
-    flex-basis: 30rem;
+    flex-basis: 20rem;
     flex-grow: 1;
   }
   img {
     display: block;
-    height: 25rem;
+    height: 20rem;
     width: 100%;
     object-fit: cover;
   }
   </style>
-  {{ localisedPage.data.page_title | renderAsHTML | safe }}
-  {{ localisedPage.data.introduction | renderAsHTML | safe }}
-  <ul class="gallery">
-  {% for image in localisedPage.data.images %}
-    <li><img src="{{ image.image.url }}" /></li>
-  {% endfor %}
-  </ul>
+  <div class="container">
+    <div class="stack stack--3">
+      <div class="stack stack--1">
+        {{ localisedPage.data.page_title | renderAsHTML | safe }}
+        {{ localisedPage.data.introduction | renderAsHTML | safe }}
+      </div>
+      <div>
+        <ul class="gallery">
+        {% for image in localisedPage.data.images %}
+          <li><img src="{{ image.image.url }}" /></li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}

@@ -13,6 +13,7 @@ eleventyComputed:
 ---
 
 {% block content %}
+  <div class="container">
   {{ localisedPage.data.page_title | renderAsHTML | safe }}
   <ul>
     {% for page in tour.subPagesAirtable %}
@@ -21,5 +22,6 @@ eleventyComputed:
       {% endif %}
     {% endfor %}
   </ul>
+  </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
