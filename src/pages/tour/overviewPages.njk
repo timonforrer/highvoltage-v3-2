@@ -14,14 +14,55 @@ eleventyComputed:
 
 {% block content %}
   <div class="container">
-  {{ localisedPage.data.page_title | renderAsHTML | safe }}
-  <ul>
-    {% for page in tour.subPagesAirtable %}
-      {% if page.lang === localisedPage.lang %}
-      <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
-      {% endif %}
-    {% endfor %}
-  </ul>
+    <div class="stack stack--4">
+
+    {{ localisedPage.data.page_title | renderAsHTML | safe }}
+
+      <div class="stack stack--2">
+
+        <h3>{{ localisedPage.data.upcoming_gigs | renderAsText | safe }}</h3>
+
+        <div>
+          <ul>
+          {% set noUpcoming = true %}
+            {% for page in tour.subPagesAirtable %}
+              {% if page.lang === localisedPage.lang and localisedPage.upcoming %}
+              {% set anyUpcoming = false %}
+              <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+          {% if noUpcoming %}
+            <p class="lead">
+              {%- if localisedPage.lang === 'de-ch' -%}
+              Es gibt derzeit keine bevorstehenden Veranstaltungen
+              {%- else -%}
+              There are currently no upcoming events.
+              {%- endif -%}
+            </p>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="stack stack--2">
+
+        <h3>{{ localisedPage.data.past_gigs | renderAsText | safe }}</h3>
+
+        <div>
+          <ul>
+            {% for page in tour.subPagesAirtable %}
+              {% if page.lang === localisedPage.lang and not localisedPage.upcoming %}
+              <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
