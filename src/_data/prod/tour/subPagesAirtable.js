@@ -10,6 +10,7 @@ module.exports = async () => {
   const constructBaseFields = (data) => {
     return {
       title: data['Name'],
+      upcoming: new Date(data['Türöffnung']) > new Date(),
       venue: Array.isArray(data['Lokal']) ? data['Lokal'][0] : '',
       doors: data['Türöffnung'],
       start: data['Start'],
@@ -20,6 +21,8 @@ module.exports = async () => {
       slug: data['Slug']
     };
   };
+
+  // Todo: add *actual* localised fields to the response..
 
   const responseFormattedDE = response.map((item) => {
     return { ...constructBaseFields(item.fields), lang: 'de-ch' };
