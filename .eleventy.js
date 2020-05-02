@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const PrismicDOM = require('prismic-dom');
+const getYoutubeIDHelper = require('get-youtube-id');
 
 module.exports = function(config) {
 
@@ -11,6 +12,7 @@ module.exports = function(config) {
   config.addFilter('htmlDate', (value) => {
     return new Date(value).toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' });
   });
+  config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
 
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
