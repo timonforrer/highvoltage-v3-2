@@ -12,6 +12,7 @@ permalink: "{{ nav.home[localisedPage.lang].pathPrefix }}/index.html"
 translationKey: "homePage"
 ---
 
+{% import 'macros.njk' as macros %}
 {% set data = localisedPage.data %}
 
 {% block content %}
@@ -31,13 +32,24 @@ translationKey: "homePage"
 
   <div class="hero__text pin">
     <div class="container cover">
-      <div class="stack stack--2">
+      <div class="stack stack--3">
         {{ data.hero_title | renderAsHTML | safe }}
-        <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
+
+        <div class="stack stack--2">
+          <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
+          {% if data.cta %}
+            {{ macros.button(data.cta, href='#play-video') }}
+          {% endif %}
+        </div>
+
       </div>
     </div>
   </div>
-
+</section>
+<section id="play-video">
+  <div class="container">
+    {{ macros.youtubeVideo(data.cta_content.embed_url | getYoutubeID, localisedPage.lang) }}
+  </div>
 </section>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
