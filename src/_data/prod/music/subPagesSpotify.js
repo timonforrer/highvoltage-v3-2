@@ -13,6 +13,7 @@ module.exports = async () => {
     albums.body.items.map(async item => {
       let tracks = (await authorizedApi.getAlbumTracks(item.id)).body.items;
       let response = {
+        id: item.id,
         albumName: item.name,
         tracks: tracks.map(data => new Track(data))
       };
