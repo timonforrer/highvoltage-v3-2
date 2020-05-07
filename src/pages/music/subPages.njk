@@ -1,0 +1,35 @@
+---
+pagination:
+  data: music.subPagesPrismic
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+eleventyComputed:
+  title: "{{ localisedPage.data.meta_title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
+  lastMod: "{{ localisedPage.last_publication_date }}"
+  translationKey: "{{ localisedPage.uid }}"
+permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid }}/index.html"
+---
+
+{% set data = localisedPage.data %}
+
+{% block content %}
+  <div class="container">
+
+    {{ data.title | renderAsHTML | safe }}
+
+    <h2>Tracks</h2>
+    {% for spotifyData in music.subPagesSpotify %}
+      {% if spotifyData.id == data.spotify_id %}
+        <ol>
+          {% for track in spotifyData.tracks %}
+          <li>{{ track.name }} <audio controls><source src="{{ track.url }}" type="audio/mp3"></audio> </li>
+          {% endfor %}
+        </ol>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}
+{% extends 'layouts/base.njk' %}
