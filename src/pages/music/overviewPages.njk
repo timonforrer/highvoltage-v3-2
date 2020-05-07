@@ -1,0 +1,21 @@
+---
+pagination:
+  data: music.overviewPages
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+eleventyComputed:
+  title: "{{ localisedPage.data.meta_title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
+  lastMod: "{{ localisedPage.last_publication_date }}"
+permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/index.html"
+translationKey: "musicPage"
+---
+
+{% set data = localisedPage.data %}
+{% block content %}
+  <div class="container">
+    {{ data.page_title | renderAsHTML | safe }}
+  </div>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
