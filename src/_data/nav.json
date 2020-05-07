@@ -19,6 +19,16 @@
       "title": "Konzerte"
     }
   },
+  "music": {
+    "en-gb": {
+      "pathPrefix": "/en/music",
+      "title": "Music"
+    },
+    "de-ch": {
+      "pathPrefix": "/musik",
+      "title": "Musik"
+    }
+  },
   "videos": {
     "en-gb": {
       "pathPrefix": "/en/videos",
