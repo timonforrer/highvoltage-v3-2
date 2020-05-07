@@ -16,6 +16,21 @@ translationKey: "musicPage"
 {% block content %}
   <div class="container">
     {{ data.page_title | renderAsHTML | safe }}
+
+    <ul>
+      {% for musicItem in music.subPagesPrismic %}
+        {% if musicItem.lang == localisedPage.lang %}
+          <li>
+            <a href="{{ page.url }}{{ musicItem.uid }}">
+              {{ musicItem.data.title | renderAsText | safe }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
   </div>
+
 {% endblock %}
+
 {% extends 'layouts/base.njk' %}
