@@ -26,7 +26,8 @@
     "postcss-mixins": "^6.2.3",
     "precss": "^4.0.0",
     "prismic-dom": "^2.1.0",
-    "prismic-javascript": "^2.7.1"
+    "prismic-javascript": "^2.7.1",
+    "spotify-web-api-node": "^4.0.0"
   },
   "dependencies": {
     "dotenv": "^8.2.0"
