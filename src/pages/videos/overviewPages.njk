@@ -9,7 +9,7 @@ translationKey: "videosPage"
 eleventyComputed:
   title: "{{ localisedPage.data.meta_title }}"
   metaDescription: "{{ localisedPage.data.meta_description }}"
-  lastMod: "{{ localisedPage.data.last_publication_date }}"
+  lastMod: "{{ localisedPage.last_publication_date }}"
 ---
 
 {% block content %}
