@@ -1,0 +1,12 @@
+{% macro responsiveImage(image) %}
+  {% if image.Tablet == undefined %}
+    {{ "ERROR in responsiveImage: no source for Tablet" | log }}
+  {% elif image.Mobile == undefined %}
+    {{ "ERROR in responsiveImage: no source for Mobile" | log }}
+  {% endif %}
+  <picture>
+    <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
+    <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
+    <img src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
+  </picture>
+{% endmacro %}
