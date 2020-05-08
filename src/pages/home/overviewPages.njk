@@ -51,5 +51,17 @@ translationKey: "homePage"
     {{ macros.youtubeVideo(data.cta_content.embed_url | getYoutubeID, localisedPage.lang) }}
   </div>
 </section>
+
+{% from 'slices/musician.njk' import musician as musicianSlice %}
+<div class="container">
+  {% for item in data.body %}
+    {% if item.slice_type == 'musicians' %}
+      {% for musician in item.items %}
+        {{ musicianSlice(name=musician.musician_name, function=musician.musician_function, image=musician.musician_image) }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock %}
 {% extends 'layouts/base.njk' %}
