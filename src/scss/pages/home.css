@@ -30,9 +30,16 @@
 
 #play-video {
   display: none;
+  height: 90vh;
+  max-height: 50vw;
 
   &:target {
-    display: block;
+    display: flex;
+    
+    & > * {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
   }
 }
 
@@ -43,5 +50,13 @@
     }
 
     &__text.pin { position: relative; }
+  }
+}
+
+.musician {
+  &__function {
+    align-items: center;
+    display: flex;
+    font-size: 1.2rem;
   }
 }
