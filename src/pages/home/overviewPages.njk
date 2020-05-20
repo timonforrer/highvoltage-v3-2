@@ -16,52 +16,77 @@ translationKey: "homePage"
 {% set data = localisedPage.data %}
 
 {% block content %}
-<section class="hero">
+<main class="stack stack--7">
 
-  <div class="hero__background">
-    <video
-      autoplay
-      playsinline
-      loop
-      muted
-      poster="{{ data.hero_image.Tablet.url }}"
-      src="{{ data.hero_video.url }}"
-    >
-    </video>
-  </div>
+  <section class="hero">
+    <div class="hero__background">
+      <video
+        autoplay
+        playsinline
+        loop
+        muted
+        poster="{{ data.hero_image.Tablet.url }}"
+        src="{{ data.hero_video.url }}"
+      >
+      </video>
+    </div>
+    <div class="hero__text pin">
+      <div class="container cover">
+        <div class="stack stack--3">
+          {{ data.hero_title | renderAsHTML | safe }}
 
-  <div class="hero__text pin">
-    <div class="container cover">
-      <div class="stack stack--3">
-        {{ data.hero_title | renderAsHTML | safe }}
+          <div class="stack stack--2">
+            <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
+            {% if data.cta %}
+              {{ macros.button(data.cta, href='#play-video') }}
+            {% endif %}
+          </div>
 
-        <div class="stack stack--2">
-          <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
-          {% if data.cta %}
-            {{ macros.button(data.cta, href='#play-video') }}
-          {% endif %}
         </div>
-
       </div>
     </div>
-  </div>
-</section>
-<section id="play-video">
-  <div class="container">
-    {{ macros.youtubeVideo(data.cta_content.embed_url | getYoutubeID, localisedPage.lang) }}
-  </div>
-</section>
+  </section>
 
-{% from 'slices/musician.njk' import musician as musicianSlice %}
-<div class="container">
+  <section id="play-video">
+    <div class="container">
+      {{ macros.youtubeVideo(data.cta_content.embed_url | getYoutubeID, localisedPage.lang) }}
+    </div>
+  </section>
+
+  {% from 'components/responsiveImage.njk' import responsiveImage %}
+  {% from 'svg/flash.njk' import flashIcon %}
   {% for item in data.body %}
-    {% if item.slice_type == 'musicians' %}
-      {% for musician in item.items %}
-        {{ musicianSlice(name=musician.musician_name, function=musician.musician_function, image=musician.musician_image) }}
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-</div>
 
+    {% if item.slice_type == 'musicians' %}
+      <section>
+        <div class="container">
+          <div class="stack stack--4">
+
+            <h2>{{ item.primary.title }}</h2>
+
+            <div>
+              <ul class="grid grid--dense">
+                {% for musician in item.items %}
+                  <li>
+                    <article class="musician">
+                      {{ responsiveImage(musician.musician_image, rounded=true) }}
+                      <div class="stack stack--1">
+                        <h3>{{ musician.musician_name }}</h3>
+                        <p class="musician__function">{{ flashIcon() }}{{ musician.musician_function }}</p>
+                      </div>
+                    </article>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+  {% endfor %}
+
+</main>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
