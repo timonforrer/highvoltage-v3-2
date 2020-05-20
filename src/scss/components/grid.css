@@ -1,0 +1,23 @@
+ul.grid,
+.grid {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.75em;
+
+  > * {
+    flex-grow: 1;
+    flex-basis: 15rem;
+    margin: 0.75em;
+  }
+
+  &--reverse { flex-direction: row-reverse; }
+
+  &--dense {
+    & > * { flex-basis: 7.5rem; }
+  }
+
+  &--extended {
+    & > * { flex-basis: 40rem; }
+  }
+}
