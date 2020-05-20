@@ -1,0 +1,12 @@
+{% macro flashIcon(size=24, dark=false) %}
+  <svg
+    class="icon{% if dark %} icon--dark{% endif %}"
+    width="{{ size }}"
+    height="{{ size }}"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M16 14L19 1L10 20L16 18L13 31L22 12L16 14Z" />
+  </svg>
+{% endmacro %}
