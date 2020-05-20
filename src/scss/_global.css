@@ -36,3 +36,9 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
+
+picture.rounded,
+image.rounded {
+  border-radius: 3px;
+  overflow: hidden;
+}

@@ -1,10 +1,10 @@
-{% macro responsiveImage(image) %}
+{% macro responsiveImage(image, rounded=false) %}
   {% if image.Tablet == undefined %}
     {{ "ERROR in responsiveImage: no source for Tablet" | log }}
   {% elif image.Mobile == undefined %}
     {{ "ERROR in responsiveImage: no source for Mobile" | log }}
   {% endif %}
-  <picture>
+  <picture {% if rounded %} class="rounded" {% endif %}>
     <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
     <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
     <img src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
