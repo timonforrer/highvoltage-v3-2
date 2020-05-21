@@ -7,6 +7,6 @@
   <picture {% if rounded %} class="rounded" {% endif %}>
     <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
     <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
-    <img src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
+    <img width="{{ image.dimensions.width }}" heigth="{{ image.dimensions.height }}" src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
   </picture>
 {% endmacro %}
