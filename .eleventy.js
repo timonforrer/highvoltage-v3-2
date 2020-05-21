@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const PrismicDOM = require('prismic-dom');
 const getYoutubeIDHelper = require('get-youtube-id');
+const moment = require('moment');
 
 module.exports = function(config) {
 
@@ -12,6 +13,9 @@ module.exports = function(config) {
   config.addFilter('htmlDate', (value) => {
     return new Date(value).toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' });
   });
+  config.addFilter('toLocaleString', (date, lang) => {
+    return moment(date).locale(lang).format('llll');
+  })
   config.addFilter('convertMs', (value) => {
     var ms = value % 1000;
     value = (value - ms) / 1000;
