@@ -14,51 +14,25 @@ eleventyComputed:
 
 {% block content %}
   <div class="container">
-    <div class="stack stack--4">
+    <div class="stack stack--5">
 
-    {{ localisedPage.data.page_title | renderAsHTML | safe }}
+      <section class="stack stack--2">
+        {{ localisedPage.data.page_title | renderAsHTML | safe }}
+        <p class="lead">{{ localisedPage.data.introduction | renderAsText }}</p>
+      </section>
 
-      <div class="stack stack--2">
+      <div class="stack stack--6">
 
-        <h3>{{ localisedPage.data.upcoming_gigs | renderAsText | safe }}</h3>
+        {% from 'components/showList.njk' import showList %}
 
-        <div>
-          <ul>
-          {% set noUpcoming = true %}
-            {% for page in tour.subPagesAirtable %}
-              {% if page.lang === localisedPage.lang and localisedPage.upcoming %}
-              {% set anyUpcoming = false %}
-              <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
-              {% endif %}
-            {% endfor %}
-          </ul>
+        {% set shows = tour.subPagesAirtable %}
+        {% set lang = localisedPage.lang %}
 
-          {% if noUpcoming %}
-            <p class="lead">
-              {%- if localisedPage.lang === 'de-ch' -%}
-              Es gibt derzeit keine bevorstehenden Veranstaltungen
-              {%- else -%}
-              There are currently no upcoming events.
-              {%- endif -%}
-            </p>
-          {% endif %}
-        </div>
+        {% set title = localisedPage.data.upcoming_gigs | renderAsText %}
+        {{ showList(title, shows, lang, upcoming = true, nav, tour.venues) }}
 
-      </div>
-
-      <div class="stack stack--2">
-
-        <h3>{{ localisedPage.data.past_gigs | renderAsText | safe }}</h3>
-
-        <div>
-          <ul>
-            {% for page in tour.subPagesAirtable %}
-              {% if page.lang === localisedPage.lang and not localisedPage.upcoming %}
-              <li><a href="{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ page.slug }}/">{{ page.title }}</a></li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        </div>
+        {% set title = localisedPage.data.past_gigs | renderAsText %}
+        {{ showList(title, shows, lang, upcoming = false, nav, tour.venues) }}
 
       </div>
 
