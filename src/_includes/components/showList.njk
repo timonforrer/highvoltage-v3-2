@@ -1,0 +1,44 @@
+{% macro showItem(show, link, venues, lang) %}
+  <article>
+    <p>{{ show.start | toLocaleString(lang) }}</p>
+    <a href="{{ link }}"><h3>{{ show.title }}</h3></a>
+    {% for venue in venues %}
+      {% if show.venue == venue.id %}
+        <p class="uppercase">{{ venue.name }} {{ venue.city }}, {{ venue.province }}</p>
+      {% endif %}
+    {% endfor %}
+  </article>
+{% endmacro %}
+
+{% macro showList(title, shows, lang, upcoming = true, nav, venues) %}
+  <section class="stack stack--4">
+
+    <h2>{{ title }}</h2>
+
+    {% set noShows = true %}
+    <div>
+      <ul class="stack stack--3">
+        {% for show in shows %}
+          {% set link = nav.tour[lang].pathPrefix + "/" + show.slug %}
+            {% if show.lang == lang and show.upcoming == upcoming %}
+              {% set noShows = false %}
+              <li>
+                {{ showItem(show, link, venues, lang) }}
+              </li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% if noShows == true %}
+        <p>
+          {% if lang == 'de-ch' %}
+            Es gibt derzeit keine bevorstehenden Veranstaltungen.
+          {% else %}
+            There are currently no upcoming shows.
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+
+  </section>
+{% endmacro %}
