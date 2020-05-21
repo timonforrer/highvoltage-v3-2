@@ -12,6 +12,15 @@ module.exports = function(config) {
   config.addFilter('htmlDate', (value) => {
     return new Date(value).toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' });
   });
+  config.addFilter('convertMs', (value) => {
+    var ms = value % 1000;
+    value = (value - ms) / 1000;
+    var secs = value % 60;
+    value = (value - secs) / 60;
+    var mins = value % 60;
+
+    return `${mins}.${secs}`
+  })
   config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
 
   config.addWatchTarget('./src/scss/');
