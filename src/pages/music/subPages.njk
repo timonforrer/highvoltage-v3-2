@@ -24,7 +24,13 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
       {% if spotifyData.id == data.spotify_id %}
         <ol>
           {% for track in spotifyData.tracks %}
-          <li>{{ track.name }} <audio controls><source src="{{ track.url }}" type="audio/mp3"></audio> </li>
+          <li>
+            <article>
+            {{ track.duration | convertMs }}
+              <p>{{ track.name }}</p>
+              <audio><source src="{{ track.url }}" type="audio/mp3"></audio>
+            </article>
+          </li>
           {% endfor %}
         </ol>
       {% endif %}
