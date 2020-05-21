@@ -54,10 +54,10 @@
 }
 
 .musician {
-  h3 {
+  /*h3 {
     margin-top: -2.5rem;
     margin-left: -0.75rem;
-  }
+  }*/
   &__function {
     align-items: center;
     display: flex;
