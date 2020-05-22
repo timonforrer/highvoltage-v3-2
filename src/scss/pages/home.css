@@ -30,15 +30,12 @@
 
 #play-video {
   display: none;
-  height: 90vh;
-  max-height: 50vw;
 
   &:target {
     display: flex;
     
     & > * {
-      margin-top: auto;
-      margin-bottom: auto;
+      padding-top: 1rem;
     }
   }
 }
