@@ -1,12 +1,25 @@
 {% macro showItem(show, link, venues, lang) %}
-  <article>
-    <p>{{ show.start | toLocaleString(lang) }}</p>
-    <a href="{{ link }}"><h3>{{ show.title }}</h3></a>
-    {% for venue in venues %}
-      {% if show.venue == venue.id %}
-        <p class="uppercase">{{ venue.name }} {{ venue.city }}, {{ venue.province }}</p>
-      {% endif %}
-    {% endfor %}
+
+  {% from 'macros.njk' import button %}
+
+  <article class="show-list__item">
+    <div>
+      <p>{{ show.start | toLocaleString(lang) }}</p>
+      <a href="{{ link }}"><h3>{{ show.title }}</h3></a>
+      {% for venue in venues %}
+        {% if show.venue == venue.id %}
+          <p class="uppercase">{{ venue.name }} {{ venue.city }}, {{ venue.province }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if lang == 'de-ch' %}
+      {% set text = 'Eventinfos anzeigen' %}
+    {% else %}
+      {% set text = 'Show event info' %}
+    {% endif %}
+
+    {{ button(text, link) }}
   </article>
 {% endmacro %}
 
@@ -17,7 +30,7 @@
 
     {% set noShows = true %}
     <div>
-      <ul class="stack stack--3">
+      <ul class="show-list stack stack--3">
         {% for show in shows %}
           {% set link = nav.tour[lang].pathPrefix + "/" + show.slug %}
             {% if show.lang == lang and show.upcoming == upcoming %}
