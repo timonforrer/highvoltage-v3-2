@@ -7,14 +7,14 @@ ul.grid,
 
   > * {
     flex-grow: 1;
-    flex-basis: 15rem;
+    flex-basis: 14rem;
     margin: 0.75em;
   }
 
   &--reverse { flex-direction: row-reverse; }
 
   &--dense {
-    & > * { flex-basis: 7.5rem; }
+    & > * { flex-basis: 7rem; }
   }
 
   &--extended {
