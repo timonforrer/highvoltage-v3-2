@@ -1,12 +1,21 @@
-{% macro responsiveImage(image, rounded=false) %}
-  {% if image.Tablet == undefined %}
-    {{ "ERROR in responsiveImage: no source for Tablet" | log }}
-  {% elif image.Mobile == undefined %}
-    {{ "ERROR in responsiveImage: no source for Mobile" | log }}
+{% macro responsiveImage(image, rounded=false, caption=false) %}
+  {% if caption %}
+    <figure>
   {% endif %}
-  <picture {% if rounded %} class="rounded" {% endif %}>
-    <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
-    <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
-    <img width="{{ image.dimensions.width }}" heigth="{{ image.dimensions.height }}" src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
-  </picture>
+
+      {% if image.Tablet == undefined %}
+        {{ "ERROR in responsiveImage: no source for Tablet" | log }}
+      {% elif image.Mobile == undefined %}
+        {{ "ERROR in responsiveImage: no source for Mobile" | log }}
+      {% endif %}
+      <picture {% if rounded %} class="rounded" {% endif %}>
+        <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
+        <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
+        <img width="{{ image.dimensions.width }}" heigth="{{ image.dimensions.height }}" src="{{ image.Mobile.url }}" alt="{{ alt }}" loading="lazy" />
+      </picture>
+
+  {% if caption %}
+      <figcaption>{{ caption }}</figcaption>
+    </figure>
+  {% endif %}
 {% endmacro %}
