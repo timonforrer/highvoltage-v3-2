@@ -1,0 +1,15 @@
+{% from 'components/responsiveImage.njk' import responsiveImage %}
+
+{% macro rich_text(data) %}
+  {% set content = data.primary.content %}
+  {{ content | renderAsHTML | safe }}
+{% endmacro %}
+
+{% macro photo(data) %}
+  {% set image = data.primary.image %}
+  {% set caption = data.primary.caption %}
+  {{ responsiveImage(image, rounded=true, caption) }}
+{% endmacro %}
+
+{% macro embed() %}
+{% endmacro %}
