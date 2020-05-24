@@ -13,19 +13,21 @@ eleventyComputed:
 {% block content %}
   <div class="container">
 
-    <h1>{{ localisedPage.title }}</h1>
+    <div class="stack stack--3">
+      <h1>{{ localisedPage.title }}</h1>
 
-    {% for prismicContent in tour.subPagesPrismic %}
-      {% if prismicContent.uid == localisedPage.slug and prismicContent.lang == localisedPage.lang %}
+      {% for prismicContent in tour.subPagesPrismic %}
+        {% if prismicContent.uid == localisedPage.slug and prismicContent.lang == localisedPage.lang %}
 
-        {% for sliceItem in prismicContent.data.body %}
-          {% set slice_type = sliceItem.slice_type %}
-          {% import 'components/slices.njk' as slices %}
-          {{ slices[slice_type](sliceItem) }}
-        {% endfor %}
+          {% for sliceItem in prismicContent.data.body %}
+            {% set slice_type = sliceItem.slice_type %}
+            {% import 'components/slices.njk' as slices %}
+            {{ slices[slice_type](sliceItem) }}
+          {% endfor %}
 
-      {% endif %}
-    {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
