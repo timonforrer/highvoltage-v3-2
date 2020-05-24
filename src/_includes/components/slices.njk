@@ -2,13 +2,13 @@
 
 {% macro rich_text(data) %}
   {% set content = data.primary.content %}
-  {{ content | renderAsHTML | safe }}
+  <div class="stack stack--2">{{ content | renderAsHTML | safe }}</div>
 {% endmacro %}
 
 {% macro photo(data) %}
   {% set image = data.primary.image %}
   {% set caption = data.primary.caption %}
-  {{ responsiveImage(image, rounded=true, caption) }}
+  <div class="stack stack--2">{{ responsiveImage(image, rounded=true, caption) }}</div>
 {% endmacro %}
 
 {% macro embed() %}
