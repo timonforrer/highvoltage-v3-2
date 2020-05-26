@@ -42,3 +42,9 @@ image.rounded {
   border-radius: 3px;
   overflow: hidden;
 }
+
+.full-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
