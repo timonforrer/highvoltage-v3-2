@@ -35,6 +35,12 @@ module.exports = async () => {
   responseFormattedDE.map(item => returnArray.push(item));
   responseFormattedEN.map(item => returnArray.push(item));
 
-  saveSeed(returnArray, `${__dirname}/../../dev/tour/subPagesAirtable.json`);
-  return returnArray;
+  const returnArraySorted = returnArray.sort((a, b) => {
+    a = new Date(a.start);
+    b = new Date(b.start);
+    return a>b ? -1 : a<b ? 1 : 0;
+  })
+
+  saveSeed(returnArraySorted, `${__dirname}/../../dev/tour/subPagesAirtable.json`);
+  return returnArraySorted;
 }
