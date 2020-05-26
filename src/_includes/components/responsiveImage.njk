@@ -4,37 +4,32 @@
     <figure>
   {% endif %}
 
-    {# todo: clean up this mess #}
+    {% if image.Tablet != undefined %}
+      {% set tablet = image.Tablet %}
+    {% elif image.tablet != undefined %}
+      {% set tablet = image.tablet %}
+    {% else %}
+      {{ "ERROR in responsiveImage: no source for Tablet" | log }}
+    {% endif %}
 
-      {% if image.Tablet == undefined or image.tablet == undefined %}
-        {{ "ERROR in responsiveImage: no source for Tablet" | log }}
-      {% elif image.Mobile == undefined or image.phone == undefined %}
-        {{ "ERROR in responsiveImage: no source for Mobile" | log }}
-      {% endif %}
+    {% if image.Mobile != undefined %}
+      {% set phone = image.Mobile %}
+    {% elif image.phone != undefined %}
+      {% set phone = image.phone %}
+    {% else %}
+      {{ "ERROR in responsiveImage: no source for Phone" | log }}
+    {% endif %}
+
       <picture {% if rounded %} class="rounded" {% endif %}>
         <source srcset="{{ image.url }}" media="(min-width: {{ image.dimensions.width }}px)" />
-        {% if image.Tablet != undefined %}
-          <source srcset="{{ image.Tablet.url }}" media="(min-width: {{ image.Tablet.dimensions.width }}px)" />
-        {% elif image.tablet != undefined %}
-          <source srcset="{{ image.tablet.url }}" media="(min-width: {{ image.tablet.dimensions.width }}px)" />
-        {% endif %}
-        {% if image.Mobile != undefined %}
-          <img
-            width="{{ image.Mobile.dimensions.width }}"
-            heigth="{{ image.phone.dimensions.height }}"
-            src="{{ image.Mobile.url }}"
-            alt="{{ alt }}"
-            loading="lazy"
-          />
-        {% elif image.phone != undefined %}
-          <img
-            width="{{ image.phone.dimensions.width }}"
-            heigth="{{ image.phone.dimensions.height }}"
-            src="{{ image.phone.url }}"
-            alt="{{ alt }}"
-            loading="lazy"
-          />
-        {% endif %}
+        <source srcset="{{ tablet.url }}" media="(min-width: {{ tablet.dimensions.width }}px)" />
+        <img
+          width="{{ phone.dimensions.width }}"
+          heigth="{{ phone.dimensions.height }}"
+          src="{{ phone.url }}"
+          alt="{{ alt }}"
+          loading="lazy"
+        />
       </picture>
 
   {% if caption %}
