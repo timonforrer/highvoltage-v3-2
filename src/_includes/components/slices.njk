@@ -11,5 +11,12 @@
   <div class="stack stack--2">{{ responsiveImage(image, rounded=true, caption) }}</div>
 {% endmacro %}
 
-{% macro embed() %}
+{% macro embed(data, lang) %}
+  {% set data = data.primary.url %}
+  {% if data.type == 'video' %}
+    {% from 'macros.njk' import youtubeVideo as video %}
+    <div class="full-bleed">
+      {{ video(data.embed_url | getYoutubeID, lang) }}
+    </div>
+  {% endif %}
 {% endmacro %}
