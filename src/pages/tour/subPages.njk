@@ -22,9 +22,8 @@ eleventyComputed:
           {% for sliceItem in prismicContent.data.body %}
             {% set slice_type = sliceItem.slice_type %}
             {% import 'components/slices.njk' as slices %}
-            {{ slices[slice_type](sliceItem) }}
+            {{ slices[slice_type](sliceItem, lang=localisedPage.lang) }}
           {% endfor %}
-
         {% endif %}
       {% endfor %}
     </div>
