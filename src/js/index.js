@@ -1,0 +1,1 @@
+import '@spartan-components/sp-video/sp-video';
