@@ -16,5 +16,9 @@ eleventyComputed:
   <div class="container">
     {{ localisedPage.data.page_title | renderAsHTML | safe }}
   </div>
+  <sp-video video-id="a_0QSRlRJuI" provider="youtube" text="Play video">
+    <img slot="thumbnail" src="https://img.youtube.com/vi/a_0QSRlRJuI/maxresdefault.jpg" />
+    <a slot="video-controller" href="https://www.youtube.com/watch?v=a_0QSRlRJuI" target="black">Video in neuem Tab öffnen</a>
+  </sp-video>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
