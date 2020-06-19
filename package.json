@@ -4,9 +4,10 @@
   "description": "The Official Voltage Arc Website",
   "main": "src/index.html",
   "scripts": {
+    "clean": "rimraf dist/assets",
+    "dev:rollup": "rollup -c --watch package.json",
     "dev:eleventy": "ELEVENTY_ENV=dev npx @11ty/eleventy --serve --port $PORT",
-    "dev:rollup": "rollup -c --watch",
-    "dev": "npm-run-all dev:*",
+    "dev": "run-p clean dev:*",
     "build:eleventy": "ELEVENTY_ENV=prod npx @11ty/eleventy",
     "build:rollup": "rollup -c",
     "build": "npm-run-all build:*",
@@ -34,12 +35,13 @@
     "precss": "^4.0.0",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.7.1",
+    "rimraf": "^3.0.2",
     "rollup": "^2.17.0",
     "rollup-plugin-terser": "^6.1.0",
     "spotify-web-api-node": "^4.0.0"
   },
   "dependencies": {
-    "@spartan-components/sp-video": "0.0.1",
+    "@spartan-components/sp-video": "0.0.3",
     "dotenv": "^8.2.0"
   }
 }
