@@ -14,11 +14,59 @@ eleventyComputed:
 
 {% block content %}
   <div class="container">
-    {{ localisedPage.data.page_title | renderAsHTML | safe }}
-    <sp-video video-id="a_0QSRlRJuI" provider="youtube" text="Play video">
-      <img slot="thumbnail" src="https://img.youtube.com/vi/a_0QSRlRJuI/maxresdefault.jpg" />
-      <a slot="video-controller" href="https://www.youtube.com/watch?v=a_0QSRlRJuI" target="black">Video in neuem Tab öffnen</a>
-    </sp-video>
+    <div class="stack stack--5">
+      {{ localisedPage.data.page_title | renderAsHTML | safe }}
+      
+      <div class="stack stack--4">
+        {% for video in videos.overviewPagesYoutube %}
+          {% for localisedVideo in video %}
+            {% if localisedVideo.lang === localisedPage.lang %}
+              <article class="stack stack--2">
+                <h3>{{ localisedVideo.title }}</h3>
+                <sp-video
+                  provider="youtube-nocookie"
+                  video-id="{{ localisedVideo.id }}"
+                >
+                  <!-- Custom thumbnail image, declared as slot="thumbnail" -->
+                  <img
+                    slot="thumbnail"
+                    width="720"
+                    height="405"
+                    loading="lazy"
+                    src="https://img.youtube.com/vi/{{ localisedVideo.id }}/maxresdefault.jpg"
+                    alt=""
+                  />
+                  <!-- Custom video controller, declared as slot="controller", iframe loads on click -->
+                  <button
+                    slot="controller"
+                    class="button uppercase hidden-when-undefined"
+                  >
+                    {% if localisedPage.lang === 'de-ch' %}
+                      Video abspielen
+                    {% else %}
+                      Play video
+                    {% endif %}
+                  </button>
+                  <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
+                  <a
+                    href="https://www.youtube.com/watch?v={{ localisedVideo.id }}"
+                    class="fallback-link"
+                    target="blank"
+                    rel="noopener noreferrer"
+                  >
+                    {% if localisedPage.lang === 'de-ch' %}
+                      Video in neuem Tab öffnen
+                    {% else %}
+                      Open video in new Tab
+                    {% endif %}
+                  </a>
+                </sp-video>
+              </article>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
