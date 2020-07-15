@@ -14,26 +14,6 @@ eleventyComputed:
 
 
 {% block content %}
-  <style>
-  ul.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-  }
-  ul.gallery > li {
-    flex-basis: 20rem;
-    flex-grow: 1;
-  }
-  img {
-    display: block;
-    height: 20rem;
-    width: 100%;
-    object-fit: cover;
-  }
-  </style>
   <div class="container">
     <div class="stack stack--3">
       <div class="stack stack--1">
@@ -41,9 +21,10 @@ eleventyComputed:
         {{ localisedPage.data.introduction | renderAsHTML | safe }}
       </div>
       <div>
-        <ul class="gallery">
+        {% from 'components/responsiveImage.njk' import responsiveImage %}
+        <ul class="stack stack--2">
         {% for image in localisedPage.data.images %}
-          <li><img src="{{ image.image.url }}" /></li>
+          <li>{{ responsiveImage(image.image) }}</li>
         {% endfor %}
         </ul>
       </div>
