@@ -28,14 +28,16 @@
   }
 }
 
-#play-video {
-  display: none;
-
-  &:target {
-    display: flex;
-    
-    & > * {
-      padding-top: 1rem;
+@supports(display:grid) {
+  #play-video {
+    display: none;
+  
+    &:target {
+      display: flex;
+      
+      & > * {
+        padding-top: 1rem;
+      }
     }
   }
 }
