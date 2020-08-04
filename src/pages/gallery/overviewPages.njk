@@ -21,7 +21,7 @@ eleventyComputed:
         {{ localisedPage.data.introduction | renderAsHTML | safe }}
       </div>
       <div>
-        {% from 'components/responsiveImage.njk' import responsiveImage %}
+        {% from 'components/responsive-image.njk' import responsiveImage %}
         <ul class="stack stack--2">
         {% for image in localisedPage.data.images %}
           <li>{{ responsiveImage(image.image) }}</li>
