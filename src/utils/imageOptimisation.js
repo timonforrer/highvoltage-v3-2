@@ -7,7 +7,9 @@ module.exports = async (src, alt, attributes) => {
     throw new Error(`Missing \`alt\` on myResponsiveImage from: ${src}`);
   }
 
-  let options = {};
+  let options = {
+    outputDir: './dist/img'
+  };
 
   let stats = await Image(src, options);
   let lowestSrc = stats.jpeg[0];
