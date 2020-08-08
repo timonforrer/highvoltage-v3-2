@@ -5,3 +5,4 @@ img
 .DS_Store
 .now
 .env
+src/_data/dev
