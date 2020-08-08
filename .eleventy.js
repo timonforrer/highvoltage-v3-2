@@ -4,6 +4,8 @@ const PrismicDOM = require('prismic-dom');
 const getYoutubeIDHelper = require('get-youtube-id');
 const moment = require('moment');
 
+const imageOptimisation = require('./src/utils/imageOptimisation.js');
+
 module.exports = function(config) {
 
   let env = process.env.ELEVENTY_ENV;
@@ -29,8 +31,13 @@ module.exports = function(config) {
   })
   config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
 
+  config.addNunjucksAsyncShortcode('image', async (image) => {
+    return imageOptimisation(image.src, image.alt, image.attributes);
+  });
+
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
+  config.addPassthroughCopy('./img');
 
   config.setTemplateFormats([
     'njk',
