@@ -42,7 +42,7 @@
     "spotify-web-api-node": "^4.0.0"
   },
   "dependencies": {
-    "@spartan-components/sp-video": "0.0.7",
+    "@spartan-components/sp-video": "0.0.8",
     "dotenv": "^8.2.0"
   }
 }
