@@ -28,14 +28,7 @@ eleventyComputed:
                   video-id="{{ localisedVideo.id }}"
                 >
                   <!-- Custom thumbnail image, declared as slot="thumbnail" -->
-                  <img
-                    slot="thumbnail"
-                    width="720"
-                    height="405"
-                    loading="lazy"
-                    src="https://img.youtube.com/vi/{{ localisedVideo.id }}/maxresdefault.jpg"
-                    alt=""
-                  />
+                  {% image src=localisedVideo.thumbnails.maxres.url, alt="", attributes=[{name:"slot",value:"thumbnail"}] %}
                   <!-- Custom video controller, declared as slot="controller", iframe loads on click -->
                   <button
                     slot="controller"
