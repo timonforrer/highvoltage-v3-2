@@ -12,6 +12,10 @@ module.exports = function(config) {
 
   config.setQuietMode(true);
 
+  config.addNunjucksAsyncShortcode('image', async (image) => {
+    return imageOptimisation(image.src, image.alt, image.attributes);
+  });
+
   config.addFilter('renderAsHTML', (value) => PrismicDOM.RichText.asHtml(value));
   config.addFilter('renderAsText', (value) => PrismicDOM.RichText.asText(value));
   config.addFilter('htmlDate', (value) => {
@@ -30,10 +34,6 @@ module.exports = function(config) {
     return `${mins}.${secs}`
   })
   config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
-
-  config.addNunjucksAsyncShortcode('image', async (image) => {
-    return imageOptimisation(image.src, image.alt, image.attributes);
-  });
 
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
