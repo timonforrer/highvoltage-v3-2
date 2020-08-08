@@ -20,7 +20,8 @@
   "author": "Timon Forrer",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.0-beta.3",
+    "@11ty/eleventy": "^0.11.0",
+    "@11ty/eleventy-img": "^0.3.0",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "airtable": "^0.8.1",
     "cssnano": "^4.1.10",
