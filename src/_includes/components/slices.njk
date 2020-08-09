@@ -1,5 +1,3 @@
-{% from 'components/responsive-image.njk' import responsiveImage %}
-
 {% macro rich_text(data) %}
   {% set content = data.primary.content %}
   <div class="stack stack--2">{{ content | renderAsHTML | safe }}</div>
@@ -8,7 +6,19 @@
 {% macro photo(data) %}
   {% set image = data.primary.image %}
   {% set caption = data.primary.caption %}
-  <div class="stack stack--2">{{ responsiveImage(image, rounded=true, caption) }}</div>
+  <div class="stack stack--2">
+    <figure>
+      {%
+        image
+        src=image.url,
+        attributes=[{
+          name: "class",
+          value: "rounded"
+        }]
+      %}
+      <figcaption>{{ caption }}</figcaption>
+    </figure>
+  </div>
 {% endmacro %}
 
 {% macro embed(data, lang) %}

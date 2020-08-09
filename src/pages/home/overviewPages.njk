@@ -55,14 +55,15 @@ translationKey: "homePage"
         video-id="{{ videoId }}"
       >
         <!-- Custom thumbnail image, declared as slot="thumbnail" -->
-        <img
-          slot="thumbnail"
-          width="720"
-          height="405"
-          loading="lazy"
-          src="https://img.youtube.com/vi/{{ videoId }}/maxresdefault.jpg"
-          alt=""
-        />
+        {%
+          image
+          src="https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg",
+          alt="",
+          attributes=[{
+            name: "slot",
+            value: "thumbnail"
+          }]
+        %}
         <!-- Custom video controller, declared as slot="controller", iframe loads on click -->
         <button
           slot="controller"
@@ -88,11 +89,9 @@ translationKey: "homePage"
           {% endif %}
         </a>
       </sp-video>
-      {# {{ macros.youtubeVideo(data.cta_content.embed_url | getYoutubeID, localisedPage.lang) }} #}
     </div>
   </section>
 
-  {% from 'components/responsive-image.njk' import responsiveImage %}
   {% from 'svg/flash.njk' import flashIcon %}
   {% for item in data.body %}
 
@@ -108,7 +107,15 @@ translationKey: "homePage"
                 {% for musician in item.items %}
                   <li>
                     <article class="musician">
-                      {{ responsiveImage(musician.musician_image, rounded=true) }}
+                      {%
+                        image
+                        src=musician.musician_image.url,
+                        alt=musician.musician_image.alt,
+                        attributes=[{
+                          name: "class",
+                          value: "rounded"
+                        }]
+                      %}
                       <div class="stack stack--0">
                         <h3 class="as-h4">{{ musician.musician_name }}</h3>
                         <p class="musician__function">{{ flashIcon() }}{{ musician.musician_function }}</p>
