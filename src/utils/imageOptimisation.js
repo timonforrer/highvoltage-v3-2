@@ -17,7 +17,7 @@ module.exports = async (src, alt, attributes) => {
 
   // Iterate over formats and widths
   return `
-  <picture ${attributes.map(attr => `${attr.name}="${attr.value}"`)}>
+  <picture ${Array.isArray(attributes) ? attributes.map(attr => `${attr.name}="${attr.value}"`) : ''}>
     ${Object.values(stats).map(imageFormat => {
       return `<source type="image/${imageFormat[0].format}" srcset="${imageFormat.map(entry => `${entry.url} ${entry.width}w`).join(", ")}" sizes="${sizes}">`;
     }).join("\n")}
