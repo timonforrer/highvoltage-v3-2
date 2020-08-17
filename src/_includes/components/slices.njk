@@ -4,19 +4,18 @@
 {% endmacro %}
 
 {% macro photo(data) %}
-  {% set image = data.primary.image %}
-  {% set caption = data.primary.caption %}
-  <div class="stack stack--2">
-    <figure>
-      {%
-        image
-        src=image.url,
-        attributes=[{
-          name: "class",
-          value: "rounded"
-        }]
-      %}
-      <figcaption>{{ caption }}</figcaption>
+  {% set alt = "" %}
+  {% if image.alt %}
+    {% set alt = image.alt %}
+  {% endif %}
+
+  <div>
+    <figure class="stack stack--2">
+    {% from 'components/responsive-image.njk' import responsiveImage %}
+    {{ responsiveImage(image=data.primary.image, rounded=true, alt=alt) }}
+      {% if data.primary.caption %}
+        <figcaption>{{ data.primary.caption }}</figcaption>
+      {% endif %}
     </figure>
   </div>
 {% endmacro %}
