@@ -19,7 +19,7 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
   <div class="music-hero stack stack-2 {%- if data.text_color == 'Black' %} music-hero--inverted {%- endif %}">
     
     <div class="music-hero__main">
-      <div class="container">
+      <div class="container container--narrow">
         <h2>{{ data.type }}</h2>
         {{ data.title | renderAsHTML | safe }}
       </div>
@@ -30,13 +30,24 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
       ></div>
     </div>
 
-    <div class="container">
+    <div class="container container--narrow">
       {% image src=data.cover_photo.url, alt="", attributes=[{name:"class",value:"music-hero__cover"}] %}
     </div>
 
   </div>
 
-  <div class="container stack stack--3">
+  <div class="container container--narrow stack stack--3">
+
+    <h2>Tracks</h2>
+    <ul>
+      {% for song in data.songs %}
+      <li>
+        {{ song.name }}<br />
+        <audio controls src="{{ song.preview.url }}"></audio>
+      </li>
+      {% endfor %}
+    </ul>
+
     {% for sliceItem in data.body %}
       {% set slice_type = sliceItem.slice_type %}
       {% import 'components/slices.njk' as slices %}
