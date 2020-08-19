@@ -30,6 +30,10 @@ a {
   padding-right: 1.5rem;
   position: relative;
   width: 95ch;
+
+  &--narrow {
+    width: 75ch;
+  }
 }
 
 .container--full-width {
@@ -44,7 +48,8 @@ image.rounded {
 }
 
 .full-bleed {
-  width: 100vw;
   margin-left: 50%;
+  max-width: 75ch;
   transform: translateX(-50%);
+  width: 100vw;
 }
