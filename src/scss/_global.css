@@ -53,3 +53,14 @@ image.rounded {
   transform: translateX(-50%);
   width: 100vw;
 }
+
+ul.flex-list,
+.flex-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.25rem -0.25rem;
+
+  & > * {
+    margin: 0.25rem 0.25rem;
+  }
+}
