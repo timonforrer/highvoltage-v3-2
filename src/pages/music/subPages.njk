@@ -37,18 +37,42 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
   </div>
 
   <div class="container container--narrow stack stack--5">
-
+    {% if data.songs != undefined %}
     <div class="stack stack--4">
       <h2>Tracks</h2>
-      <ul class="music-tracks stack stack--3">
-        {% for song in data.songs %}
-        <li class="stack stack--2">
-          <h3>{{ song.name }}</h3>
-          <audio controls src="{{ song.preview.url }}"></audio>
-        </li>
-        {% endfor %}
-      </ul>
+      <div>
+        <ul class="music-tracks stack stack--3">
+          {% for song in data.songs %}
+          <li class="stack stack--2">
+            <h3>{{ song.name }}</h3>
+            <audio controls src="{{ song.preview.url }}"></audio>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
+    {% endif %}
+    
+    {% if data.providers != undefined %}
+      <div class="stack stack--4">
+        <h2>
+          {% if localisedPage.lang == 'de-ch' %}
+          Erhältlich auf
+          {% else %}
+          Available at
+          {% endif %}
+        </h2>
+
+        {% from 'macros.njk' import button %}
+        <div>
+          <ul class="flex-list">
+            {% for provider in data.providers %}
+            <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
 
     {% for sliceItem in data.body %}
       {% set slice_type = sliceItem.slice_type %}
