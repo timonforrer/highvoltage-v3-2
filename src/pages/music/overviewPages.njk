@@ -31,7 +31,9 @@ translationKey: "musicPage"
                 {% image src=musicItem.data.cover_photo.url, alt="", attributes=[{name:'class', value:'m-preview__cover'}] %}
 
                 <div class="stack stack--3">
+
                   <h2><a href="{{ page.url }}{{ musicItem.uid }}">{{ musicItem.data.title | renderAsText | safe }}</a></h2>
+
                   <div>
                     <h3>Tracks</h3>
                     <div class="stack stack--1">
@@ -45,37 +47,36 @@ translationKey: "musicPage"
                       </ul>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="stack stack--3">
-              
-                <div class="stack stack--2">
-                  <h3>
-                    {% if localisedPage.lang == 'de-ch' %}
-                      Erhältlich auf
-                    {% else %}
-                      Available at
-                    {% endif %}
-                  </h3>
+                  <div class="stack stack--2">
+                    <h3>
+                      {% if localisedPage.lang == 'de-ch' %}
+                        Erhältlich auf
+                      {% else %}
+                        Available at
+                      {% endif %}
+                    </h3>
 
-                  {% from 'macros.njk' import button %}
-                  <div>
-                    <ul class="flex-list">
-                      {% for provider in musicItem.data.providers %}
-                      <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
-                      {% endfor %}
-                    </ul>
+                    {% from 'macros.njk' import button %}
+                    <div>
+                      <ul class="flex-list">
+                        {% for provider in musicItem.data.providers %}
+                        <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
                   </div>
-                </div>
 
-                {% if localisedPage.lang == 'de-ch' %}
-                  {% set btn_text = 'Mehr erfahren' %}
-                {% else %}
-                  {% set btn_text = 'Learn more' %}
-                {% endif %}
-                {{ button(text=btn_text, href=page.url+musicItem.uid) }}
+                  {% if localisedPage.lang == 'de-ch' %}
+                    {% set btn_text = 'Mehr erfahren' %}
+                  {% else %}
+                    {% set btn_text = 'Learn more' %}
+                  {% endif %}
+                  {{ button(text=btn_text, href=page.url+musicItem.uid) }}
+
+                </div>
               </div>
+              
 
             </li>
           {% endif %}

@@ -44,11 +44,12 @@
     flex-wrap: wrap;
     margin: -0.75rem;
 
-    & > * { margin: 0.75rem }
+    & > * {
+      margin: 0.75rem;
+      flex-basis: 17rem;
+    }
     & > *:last-child { flex-grow: 1; }
   }
-
-  &__cover { flex-basis: 17rem; }
 
   & audio {
     display: block;
