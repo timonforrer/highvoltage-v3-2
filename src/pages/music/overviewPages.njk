@@ -14,20 +14,74 @@ translationKey: "musicPage"
 
 {% set data = localisedPage.data %}
 {% block content %}
-  <div class="container">
+  <div class="stack stack--5 container">
+
     {{ data.page_title | renderAsHTML | safe }}
 
-    <ul>
-      {% for musicItem in music.subPagesPrismic %}
-        {% if musicItem.lang == localisedPage.lang %}
-          <li>
-            <a href="{{ page.url }}{{ musicItem.uid }}">
-              {{ musicItem.data.title | renderAsText | safe }}
-            </a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+    <div>
+
+      <ul class="stack stack--6 m-preview-list">
+        {% for musicItem in music.subPagesPrismic %}
+          {% if musicItem.lang == localisedPage.lang %}
+
+            <li class="stack stack--3 m-preview">
+
+              <div class="m-preview__columns">
+
+                {% image src=musicItem.data.cover_photo.url, alt="", attributes=[{name:'class', value:'m-preview__cover'}] %}
+
+                <div class="stack stack--3">
+                  <h2><a href="{{ page.url }}{{ musicItem.uid }}">{{ musicItem.data.title | renderAsText | safe }}</a></h2>
+                  <div>
+                    <h3>Tracks</h3>
+                    <div class="stack stack--1">
+                      <ul class="stack stack--2">
+                        {% for song in musicItem.data.songs %}
+                          <li class="stack stack--1">
+                            <p>{{ song.name }}</p>
+                            <audio controls src="{{ song.preview.url }}"></audio>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stack stack--3">
+              
+                <div class="stack stack--2">
+                  <h3>
+                    {% if localisedPage.lang == 'de-ch' %}
+                      Erhältlich auf
+                    {% else %}
+                      Available at
+                    {% endif %}
+                  </h3>
+
+                  {% from 'macros.njk' import button %}
+                  <div>
+                    <ul class="flex-list">
+                      {% for provider in musicItem.data.providers %}
+                      <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+                {% if localisedPage.lang == 'de-ch' %}
+                  {% set btn_text = 'Mehr erfahren' %}
+                {% else %}
+                  {% set btn_text = 'Learn more' %}
+                {% endif %}
+                {{ button(text=btn_text, href=page.url+musicItem.uid) }}
+              </div>
+
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
 
   </div>
 
