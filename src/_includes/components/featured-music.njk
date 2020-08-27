@@ -1,5 +1,11 @@
 {% macro featuredMusic(data, lang) %}
 
+  {% if lang == 'de-ch' %}
+    {% set deeplink = "/musik/" + data.uid %}
+  {% else %}
+    {% set deeplink = "/en/music/" + data.uid %}
+  {% endif %}
+
   <div class="m-preview__columns">
 
     {% from 'components/responsive-image.njk' import responsiveImage %}
@@ -8,7 +14,7 @@
     <div class="stack stack--3">
 
       <h2>
-        <a href="{% if lang == 'de-ch' %}/musik/{% else %}/en/music/{% endif %}{{ data.uid }}">
+        <a href="{{ deeplink }}">
           {{ data.data.title | renderAsText | safe }}
         </a>
       </h2>
@@ -51,7 +57,7 @@
       {% else %}
         {% set btn_text = 'Learn more' %}
       {% endif %}
-      {{ button(text=btn_text, href=page.url+data.uid) }}
+      {{ button(text=btn_text, href=deeplink) }}
 
     </div>
   </div>
