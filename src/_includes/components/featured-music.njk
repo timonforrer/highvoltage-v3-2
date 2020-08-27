@@ -1,7 +1,5 @@
 {% macro featuredMusic(data, lang) %}
 
-  {{ data | log }}
-
   <div class="m-preview__columns">
 
     {% from 'components/responsive-image.njk' import responsiveImage %}
@@ -9,7 +7,11 @@
 
     <div class="stack stack--3">
 
-      <h2><a href="{{ page.url }}{{ data.uid }}">{{ data.data.title | renderAsText | safe }}</a></h2>
+      <h2>
+        <a href="{% if lang == 'de-ch' %}/musik/{% else %}/en/music/{% endif %}{{ data.uid }}">
+          {{ data.data.title | renderAsText | safe }}
+        </a>
+      </h2>
 
       <div>
         <h3>Tracks</h3>
