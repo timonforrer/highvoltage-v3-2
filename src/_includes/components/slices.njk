@@ -29,3 +29,8 @@
     </div>
   {% endif %}
 {% endmacro %}
+
+{% macro featured_music(data, lang) %}
+  {% from 'components/featured-music.njk' import featuredMusic %}
+  {{ featuredMusic(data, lang) }}
+{% endmacro %}
