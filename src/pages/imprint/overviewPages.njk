@@ -1,0 +1,24 @@
+---
+links:
+  en-gb: "en/imprint/"
+  de-ch: "impressum/"
+pagination:
+  data: imprint.overviewPages
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+eleventyComputed:
+  title: "{{ localisedPage.data.meta_title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
+  lastMod: "{{ localisedPage.last_publication_date }}"
+permalink: "{{ links[localisedPage.lang] }}/index.html"
+translationKey: "imprintPage"
+---
+
+{% block content %}
+  <div class="container container--narrow stack stack--2">
+    {{ localisedPage.data.title | renderAsHTML | safe }}
+    {{ localisedPage.data.content | renderAsHTML | safe }}
+  </div>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
