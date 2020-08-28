@@ -18,7 +18,8 @@ module.exports = async () => {
       pricePreSale: data['Ticket Preis (Vorverkauf)'],
       priceBoxOffice: data['Ticket Preis (Abendkasse)'],
       ticketUrl: data['Ticket URL'],
-      slug: data['Slug']
+      slug: data['Slug'],
+      lastMod: data['last_mod']
     };
   };
 

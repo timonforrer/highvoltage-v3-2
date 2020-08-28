@@ -8,6 +8,8 @@ permalink: "{{ nav.tour[localisedPage.lang].pathPrefix }}/{{ localisedPage.slug 
 eleventyComputed:
   translationKey: "{{ localisedPage.slug }}"
   title: "{{ localisedPage.title }}"
+  metaDescription: "{{ localisedPage.data.meta_description }}"
+  lastMod: "{{ localisedPage.lastMod }}"
 ---
 
 {% block content %}
