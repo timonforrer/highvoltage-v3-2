@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/events",
+      "destination": "/konzerte"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/galerie"
+    },
+    {
+      "source": "/video",
+      "destination": "https://www.youtube.com/watch?v=QcdNe7C69OY"
+    }
+  ]
+}
