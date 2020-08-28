@@ -16,7 +16,7 @@ translationKey: "homePage"
 {% set data = localisedPage.data %}
 
 {% block content %}
-<main class="stack stack--7">
+<div class="stack stack--7">
 
   <section class="hero">
     <div class="hero__background">
@@ -133,7 +133,7 @@ translationKey: "homePage"
 
   {% endfor %}
 
-</main>
+</div>
 <script>
 
   if('querySelector' in document) {
@@ -145,4 +145,3 @@ translationKey: "homePage"
 </script>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
-

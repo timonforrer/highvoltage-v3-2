@@ -8,8 +8,11 @@
 </head>
 <body>
   {% include 'components/nav.njk' %}
-  {% block content %}
-  {% endblock content %}
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+  {% include 'components/footer.njk' %}
   <script src="/assets/bundle.js"></script>
 </body>
 </html>
