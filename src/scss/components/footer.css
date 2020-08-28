@@ -1,0 +1,9 @@
+footer {
+  background-color: $c_bg_2;
+  p {
+    a {
+      display: block;
+      line-height: 3rem;
+    }
+  }
+}

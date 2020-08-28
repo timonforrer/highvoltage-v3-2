@@ -1,0 +1,17 @@
+<footer>
+  {% set
+    imprint = {
+      'de-ch': {
+        'link': '/impressum/',
+        'title': 'Impressum'
+      },
+      'en-gb': {
+        'link': '/en/imprint/',
+        'title': 'Imprint'
+      }
+    }
+  %}
+  <div class="container">
+    <p><a href="{{ imprint[localisedPage.lang].link }}">{{ imprint[localisedPage.lang].title }}</a></p>
+  </div>
+</footer>
