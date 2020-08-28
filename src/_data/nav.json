@@ -50,6 +50,7 @@
     }
   },
   "contact": {
+    "inactive": true,
     "en-gb": {
       "pathPrefix": "/en/contact",
       "title": "Contact"

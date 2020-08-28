@@ -10,7 +10,7 @@
       
       {# set fallback to homepage #}
       {% set translatedUrl = language.pathPrefix %}
-      
+
       {# loop through all sites #}
       {%-for item in collections.all -%}
         {%- if item.data.translationKey == translationKey and item.data.localisedPage.lang == language.code -%}
@@ -28,7 +28,9 @@
     <div class="container container--full-width">
       <ul class="reel">
         {% for key, link in nav %}
+        {% if link.inactive != true %}
         <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
+        {% endif %}
         {% endfor %}
       </ul>
     </div>
