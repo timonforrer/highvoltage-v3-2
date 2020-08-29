@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/*.",
-      "headers": { "cache-control": "s-maxage=0" }
+      "headers": { "cache-control": "no-cache" }
     },
     {
       "src": "/events",
