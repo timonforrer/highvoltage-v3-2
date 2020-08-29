@@ -1,16 +1,20 @@
 {
-  "redirects": [
+  "routes": [
     {
-      "source": "/events",
-      "destination": "/konzerte"
+      "src": "/*.",
+      "headers": { "cache-control": "s-maxage=0" }
     },
     {
-      "source": "/gallery",
-      "destination": "/galerie"
+      "src": "/events",
+      "dest": "/konzerte"
     },
     {
-      "source": "/video",
-      "destination": "https://www.youtube.com/watch?v=QcdNe7C69OY"
+      "src": "/gallery",
+      "dest": "/galerie"
+    },
+    {
+      "src": "/video",
+      "dest": "https://www.youtube.com/watch?v=QcdNe7C69OY"
     }
   ]
 }
