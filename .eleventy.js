@@ -38,7 +38,7 @@ module.exports = function(config) {
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
   config.addPassthroughCopy('./src/static');
-  config.addPassthroughCopy({'./src/unregister-sw.js': './workbox-v3.6.3/workbox-sw.js'});
+  config.addPassthroughCopy({'./src/unregister-sw.js': './sw.js'});
 
   config.setTemplateFormats([
     'njk',
