@@ -1,0 +1,11 @@
+sp-video {
+  button.button {
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    box-shadow: 0.1rem 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
+    &:hover,
+    &:active {
+      box-shadow: 0.15rem 0.75rem 1rem rgba(0, 0, 0, 0.75);
+      transform: translateY(-2px);
+    }
+  }
+}
