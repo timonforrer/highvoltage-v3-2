@@ -33,8 +33,7 @@ translationKey: "homePage"
     <div class="hero__text pin">
       <div class="container cover">
         <div class="stack stack--3">
-          {{ data.hero_title | renderAsHTML | safe }}
-
+          <h1 class="display">{{ data.hero_title | renderAsText }}</h1>
           <div class="stack stack--2">
             <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
             {% if data.cta %}

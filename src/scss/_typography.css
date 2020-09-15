@@ -53,34 +53,39 @@ h4 {
   font-weight: 900;
 }
 
+.display {
+  font-size: calc(3vw + 1.75rem);
+  line-height: calc(3vw + 2rem);
+}
+
 h1,
 .as-h1 {
   font-size: 2.5rem;
-  font-size: calc(3vw + 1.75rem);
+  font-size: calc(2.5vw + 1.5rem);
   line-height: 2.75rem;
-  line-height: calc(3vw + 2rem);
+  line-height: calc(2.5vw + 1.75rem);
 }
 
 h2,
 .as-h2 {
   font-size: 2rem;
-  font-size: calc(2.5vw + 1.5rem);
+  font-size: calc(2vw + 1rem);
   line-height: 2.25rem;
-  line-height: calc(2.5vw + 1.75rem);
+  line-height: calc(2vw + 1.25rem);
 }
 
 h3,
 .as-h3 {
   font-size: 1.5rem;
-  font-size: calc(2vw + 1rem);
+  font-size: calc(1.5vw + .75rem);
   line-height: 1.75rem;
-  line-height: calc(2vw + 1.25rem);
+  line-height: calc(1.5vw + 1rem);
 }
 
 h4,
 .as-h4 {
   font-size: 1.25rem;
-  font-size: calc(1.5vw + .75rem);
+  font-size: calc(1.25vw + .625rem);
   line-height: 1.5rem;
-  line-height: calc(1.5vw + 1rem);
+  line-height: calc(1.25vw + 1.125rem);
 }
