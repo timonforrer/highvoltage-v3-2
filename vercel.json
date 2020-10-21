@@ -10,6 +10,7 @@
     },
     {
       "src": "/video",
+      "status": 308,
       "headers": { "Location": "https://www.youtube.com/watch?v=QcdNe7C69OY" }
     }
   ]
