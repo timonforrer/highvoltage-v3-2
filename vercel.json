@@ -10,7 +10,7 @@
     },
     {
       "src": "/video",
-      "dest": "https://www.youtube.com/watch?v=QcdNe7C69OY"
+      "headers": { "Location": "https://www.youtube.com/watch?v=QcdNe7C69OY" }
     }
   ]
 }
