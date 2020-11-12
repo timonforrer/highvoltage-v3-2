@@ -18,21 +18,23 @@
         {%- endif -%}
       {%- endfor -%}
 
-      <li><a href="{{ translatedUrl }}">{{ language.label }}</a></li>
+      <li class="{% if localisedPage.lang !== language.code %}inactive{% endif %}">
+        <a href="{{ translatedUrl }}">{{ language.label }}</a>
+      </li>
 
     {%- endfor -%}
     </ul>
   </div>
-
-  <nav class="main-nav" id="main-nav">
-    <div class="container container--full-width">
-      <ul class="reel">
-        {% for key, link in nav %}
-        {% if link.inactive != true %}
-        <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-  </nav>
 </header>
+
+<nav class="main-nav" id="main-nav">
+  <div class="container container--full-width">
+    <ul class="reel">
+      {% for key, link in nav %}
+      {% if link.inactive != true %}
+      <li><a href="{{ link[localisedPage.lang].pathPrefix }}">{{ link[localisedPage.lang].title }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
