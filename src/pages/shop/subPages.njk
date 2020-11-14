@@ -26,49 +26,98 @@ eleventyComputed:
     size: {
       'de-ch': 'Grösse',
       'en-gb': 'Size'
+    },
+    sizes: {
+      'de-ch': 'Grössen',
+      'en-gb': 'Sizes'
+    },
+    price: {
+      'de-ch': 'Preis (exklusiv Porto-Kosten)',
+      'en-gb': 'Price (excluding postage)'
+    },
+    addToCart: {
+      'de-ch': 'In den Warenkorb',
+      'en-gb': 'Add to cart'
     }
   }%}
 
-  <section class="container">
-    <div class="two-columns">
-      <div>
-        {{ responsiveImage(data.main_image,alt="") }}
-      </div>
-      <div class="product-info">
-        <h1 class="as-h2">{{ data.product_name | renderAsText | safe }}</h1>
-        <ul>  
-          {% for usp in data.usps %}
-            <li>{{ usp.usp | renderAsHTML | safe }}</li>
-          {% endfor %}
-          {% for size in data.product_group %}
-            {% if size.sku == localisedPage.productNumber %}
-              <li>{{TRANSLATIONS.size[lang]}}: {{ size.product_label }}</li>
-            {% endif %}
-          {% endfor %}
-        </ul>
+  <div class="stack stack--7">
 
-        <ul class="flex-list">
-          {% for size in data.product_group %}
+    <section class="container">
+      <div class="two-columns">
+        <div>
+          {{ responsiveImage(data.main_image,alt="",rounded=true) }}
+        </div>
+        <div class="product-info stack stack--4">
+          <h1 class="as-h2">{{ data.product_name | renderAsText | safe }}</h1>
+          <ul>  
+            {% for usp in data.usps %}
+              <li>{{ usp.usp | renderAsHTML | safe }}</li>
+            {% endfor %}
+            {% for size in data.product_group %}
+              {% if size.sku == localisedPage.productNumber %}
+                <li>{{TRANSLATIONS.size[lang]}}: {{ size.product_label }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+          <div class="stack stack--1">
+            <p class="uppercase">{{ TRANSLATIONS.sizes[lang] }}</p>
+            <div>
+              <ul class="flex-list">
+                {% for size in data.product_group %}
+                  {% set variantsUrl = pathPrefix+"/"+size.sku+"/" %}
+                  <li>
+                    <a
+                      class="variants-button uppercase"
+                      href="{{ variantsUrl | toLowerCase }}"
+                      {% if page.url == variantsUrl %}
+                        aria-current="true"
+                      {% endif %}
+                    >
+                      {{ size.product_label }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="stack stack--1">
+            <p class="uppercase">
+              {{ TRANSLATIONS.price[lang] }}
+            </p>
+
+            <div>
+              <div class="flex-list flex-list--bigger-gap">
+                <p class="as-h3">
+                  CHF {{ localisedPage.basePrice }}
+                </p>
+                <div id="buttonWrapper" data-stock="{{ localisedPage.stock }}" data-text="{{ TRANSLATIONS.addToCart[lang] }}">
+                  <button class="button">BUY ITTTTTT</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <ul class="grid">
+          {% for image in data.supplemental_images %}
             <li>
-              <a href="{{ pathPrefix }}/{{ size.sku | lower }}">{{ size.product_label }}</a>
+              {{ responsiveImage(image.square_image,alt="",rounded=true) }}
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="container">
-      <ul class="grid">
-        {% for image in data.supplemental_images %}
-          <li>
-            {{ responsiveImage(image.square_image,alt="",rounded=true) }}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </section>
+  </div>
 
 {% endblock %}
 {% extends 'layouts/base.njk' %}
