@@ -4,7 +4,7 @@ pagination:
   size: 1
   alias: localisedPage
   addAllPagesToCollections: true
-permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/{{ localisedPage.productNumber }}/index.html"
+permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/{{ localisedPage.productNumber | lower }}/index.html"
 eleventyComputed:
   data: ""
   translationKey: "{{ localisedPage.productNumber }}"
@@ -70,7 +70,7 @@ eleventyComputed:
                   <li>
                     <a
                       class="variants-button uppercase"
-                      href="{{ variantsUrl | toLowerCase }}"
+                      href="{{ variantsUrl | lower }}"
                       {% if page.url == variantsUrl %}
                         aria-current="true"
                       {% endif %}
