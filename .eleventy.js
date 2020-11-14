@@ -2,10 +2,12 @@ require('dotenv').config();
 
 const PrismicDOM = require('prismic-dom');
 const getYoutubeIDHelper = require('get-youtube-id');
-const moment = require('moment');
 
 const imageOptimisation = require('./src/utils/imageOptimisation.js');
 const filterContentByProductGroup = require('./src/utils/filterContentByProductGroup.js');
+const convertMs = require('./src/utils/convertMs.js');
+const htmlDate = require('./src/utils/htmlDate.js');
+const toLocaleString = require('./src/utils/toLocaleString.js');
 
 module.exports = function(config) {
 
@@ -13,31 +15,16 @@ module.exports = function(config) {
 
   config.setQuietMode(true);
 
-  config.addNunjucksAsyncShortcode('image', async (image) => {
-    return imageOptimisation(image.src, image.alt, image.attributes);
-  });
+  config.addNunjucksAsyncShortcode('image', async (image) => imageOptimisation(image.src, image.alt, image.attributes));
 
   config.addFilter('renderAsHTML', (value) => PrismicDOM.RichText.asHtml(value));
   config.addFilter('renderAsText', (value) => PrismicDOM.RichText.asText(value));
-  config.addFilter('htmlDate', (value) => {
-    return new Date(value).toISOString().split('T')[0];
-  });
-  config.addFilter('toLocaleString', (date, lang) => {
-    return moment(date).locale(lang).format('llll');
-  })
-  config.addFilter('convertMs', (value) => {
-    var ms = value % 1000;
-    value = (value - ms) / 1000;
-    var secs = value % 60;
-    value = (value - secs) / 60;
-    var mins = value % 60;
-
-    return `${mins}.${secs}`
-  })
+  config.addFilter('convertMs', (value) => convertMs(value));
+  config.addFilter('htmlDate', (value) => htmlDate(value));
+  config.addFilter('toLocaleString', (date, lang) => toLocaleString(date,lang));
+  config.addFilter('toLowerCase', (value) => value.toLowerCase());
   config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
-  config.addFilter('contentFilter', (prismicInput, airtableInput) => {
-    return filterContentByProductGroup(prismicInput, airtableInput)
-  });
+  config.addFilter('contentFilter', (prismicInput, airtableInput) => filterContentByProductGroup(prismicInput, airtableInput));
 
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
@@ -49,7 +36,7 @@ module.exports = function(config) {
     '11ty.js'
   ]);
 
-  env = (env=='seed') ? 'prod' : env
+  env = (env=='seed') ? 'prod' : env;
 
   return {
     dir: {
