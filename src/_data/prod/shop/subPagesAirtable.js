@@ -11,7 +11,8 @@ module.exports = async () => {
     return {
       productNumber: data['Product Number'],
       basePrice: data['Base Price'],
-      prismicUID: data['prismicUID']
+      prismicUID: data['prismicUID'],
+      stock: data['Inventory']
     };
   };
 
