@@ -1,3 +1,23 @@
 .main-product-info {
-  
+}
+
+.variants-button {
+  border: 2px solid;
+  border-radius: 3px;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem 2rem;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $c_main_1;
+    outline: none;
+  }
+
+  &[aria-current="true"],
+  &:focus,
+  &:hover {
+    background-color: $c_fg_1;
+    border-color: $c_fg_1;
+    color: $c_bg_3;
+  }
 }
