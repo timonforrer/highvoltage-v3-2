@@ -1,0 +1,74 @@
+---
+pagination:
+  data: shop.subPagesAirtable
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/{{ localisedPage.productNumber }}/index.html"
+eleventyComputed:
+  data: ""
+  translationKey: "{{ localisedPage.productNumber }}"
+  title: ""
+  metaDescription: ""
+  lastMod: "11-11-2020"
+---
+
+{% block content %}
+
+  {% set prismicContent = shop.subPagesPrismic | contentFilter(localisedPage) %}
+  {% set data = prismicContent.data %}
+  {% set lang = localisedPage.lang %}
+  {% from 'components/responsive-image.njk' import responsiveImage %}
+
+  {% set pathPrefix = nav.shop[localisedPage.lang].pathPrefix %}
+
+  {% set TRANSLATIONS = {
+    size: {
+      'de-ch': 'Grösse',
+      'en-gb': 'Size'
+    }
+  }%}
+
+  <section class="container">
+    <div class="two-columns">
+      <div>
+        {{ responsiveImage(data.main_image,alt="") }}
+      </div>
+      <div class="product-info">
+        <h1 class="as-h2">{{ data.product_name | renderAsText | safe }}</h1>
+        <ul>  
+          {% for usp in data.usps %}
+            <li>{{ usp.usp | renderAsHTML | safe }}</li>
+          {% endfor %}
+          {% for size in data.product_group %}
+            {% if size.sku == localisedPage.productNumber %}
+              <li>{{TRANSLATIONS.size[lang]}}: {{ size.product_label }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <ul class="flex-list">
+          {% for size in data.product_group %}
+            <li>
+              <a href="{{ pathPrefix }}/{{ size.sku | lower }}">{{ size.product_label }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <ul class="grid">
+        {% for image in data.supplemental_images %}
+          <li>
+            {{ responsiveImage(image.square_image,alt="",rounded=true) }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+{% endblock %}
+{% extends 'layouts/base.njk' %}
