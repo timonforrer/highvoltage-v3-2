@@ -64,3 +64,16 @@ ul.flex-list,
     margin: 0.25rem 0.25rem;
   }
 }
+
+.two-columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem;
+
+  & > * {
+    flex-basis: 17rem;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 1rem;
+  }
+}
