@@ -71,7 +71,7 @@ eleventyComputed:
                     <a
                       class="variants-button uppercase"
                       href="{{ variantsUrl | lower }}"
-                      {% if page.url == variantsUrl %}
+                      {% if page.url == (variantsUrl | lower) %}
                         aria-current="true"
                       {% endif %}
                     >
@@ -94,8 +94,12 @@ eleventyComputed:
                 <p class="as-h3">
                   CHF {{ localisedPage.basePrice }}
                 </p>
-                <div id="buttonWrapper" data-stock="{{ localisedPage.stock }}" data-text="{{ TRANSLATIONS.addToCart[lang] }}">
-                  <button class="button">BUY ITTTTTT</button>
+                <div
+                  id="buttonWrapper"
+                  data-stock="{{ localisedPage.stock }}"
+                  data-text="{{ TRANSLATIONS.addToCart[lang] }}"
+                  data-sku="{{ localisedPage.productNumber }}"
+                >
                 </div>
               </div>
             </div>
@@ -116,6 +120,44 @@ eleventyComputed:
         </ul>
       </div>
     </section>
+
+    <script>
+      // get reference to wrapper element
+      var wrapper = document.querySelector('#buttonWrapper');
+
+      // get amount in stock and display text
+      var {
+        stock,
+        text,
+        sku
+      } = wrapper.dataset;
+
+      function addToCart(sku) {
+        var itemToAdd = {
+          sku: sku,
+          quantity: 1,
+          basePrice: 25
+        };
+        var strItemToAdd = JSON.stringify(itemToAdd);
+        localStorage.setItem('cart',strItemToAdd);
+        console.log(JSON.parse(localStorage.getItem('cart')));
+      }
+
+      // check if localStorage is supported and if items in stock
+      if(window.localStorage!==undefined && stock > 0) {
+        // create the button node
+        var button = document.createElement('button');
+        // set text on button
+        button.textContent = text;
+        // set class on button
+        button.setAttribute('class', 'button');
+        // add eventListener on button
+        button.addEventListener('click', function(e) {
+          addToCart(sku)
+        });
+        wrapper.appendChild(button);
+      }
+    </script>
 
   </div>
 
