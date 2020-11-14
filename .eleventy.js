@@ -5,6 +5,7 @@ const getYoutubeIDHelper = require('get-youtube-id');
 const moment = require('moment');
 
 const imageOptimisation = require('./src/utils/imageOptimisation.js');
+const filterContentByProductGroup = require('./src/utils/filterContentByProductGroup.js');
 
 module.exports = function(config) {
 
@@ -34,6 +35,9 @@ module.exports = function(config) {
     return `${mins}.${secs}`
   })
   config.addFilter('getYoutubeID', (value) => getYoutubeIDHelper(value));
+  config.addFilter('contentFilter', (prismicInput, airtableInput) => {
+    return filterContentByProductGroup(prismicInput, airtableInput)
+  });
 
   config.addWatchTarget('./src/scss/');
   config.addPassthroughCopy('./src/fonts');
