@@ -23,6 +23,30 @@ eleventyComputed:
   {% set pathPrefix = nav.shop[localisedPage.lang].pathPrefix %}
 
   {% set TRANSLATIONS = {
+    addToCart: {
+      'de-ch': 'In den Warenkorb',
+      'en-gb': 'Add to cart'
+    },
+    articleNumber: {
+      'de-ch': 'Artikelnummer',
+      'en-gb': 'Article number'
+    },
+    height: {
+      'de-ch': 'Höhe',
+      'en-gb': 'Height'
+    },
+    inCM: {
+      'de-ch': 'in cm',
+      'en-gb': 'in cm'
+    },
+    price: {
+      'de-ch': 'Preis (exklusiv Porto-Kosten)',
+      'en-gb': 'Price (excluding postage)'
+    },
+    stock: {
+      'de-ch': 'Lagerbestand',
+      'en-gb': 'Amount in Stock'
+    },
     size: {
       'de-ch': 'Grösse',
       'en-gb': 'Size'
@@ -31,13 +55,9 @@ eleventyComputed:
       'de-ch': 'Grössen',
       'en-gb': 'Sizes'
     },
-    price: {
-      'de-ch': 'Preis (exklusiv Porto-Kosten)',
-      'en-gb': 'Price (excluding postage)'
-    },
-    addToCart: {
-      'de-ch': 'In den Warenkorb',
-      'en-gb': 'Add to cart'
+    width: {
+      'de-ch': 'Breite',
+      'en-gb': 'Width'
     }
   }%}
 
@@ -96,9 +116,10 @@ eleventyComputed:
                 </p>
                 <div
                   id="buttonWrapper"
+                  data-base-price="{{ localisedPage.basePrice }}"
+                  data-sku="{{ localisedPage.productNumber }}"
                   data-stock="{{ localisedPage.stock }}"
                   data-text="{{ TRANSLATIONS.addToCart[lang] }}"
-                  data-sku="{{ localisedPage.productNumber }}"
                 >
                 </div>
               </div>
@@ -108,6 +129,45 @@ eleventyComputed:
         </div>
       </div>
     </section>
+
+    {% if data.type === 'T-Shirt' %}
+    <section>
+      <div class="container">
+        <div class="flex">
+          {% include 'assets/t-shirt.svg' %}
+
+          <table>
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                {% for size in data.sizes %}
+                  <th>{{ size.size_label }}</th>
+                {% endfor %}
+              </tr>
+              <tr>
+                <th>{{ TRANSLATIONS.width[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+                {% for size in data.sizes %}
+                  <td>{{ size.width_in_cm }}</td>
+                {% endfor %}
+              </tr>
+              <tr>
+                <th>{{ TRANSLATIONS.height[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+                {% for size in data.sizes %}
+                  <td>{{ size.height_in_cm }}</td>
+                {% endfor %}
+              </tr>
+              {# <tr>
+                <th>{{ TRANSLATIONS.articleNumber[lang] }}</th>
+                {% for size in data.sizes %}
+                  {{ size.skz }}
+                {% endfor %}
+              </tr> #}
+            </thead>
+          </table>
+        </div>
+      </div>
+    </section>
+    {% endif %}
 
     <section>
       <div class="container">
@@ -125,26 +185,66 @@ eleventyComputed:
       // get reference to wrapper element
       var wrapper = document.querySelector('#buttonWrapper');
 
-      // get amount in stock and display text
+      // get stock, sku and base price of item and text for cart button
       var {
         stock,
         text,
-        sku
+        sku,
+        basePrice
       } = wrapper.dataset;
 
-      function addToCart(sku) {
-        var itemToAdd = {
-          sku: sku,
-          quantity: 1,
-          basePrice: 25
-        };
-        var strItemToAdd = JSON.stringify(itemToAdd);
-        localStorage.setItem('cart',strItemToAdd);
-        console.log(JSON.parse(localStorage.getItem('cart')));
-      }
+      // check if any of the supplied items has the same sku as the item to add
+      function alreadyInCart(arr, itemToCheck) {
+        return arr.some(function(item) {
+          return item.sku === itemToCheck.sku;
+        });
+      };
 
-      // check if localStorage is supported and if items in stock
-      if(window.localStorage!==undefined && stock > 0) {
+      // check if localStorage is supported and if item is in stock
+      if(window.localStorage !== undefined && stock > 0) {
+
+        // function to add the item to cart
+        function addToCart(sku) {
+          // get current cart
+          var cart = localStorage.getItem('cart');
+
+          // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
+          cart = cart != null ? JSON.parse(cart) : [];
+
+          // create new item to add to cart
+          var itemToAdd = {
+            basePrice: basePrice,
+            sku: sku,
+            quantity: 1
+          };
+
+          // check if already some items in cart
+          if(cart.length > 0) {
+            // if items in cart, check if item to add is already in cart
+            if(alreadyInCart(cart, itemToAdd)) {
+              cart.forEach(function(item) {
+                if(item.sku === itemToAdd.sku) {
+                  item.quantity++;
+                };
+              });
+            } else {
+              // item not present in cart, push entire object
+              cart.push(itemToAdd);
+            };
+          } else {
+            // cart is empty, push entire object to cart
+            cart.push(itemToAdd);
+          };
+
+          // create string from object
+          var strCart = JSON.stringify(cart);
+
+          // add the cart string to localStorage
+          localStorage.setItem('cart',strCart);
+
+          console.log(JSON.parse(localStorage.getItem('cart')));
+        };
+
         // create the button node
         var button = document.createElement('button');
         // set text on button
@@ -156,7 +256,7 @@ eleventyComputed:
           addToCart(sku);
         });
         wrapper.appendChild(button);
-      }
+      };
     </script>
 
   </div>
