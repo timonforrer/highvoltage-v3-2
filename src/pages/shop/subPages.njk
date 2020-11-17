@@ -116,7 +116,9 @@ eleventyComputed:
                 </p>
                 <div
                   id="buttonWrapper"
+                  data-description="{{ localisedPage.description }}"
                   data-base-price="{{ localisedPage.basePrice }}"
+                  data-name="{{ data.product_name | renderAsText }}"
                   data-sku="{{ localisedPage.productNumber }}"
                   data-stock="{{ localisedPage.stock }}"
                   data-text="{{ TRANSLATIONS.addToCart[lang] }}"
@@ -133,36 +135,34 @@ eleventyComputed:
     {% if data.type === 'T-Shirt' %}
     <section>
       <div class="container">
-        <div class="flex">
+        <div class="two-columns two-columns--v-center">
           {% include 'assets/t-shirt.svg' %}
 
-          <table>
-            <thead>
-              <tr>
-                <th>&nbsp;</th>
-                {% for size in data.sizes %}
-                  <th>{{ size.size_label }}</th>
-                {% endfor %}
-              </tr>
-              <tr>
-                <th>{{ TRANSLATIONS.width[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
-                {% for size in data.sizes %}
-                  <td>{{ size.width_in_cm }}</td>
-                {% endfor %}
-              </tr>
-              <tr>
-                <th>{{ TRANSLATIONS.height[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
-                {% for size in data.sizes %}
-                  <td>{{ size.height_in_cm }}</td>
-                {% endfor %}
-              </tr>
-              {# <tr>
-                <th>{{ TRANSLATIONS.articleNumber[lang] }}</th>
-                {% for size in data.sizes %}
-                  {{ size.skz }}
-                {% endfor %}
-              </tr> #}
-            </thead>
+          <table class="table">
+            <tr>
+              <th>&nbsp;</th>
+              {% for size in data.sizes %}
+                <th>{{ size.size_label }}</th>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>A: {{ TRANSLATIONS.width[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+              {% for size in data.sizes %}
+                <td>{{ size.width_in_cm }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>B: {{ TRANSLATIONS.height[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+              {% for size in data.sizes %}
+                <td>{{ size.height_in_cm }}</td>
+              {% endfor %}
+            </tr>
+            {# <tr>
+              <th>{{ TRANSLATIONS.articleNumber[lang] }}</th>
+              {% for size in data.sizes %}
+                {{ size.skz }}
+              {% endfor %}
+            </tr> #}
           </table>
         </div>
       </div>
@@ -187,10 +187,12 @@ eleventyComputed:
 
       // get stock, sku and base price of item and text for cart button
       var {
-        stock,
-        text,
+        description,
+        basePrice,
+        name,
         sku,
-        basePrice
+        stock,
+        text
       } = wrapper.dataset;
 
       // check if any of the supplied items has the same sku as the item to add
@@ -213,7 +215,9 @@ eleventyComputed:
 
           // create new item to add to cart
           var itemToAdd = {
+            description: description,
             basePrice: basePrice,
+            name,
             sku: sku,
             quantity: 1
           };

@@ -9,8 +9,9 @@ module.exports = async () => {
 
   const constructBaseFields = (data) => {
     return {
-      productNumber: data['Product Number'],
       basePrice: data['Base Price'],
+      description: data['Description'],
+      productNumber: data['Product Number'],
       prismicUID: data['prismicUID'],
       stock: data['Inventory']
     };
