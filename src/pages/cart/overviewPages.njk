@@ -1,21 +1,146 @@
 ---
-permalink: "cart/index.html"
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  -
+    lang: "de-ch"
+    pathPrefix: "/warenkorb/"
+  -
+    lang: "en-gb"
+    pathPrefix: "/en/cart/"
+translationKey: "Warenkorb"
 ---
 
 {% block content %}
+
+  {% set T = {
+    cart: {
+      'de-ch': 'Warenkorb',
+      'en-gb': 'Cart'
+    },
+    article: {
+      'de-ch': 'Artikel',
+      'en-gb': 'Article'
+    },
+    quantity: {
+      'de-ch': 'Anzahl',
+      'en-gb': 'Quantity'
+    },
+    remove: {
+      'de-ch': 'Entfernen',
+      'en-gb': 'Remove'
+    }
+  }%}
+
+  {% set lang = localisedPage.lang %}
+
 <div class="container">
-  <h1>Warenkorb</h1>
-  <div id="cartWrapper">
+  <div class="stack stack--5">
+    <h1>{{ T.cart[lang] }}</h1>
+    <div>
+      <ul id="cartWrapper" class="cart">
+        <li class="cart__item flex-list">
+          <div>
+            <div class="stack stack--1">
+              <p class="uppercase">Artikel</p>
+              <h2 class="as-h3">Voltage Arc T-Shirt, Männer</h2>
+              <p>Black | Male | S</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex-list flex-list--bigger-gap flex-list--end">
+              <div>
+                <div class="stack stack--1">
+                  <p class="uppercase">Anzahl</p>
+                  <div class="flex-list">
+                    <button data-sku="" data-operator="-1" class="button">-</button>
+                    {# TODO: add read only field for quantity #}
+                    <button data-sku="" data-operator="+1" class="button">+</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button class="button">Entfernen</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <script>
+  // get reference to main wrapper
   var cartWrapper = document.querySelector('#cartWrapper');
+  // get contents of localstorage
   var cart = localStorage.getItem('cart');
-  var textNode = document.createTextNode(cart);
-  cartWrapper.append(textNode);
+  // if items in cart, parse them as json
+  cart = cart != null ? JSON.parse(cart) : null;
 
-  function renderItem({  })
+  // utility to get index of item in array
+  function findIndex(array, sku) {
+    return array.findIndex(function(item) {
+      return item.sku === sku;
+    });
+  };
+
+  // function to mutate quantity of item in array
+  function mutateQuantity() {};
+
+  // function to delete item from array
+  function removeItem() {};
+
+  // function to create a list item from data
+  function createItem({
+      textArticle,
+      textRemove,
+      textQuantity,
+      productName,
+      productDescription,
+      productSKU
+    }={}) {
+      var li = document.createElement('li');
+      li.setAttribute('class', 'cart__item flex-list');
+      var content = '<div> \
+          <div class="stack stack--1"> \
+            <p class="uppercase">'+textArticle+'</p> \
+            <h2 class="as-h3">'+productName+'</h2> \
+            <p>'+productDescription+'</p> \
+          </div> \
+        </div> \
+        <div> \
+          <div class="flex-list flex-list--bigger-gap flex-list--end"> \
+            <div> \
+              <div class="stack stack--1"> \
+                <p class="uppercase">'+textQuantity+'</p> \
+                <div class="flex-list"> \
+                  <button data-sku="'+productSKU+'" data-operator="-1" class="button">-</button> \
+                  <button data-sku="'+productSKU+'" data-operator="+1" class="button">+</button> \
+                </div> \
+              </div> \
+            </div> \
+            <div> \
+              <button class="button">'+textRemove+'</button> \
+            </div> \
+          </div> \
+        </div>';
+      li.innerHTML = content;
+      cartWrapper.appendChild(li);
+  };
+
+  createItem({ 
+    textArticle: '{{ T.article[lang] }}',
+    textRemove: '{{ T.remove[lang] }}',
+    textQuantity: '{{ T.quantity[lang] }}',
+    productName: 'Voltage Arc T-Shirt, Männer',
+    productDescription: 'Black | Male | S',
+    productSKU: 'VA-P-4'
+  });
 
   /*
     Todos:
