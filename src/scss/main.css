@@ -15,6 +15,7 @@
 
 @import 'macros.css';
 
+@import 'pages/cart.css';
 @import 'pages/home.css';
 @import 'pages/music.css';
 @import 'pages/shop.css';
