@@ -89,3 +89,7 @@ h4,
   line-height: 1.5rem;
   line-height: calc(1.125vw + 1.125rem);
 }
+
+[class^="as-h"] {
+  font-weight: bold;
+}

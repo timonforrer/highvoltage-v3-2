@@ -88,4 +88,17 @@ ul.flex-list,
     flex-shrink: 1;
     margin: 1rem;
   }
+  &--v-center {
+    align-items: center;
+  }
+}
+
+.table {
+  border-collapse: collapse;
+
+  & th,
+  & td {
+    border: 1px solid $c_fg_2;
+    text-align: center;
+  }
 }

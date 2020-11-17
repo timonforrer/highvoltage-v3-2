@@ -1,0 +1,27 @@
+---
+permalink: "cart/index.html"
+---
+
+{% block content %}
+<div class="container">
+  <h1>Warenkorb</h1>
+  <div id="cartWrapper">
+  </div>
+</div>
+
+<script>
+  var cartWrapper = document.querySelector('#cartWrapper');
+  var cart = localStorage.getItem('cart');
+  var textNode = document.createTextNode(cart);
+  cartWrapper.append(textNode);
+
+  function renderItem({  })
+
+  /*
+    Todos:
+      - display items in cart
+      - create handlers for updating cart (remove item, quantity +1/-1)
+  */
+</script>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
