@@ -22,6 +22,10 @@ translationKey: "Warenkorb"
       'de-ch': 'Warenkorb',
       'en-gb': 'Cart'
     },
+    cartEmpty: {
+      'de-ch': 'Dein Warenkorb ist leer.',
+      'en-gb': 'Your cart is empty.'
+    },
     article: {
       'de-ch': 'Artikel',
       'en-gb': 'Article'
@@ -38,41 +42,14 @@ translationKey: "Warenkorb"
 
   {% set lang = localisedPage.lang %}
 
-<div class="container">
-  <div class="stack stack--5">
-    <h1>{{ T.cart[lang] }}</h1>
-    <div>
-      <ul id="cartWrapper" class="cart">
-        <li class="cart__item flex-list">
-          <div>
-            <div class="stack stack--1">
-              <p class="uppercase">Artikel</p>
-              <h2 class="as-h3">Voltage Arc T-Shirt, Männer</h2>
-              <p>Black | Male | S</p>
-            </div>
-          </div>
-          <div>
-            <div class="flex-list flex-list--bigger-gap flex-list--end">
-              <div>
-                <div class="stack stack--1">
-                  <p class="uppercase">Anzahl</p>
-                  <div class="flex-list">
-                    <button data-sku="" data-operator="-1" class="button">-</button>
-                    {# TODO: add read only field for quantity #}
-                    <button data-sku="" data-operator="+1" class="button">+</button>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <button class="button">Entfernen</button>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+  <div class="container">
+    <div class="stack stack--5">
+      <h1>{{ T.cart[lang] }}</h1>
+      <div>
+        <ul id="cartWrapper" class="cart"></ul>
+      </div>
     </div>
   </div>
-</div>
 
 <script>
   // get reference to main wrapper
@@ -90,22 +67,41 @@ translationKey: "Warenkorb"
   };
 
   // function to mutate quantity of item in array
-  function mutateQuantity() {};
-
-  // function to delete item from array
-  function removeItem() {};
+  function mutateQuantity({ sku, operator }) {
+    var index = findIndex(cart, sku);
+    switch(operator) {
+      case "+1":
+        cart[index].quantity++;
+        break;
+      case "-1":
+        if(cart[index].quantity > 1) cart[index].quantity--;
+        break;
+      case "remove":
+        cart.splice(index,1);
+        break;
+    }
+    // save the mutations made to cart in localStorage
+    saveCart();
+    // rerender the cart
+    renderItems();
+  };
 
   // function to create a list item from data
   function createItem({
+      // named parameters
       textArticle,
       textRemove,
       textQuantity,
       productName,
       productDescription,
-      productSKU
+      productSKU,
+      productQuantity
     }={}) {
+      // create the list item to insert
       var li = document.createElement('li');
+      // set classes
       li.setAttribute('class', 'cart__item flex-list');
+      // create HTML string with populated content
       var content = '<div> \
           <div class="stack stack--1"> \
             <p class="uppercase">'+textArticle+'</p> \
@@ -120,33 +116,71 @@ translationKey: "Warenkorb"
                 <p class="uppercase">'+textQuantity+'</p> \
                 <div class="flex-list"> \
                   <button data-sku="'+productSKU+'" data-operator="-1" class="button">-</button> \
+                  <span class="button">'+productQuantity+'</span>\
                   <button data-sku="'+productSKU+'" data-operator="+1" class="button">+</button> \
                 </div> \
               </div> \
             </div> \
             <div> \
-              <button class="button">'+textRemove+'</button> \
+              <button data-operator="remove" data-sku="'+productSKU+'" class="button">'+textRemove+'</button> \
             </div> \
           </div> \
         </div>';
+
+      // insert HTML string in list item
       li.innerHTML = content;
+
+      // get buttons inside list-item
+      var mutationButtons = li.querySelectorAll('button[data-operator]');
+      // add an event listener to each mutation button
+      mutationButtons.forEach(function(mutationButton){
+        mutationButton.addEventListener('click', function(e){
+          mutateQuantity(e.target.dataset);
+        });
+      });
+
+      // add the list item to the cartWrapper
       cartWrapper.appendChild(li);
   };
 
-  createItem({ 
-    textArticle: '{{ T.article[lang] }}',
-    textRemove: '{{ T.remove[lang] }}',
-    textQuantity: '{{ T.quantity[lang] }}',
-    productName: 'Voltage Arc T-Shirt, Männer',
-    productDescription: 'Black | Male | S',
-    productSKU: 'VA-P-4'
-  });
+  // main function to render the items
+  function renderItems() {
+    // remove any pre-existing items
+    cartWrapper.innerHTML = '';
 
-  /*
-    Todos:
-      - display items in cart
-      - create handlers for updating cart (remove item, quantity +1/-1)
-  */
+    if(cart == null || cart.length === 0) {
+      cartWrapper.innerHTML = '<p>{{ T.cartEmpty[lang] }}</p>'
+    } else {
+      // iterate over all items and create/append liste item
+      cart.forEach(function(cartItem) {
+        createItem({
+          textArticle: '{{ T.article[lang] }}',
+          textRemove: '{{ T.remove[lang] }}',
+          textQuantity: '{{ T.quantity[lang] }}',
+          productName: cartItem.name,
+          productDescription: cartItem.description,
+          productSKU: cartItem.sku,
+          productQuantity: cartItem.quantity
+        });
+      });
+    };
+  };
+
+  // function to save mutated cart to localStorage
+  function saveCart() {
+    // create string from json cart variable
+    var strCart = JSON.stringify(cart);
+    // empty the localStorage
+    localStorage.clear();
+    // save cart string
+    localStorage.setItem('cart',strCart);
+
+    // logging for debugging
+    console.log(JSON.parse(localStorage.getItem('cart')));
+  }
+
+  // render all items
+  renderItems();
 </script>
 {% endblock %}
 {% extends 'layouts/base.njk' %}
