@@ -15,41 +15,39 @@ data:
 translationKey: "Warenkorb"
 ---
 
+{% set T = {
+  article: {
+    'de-ch': 'Artikel',
+    'en-gb': 'Article'
+  },
+  cart: {
+    'de-ch': 'Warenkorb',
+    'en-gb': 'Cart'
+  },
+  cartEmpty: {
+    'de-ch': 'Dein Warenkorb ist leer.',
+    'en-gb': 'Your cart is empty.'
+  },
+  continue: {
+    'de-ch': 'Weiter',
+    'en-gb': 'Continue'
+  },
+  nextPage: {
+    'de-ch': '/lieferadresse/',
+    'en-gb': '/en/delivery-address/'
+  },
+  quantity: {
+    'de-ch': 'Anzahl',
+    'en-gb': 'Quantity'
+  },
+  remove: {
+    'de-ch': 'Entfernen',
+    'en-gb': 'Remove'
+  }
+}%}
+{% set lang = localisedPage.lang %}
+
 {% block content %}
-
-  {% set T = {
-    article: {
-      'de-ch': 'Artikel',
-      'en-gb': 'Article'
-    },
-    cart: {
-      'de-ch': 'Warenkorb',
-      'en-gb': 'Cart'
-    },
-    cartEmpty: {
-      'de-ch': 'Dein Warenkorb ist leer.',
-      'en-gb': 'Your cart is empty.'
-    },
-    continue: {
-      'de-ch': 'Weiter',
-      'en-gb': 'Continue'
-    },
-    nextPage: {
-      'de-ch': '/lieferadresse/',
-      'en-gb': '/en/delivery-address/'
-    },
-    quantity: {
-      'de-ch': 'Anzahl',
-      'en-gb': 'Quantity'
-    },
-    remove: {
-      'de-ch': 'Entfernen',
-      'en-gb': 'Remove'
-    }
-  }%}
-
-  {% set lang = localisedPage.lang %}
-
   <section>
     <div class="container">
       <div class="stack stack--5">
@@ -61,15 +59,13 @@ translationKey: "Warenkorb"
       <a href="{{ T.nextPage[lang] }}" class="button">{{ T.continue[lang] }}</a>
     </div>
   </section>
-
 {% endblock %}
-{% extends 'layouts/base.njk' %}
 
 {# Todo: more up-to-date version using webcomponents / only loading the following on older browsers #}
 <script>
   {% javascript %}
   // import custom localStorage which fires an event on calling setItem
-  require('./src/_includes/frontend-utils/set-item.js');
+  const setLocalStorageWithEvent = require('./src/_includes/frontend-utils/set-item.js');
 
   // get reference to main wrapper
   const cartWrapper = document.querySelector('#cartWrapper');
@@ -190,10 +186,12 @@ translationKey: "Warenkorb"
     // create string from json cart variable
     let strCart = JSON.stringify(cart);
     // save cart string
-    localStorage.setItem('cart',strCart);
+    setLocalStorageWithEvent('cart',strCart);
   }
 
   // render all items
   renderItems();
   {% endjavascript %}
 </script>
+
+{% extends 'layouts/base.njk' %}
