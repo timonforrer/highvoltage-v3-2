@@ -1,4 +1,8 @@
 {% set T = {
+  articleFor: {
+    'de-ch': 'Artikel für',
+    'en-gb': 'article for'
+  },
   cart: {
     'de-ch': 'Warenkorb',
     'en-gb': 'Cart'
@@ -64,12 +68,15 @@
     </ul>
   </div>
 </nav>
-<article class="cart-header">
+<article class="cart-header" id="cartHeader">
   <div class="container">
     <div class="flex-list flex-list--center flex-list--space-between">
       <div>
         <h2 class="as-h3">{{ T.cart[lang] }}</h2>
-        <p class="lead">1 Artikel für CHF 25.00</p>
+        <p class="lead">
+          <span id="cartTotalQuantity"></span>
+          {{ T.articleFor[lang] }} CHF
+          <span id="cartTotalValue"></span></p>
       </div>
       <div>
         <div class="flex-list">
