@@ -18,6 +18,10 @@ translationKey: "Warenkorb"
 {% block content %}
 
   {% set T = {
+    article: {
+      'de-ch': 'Artikel',
+      'en-gb': 'Article'
+    },
     cart: {
       'de-ch': 'Warenkorb',
       'en-gb': 'Cart'
@@ -26,9 +30,13 @@ translationKey: "Warenkorb"
       'de-ch': 'Dein Warenkorb ist leer.',
       'en-gb': 'Your cart is empty.'
     },
-    article: {
-      'de-ch': 'Artikel',
-      'en-gb': 'Article'
+    continue: {
+      'de-ch': 'Weiter',
+      'en-gb': 'Continue'
+    },
+    nextPage: {
+      'de-ch': '/lieferadresse/',
+      'en-gb': '/en/delivery-address/'
     },
     quantity: {
       'de-ch': 'Anzahl',
@@ -42,20 +50,28 @@ translationKey: "Warenkorb"
 
   {% set lang = localisedPage.lang %}
 
-  <div class="container">
-    <div class="stack stack--5">
-      <h1>{{ T.cart[lang] }}</h1>
-      <div>
-        <ul id="cartWrapper" class="cart"></ul>
+  <section>
+    <div class="container">
+      <div class="stack stack--5">
+        <h1>{{ T.cart[lang] }}</h1>
+        <div>
+          <ul id="cartWrapper" class="cart"></ul>
+        </div>
       </div>
+      <a href="{{ T.nextPage[lang] }}" class="button">{{ T.continue[lang] }}</a>
     </div>
-  </div>
+  </section>
 
+{% endblock %}
+{% extends 'layouts/base.njk' %}
+
+{# Todo: more up-to-date version using webcomponents / only loading the following on older browsers #}
 <script>
+  {% javascript %}
   // get reference to main wrapper
-  var cartWrapper = document.querySelector('#cartWrapper');
+  const cartWrapper = document.querySelector('#cartWrapper');
   // get contents of localstorage
-  var cart = localStorage.getItem('cart');
+  let cart = localStorage.getItem('cart');
   // if items in cart, parse them as json
   cart = cart != null ? JSON.parse(cart) : null;
 
@@ -68,7 +84,7 @@ translationKey: "Warenkorb"
 
   // function to mutate quantity of item in array
   function mutateQuantity({ sku, operator }) {
-    var index = findIndex(cart, sku);
+    let index = findIndex(cart, sku);
     switch(operator) {
       case "+1":
         cart[index].quantity++;
@@ -131,7 +147,7 @@ translationKey: "Warenkorb"
       li.innerHTML = content;
 
       // get buttons inside list-item
-      var mutationButtons = li.querySelectorAll('button[data-operator]');
+      let mutationButtons = li.querySelectorAll('button[data-operator]');
       // add an event listener to each mutation button
       mutationButtons.forEach(function(mutationButton){
         mutationButton.addEventListener('click', function(e){
@@ -151,7 +167,7 @@ translationKey: "Warenkorb"
     if(cart == null || cart.length === 0) {
       cartWrapper.innerHTML = '<p>{{ T.cartEmpty[lang] }}</p>'
     } else {
-      // iterate over all items and create/append liste item
+      // iterate over all items and create/append list item
       cart.forEach(function(cartItem) {
         createItem({
           textArticle: '{{ T.article[lang] }}',
@@ -169,7 +185,7 @@ translationKey: "Warenkorb"
   // function to save mutated cart to localStorage
   function saveCart() {
     // create string from json cart variable
-    var strCart = JSON.stringify(cart);
+    let strCart = JSON.stringify(cart);
     // empty the localStorage
     localStorage.clear();
     // save cart string
@@ -181,6 +197,5 @@ translationKey: "Warenkorb"
 
   // render all items
   renderItems();
+  {% endjavascript %}
 </script>
-{% endblock %}
-{% extends 'layouts/base.njk' %}
