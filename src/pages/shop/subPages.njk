@@ -180,90 +180,92 @@ eleventyComputed:
         </ul>
       </div>
     </section>
-
-    <script>
-      // get reference to wrapper element
-      var wrapper = document.querySelector('#buttonWrapper');
-
-      // get stock, sku and base price of item and text for cart button
-      var {
-        description,
-        basePrice,
-        name,
-        sku,
-        stock,
-        text
-      } = wrapper.dataset;
-
-      // check if any of the supplied items has the same sku as the item to add
-      function alreadyInCart(arr, itemToCheck) {
-        return arr.some(function(item) {
-          return item.sku === itemToCheck.sku;
-        });
-      };
-
-      // check if localStorage is supported and if item is in stock
-      if(window.localStorage !== undefined && stock > 0) {
-
-        // function to add the item to cart
-        function addToCart(sku) {
-          // get current cart
-          var cart = localStorage.getItem('cart');
-
-          // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
-          cart = cart != null ? JSON.parse(cart) : [];
-
-          // create new item to add to cart
-          var itemToAdd = {
-            description: description,
-            basePrice: basePrice,
-            name,
-            sku: sku,
-            quantity: 1
-          };
-
-          // check if already some items in cart
-          if(cart.length > 0) {
-            // if items in cart, check if item to add is already in cart
-            if(alreadyInCart(cart, itemToAdd)) {
-              cart.forEach(function(item) {
-                if(item.sku === itemToAdd.sku) {
-                  item.quantity++;
-                };
-              });
-            } else {
-              // item not present in cart, push entire object
-              cart.push(itemToAdd);
-            };
-          } else {
-            // cart is empty, push entire object to cart
-            cart.push(itemToAdd);
-          };
-
-          // create string from object
-          var strCart = JSON.stringify(cart);
-
-          // add the cart string to localStorage
-          localStorage.setItem('cart',strCart);
-
-          console.log(JSON.parse(localStorage.getItem('cart')));
-        };
-
-        // create the button node
-        var button = document.createElement('button');
-        // set text on button
-        button.textContent = text;
-        // set class on button
-        button.setAttribute('class', 'button');
-        // add eventListener on button
-        button.addEventListener('click', function(e) {
-          addToCart(sku);
-        });
-        wrapper.appendChild(button);
-      };
-    </script>
-
   </div>
 
 {% endblock %}
+
+<script>
+{% javascript %}
+  // get reference to wrapper element
+  var wrapper = document.querySelector('#buttonWrapper');
+
+  // get stock, sku and base price of item and text for cart button
+  var {
+    description,
+    basePrice,
+    name,
+    sku,
+    stock,
+    text
+  } = wrapper.dataset;
+
+  // check if any of the supplied items has the same sku as the item to add
+  function alreadyInCart(arr, itemToCheck) {
+    return arr.some(function(item) {
+      return item.sku === itemToCheck.sku;
+    });
+  };
+
+  // check if localStorage is supported and if item is in stock
+  if(window.localStorage !== undefined && stock > 0) {
+
+    // function to add the item to cart
+    function addToCart(sku) {
+      // get current cart
+      var cart = localStorage.getItem('cart');
+
+      // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
+      cart = cart != null ? JSON.parse(cart) : [];
+
+      // create new item to add to cart
+      var itemToAdd = {
+        description: description,
+        basePrice: basePrice,
+        name,
+        sku: sku,
+        quantity: 1
+      };
+
+      // check if already some items in cart
+      if(cart.length > 0) {
+        // if items in cart, check if item to add is already in cart
+        if(alreadyInCart(cart, itemToAdd)) {
+          cart.forEach(function(item) {
+            if(item.sku === itemToAdd.sku) {
+              item.quantity++;
+            };
+          });
+        } else {
+          // item not present in cart, push entire object
+          cart.push(itemToAdd);
+        };
+      } else {
+        // cart is empty, push entire object to cart
+        cart.push(itemToAdd);
+      };
+
+      // create string from object
+      var strCart = JSON.stringify(cart);
+
+      // add the cart string to localStorage
+      localStorage.setItem('cart',strCart);
+
+      console.log(JSON.parse(localStorage.getItem('cart')));
+    };
+
+    // create the button node
+    var button = document.createElement('button');
+    // set text on button
+    button.textContent = text;
+    // set class on button
+    button.setAttribute('class', 'button');
+    // add eventListener on button
+    button.addEventListener('click', function(e) {
+      addToCart(sku);
+    });
+    wrapper.appendChild(button);
+  };
+{% endjavascript %}
+</script>
+
 {% extends 'layouts/base.njk' %}
