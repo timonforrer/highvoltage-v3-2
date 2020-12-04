@@ -1,0 +1,181 @@
+---
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  -
+    lang: "de-ch"
+    pathPrefix: "/lieferadresse/"
+  -
+    lang: "en-gb"
+    pathPrefix: "/en/shipping-address/"
+translationKey: "shippingAddress"
+---
+
+{% block content %}
+
+{% set T = {
+  address: {
+    'de-ch': 'Adresse',
+    'en-gb': 'Address'
+  },
+  city: {
+    'de-ch': 'Stadt',
+    'en-gb': 'City'
+  },
+  checkout: {
+    'de-ch': 'Zur Bezahlung mit Kreditkarte',
+    'en-gb': 'Go to checkout with credit card'
+  },
+  country: {
+    'de-ch': 'Land',
+    'en-gb': 'Country'
+  },
+  email: {
+    'de-ch': 'E-Mail',
+    'en-gb': 'E-mail'
+  },
+  firstName: {
+    'de-ch': 'Vorname',
+    'en-gb': 'First name'
+  },
+  lastName: {
+    'de-ch': 'Nachname',
+    'en-gb': 'Last name'
+  },
+  nameEmail: {
+    'de-ch': 'Name & E-Mail',
+    'en-gb': 'Name & email'
+  },
+  province: {
+    'de-ch': 'Kanton/Provinz',
+    'en-gb': 'Province'
+  },
+  street: {
+    'de-ch': 'Strasse, Nummer',
+    'en-gb': 'Street, number'
+  },
+  zip: {
+    'de-ch': 'PLZ',
+    'en-gb': 'ZIP'
+  }
+} %}
+
+{% set lang = localisedPage.lang %}
+
+  <section>
+    <div class="container">
+      <form action="">
+        <div class="stack stack--4">
+          <h2>Kontaktdaten</h2>
+          {# Personel #}
+          <fieldset>
+            <legend class="as-h3">{{ T.nameEmail[lang] }}</legend>
+            <div role="group">
+              <div class="input-group">
+                <label for="firstName">{{ T.firstName[lang] }}</label>
+                <input type="text" name="firstName" id="firstName">
+              </div>
+              <div class="input-group">
+                <label for="lastName">{{ T.lastName[lang] }}</label>
+                <input type="text" name="lastName" id="lastName">
+              </div>
+              <div class="input-group">
+                <label for="email">{{ T.email[lang] }}</label>
+                <input type="text" name="email" id="email">
+              </div>
+            </div>
+          </fieldset>
+
+          {# Address #}
+          <fieldset>
+            <legend class="as-h3">{{ T.address[lang] }}</legend>
+            <div role="group">
+              <div class="input-group">
+                <label for="street">{{ T.street[lang] }}</label>
+                <input type="text" name="street" id="street">
+              </div>
+              <div class="input-group">
+                <label for="zip">{{ T.zip[lang] }}</label>
+                <input type="number" name="zip" id="zip">
+              </div>
+              <div class="input-group">
+                <label for="city">{{ T.city[lang] }}</label>
+                <input type="text" name="city" id="city">
+              </div>
+              <div class="input-group">
+                <label for="province">{{ T.province[lang] }}</label>
+                <input type="text" name="province" id="province">
+              </div>
+              <div class="input-group">
+                <label for="country">{{ T.country[lang] }}</label>
+                <input type="text" name="country" id="country">
+              </div>
+            </div>
+          </fieldset>
+
+          <button id="checkout-button">{{ T.checkout[lang] }}</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  
+  {% javascript %}
+    let stripe = Stripe('pk_test_51HqjRwDeD8oJRtClc8Rks6IaszPqVLjA3rhO91QLmCsPGCpuk2rIgisXbB43xEqFWkNirxbxvYaMacP7WdNI7V9I00a3QRG2Gv');
+    let checkoutButton = document.getElementById('checkout-button');
+  {% endjavascript %}
+
+  <script>
+
+    // Create an instance of the Stripe object with your publishable API key
+    {# var stripe = Stripe('pk_test_51HqjRwDeD8oJRtClc8Rks6IaszPqVLjA3rhO91QLmCsPGCpuk2rIgisXbB43xEqFWkNirxbxvYaMacP7WdNI7V9I00a3QRG2Gv');
+    var checkoutButton = document.getElementById('checkout-button'); #}
+
+    // get contents of localstorage
+    var cart = localStorage.getItem('cart');
+    // if items in cart, parse them as json
+    cart = cart != null ? JSON.parse(cart) : null;
+
+
+    checkoutButton.addEventListener('click', function(e) {
+      var formData = new FormData(document.querySelector('form'));
+      // Create a new Checkout Session using the server-side endpoint you
+      // created in step 3.
+      e.preventDefault();
+      for (var pair of formData.entries()) {
+        console.log(pair)
+      }
+      {# fetch('/api/create-stripe-session', {
+        method: 'POST',
+        body: {
+          cartItems: cart,
+          address: formData
+        }
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+      })
+      .then(function(result) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using `error.message`.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      }); #}
+    });
+
+  </script>
+
+{% endblock %}
+{% extends 'layouts/base.njk' %}
