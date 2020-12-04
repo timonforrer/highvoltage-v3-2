@@ -186,6 +186,9 @@ eleventyComputed:
 
 <script>
 {% javascript %}
+  // import custom localStorage which fires an event on calling setItem
+  require('./src/_includes/frontend-utils/set-item.js');
+
   // get reference to wrapper element
   var wrapper = document.querySelector('#buttonWrapper');
 
@@ -249,8 +252,6 @@ eleventyComputed:
 
       // add the cart string to localStorage
       localStorage.setItem('cart',strCart);
-
-      console.log(JSON.parse(localStorage.getItem('cart')));
     };
 
     // create the button node

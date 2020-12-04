@@ -12,14 +12,28 @@
 
 </head>
 <body>
-
   {% include 'components/nav.njk' %}
+
   <main>
     {% block content %}
     {% endblock content %}
   </main>
   {% include 'components/footer.njk' %}
   <script src="/assets/bundle.js"></script>
+
+  {% javascript %}
+    let cart;
+
+    const getCart = function() {
+      cart = JSON.parse(localStorage.getItem('cart'));
+      console.log(cart);
+    }
+
+    document.addEventListener('itemInserted', (e) => console.log(e, localStorage), false);
+
+    getCart();
+  {% endjavascript %}
+
   <script>
     {% script page.url | safe %}
   </script>

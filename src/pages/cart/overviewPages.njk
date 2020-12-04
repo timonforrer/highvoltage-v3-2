@@ -68,6 +68,9 @@ translationKey: "Warenkorb"
 {# Todo: more up-to-date version using webcomponents / only loading the following on older browsers #}
 <script>
   {% javascript %}
+  // import custom localStorage which fires an event on calling setItem
+  require('./src/_includes/frontend-utils/set-item.js');
+
   // get reference to main wrapper
   const cartWrapper = document.querySelector('#cartWrapper');
   // get contents of localstorage
@@ -186,13 +189,8 @@ translationKey: "Warenkorb"
   function saveCart() {
     // create string from json cart variable
     let strCart = JSON.stringify(cart);
-    // empty the localStorage
-    localStorage.clear();
     // save cart string
     localStorage.setItem('cart',strCart);
-
-    // logging for debugging
-    console.log(JSON.parse(localStorage.getItem('cart')));
   }
 
   // render all items
