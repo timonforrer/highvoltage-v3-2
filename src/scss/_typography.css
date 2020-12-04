@@ -33,7 +33,8 @@ b, strong { font-weight: 600; }
 .small { font-size: 0.8rem; }
 .large { font-size: 2rem; }
 
-.uppercase {
+.uppercase,
+label {
   font-size: 0.7rem;
   letter-spacing: 0.1rem;
   text-transform: uppercase;

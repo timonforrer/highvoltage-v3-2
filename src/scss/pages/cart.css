@@ -1,8 +1,4 @@
 .cart {
-  input {
-    width: 4rem;
-  }
-
   &__item {
     border-bottom: 1px solid $c_fg_1;
     padding-bottom: 2rem;

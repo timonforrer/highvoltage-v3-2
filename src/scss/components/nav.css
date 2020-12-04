@@ -32,11 +32,22 @@
   }
 }
 
-nav {
-  background-color: $c_bg_1;
+.sticky-content {
   position: sticky;
   top: 0;
   z-index: 777;
+}
+
+.cart-header {
+  background-color: $c_main_2;
+  color: $c_fg_1;
+  margin-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+nav {
+  background-color: $c_bg_1;
 
   ul {
     list-style: none;

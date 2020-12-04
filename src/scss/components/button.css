@@ -30,6 +30,12 @@
     box-shadow: 0px 0px 0px 4px $c_main_1;
   }
 
+  &--outlined {
+    background-color: transparent;
+    border: 2px solid $c_fg_1;
+    color: $c_fg_1;
+  }
+
   & > svg {
     margin-left: 0.75rem;
     & > * {

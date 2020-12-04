@@ -76,6 +76,10 @@ ul.flex-list,
     align-items: flex-end;
   }
 
+  &--space-between {
+    justify-content: space-between;
+  }
+
   &--bigger-gap {
     margin: -0.5rem;
 
@@ -109,10 +113,4 @@ ul.flex-list,
     border: 1px solid $c_fg_2;
     text-align: center;
   }
-}
-
-input {
-  border: none;
-  border-radius: 3px;
-  text-align: center;
 }
