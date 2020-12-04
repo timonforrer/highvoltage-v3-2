@@ -1,3 +1,29 @@
+{% set T = {
+  cart: {
+    'de-ch': 'Warenkorb',
+    'en-gb': 'Cart'
+  },
+  gotoCart: {
+    'de-ch': 'Warenkorb anpassen',
+    'en-gb': 'Modify cart'
+  },
+  gotoCheckout: {
+    'de-ch': 'Zum Checkout',
+    'en-gb': 'Goto checkout'
+  },
+  pathCart: {
+    'de-ch': '/warenkorb/',
+    'en-gb': '/en/cart/'
+  },
+  pathCheckout: {
+    'de-ch': '/lieferadresse/',
+    'en-gb': '/en/shipping-address/'
+  }
+} %}
+
+{% set lang = localisedPage.lang %}
+
+
 <header class="header">
   <div class="container header__outer-container">
 
@@ -27,7 +53,7 @@
   </div>
 </header>
 
-<nav class="main-nav" id="main-nav">
+<nav class="main-nav sticky-content" id="main-nav">
   <div class="container container--full-width">
     <ul class="reel">
       {% for key, link in nav %}
@@ -38,3 +64,19 @@
     </ul>
   </div>
 </nav>
+<article class="cart-header">
+  <div class="container">
+    <div class="flex-list flex-list--center flex-list--space-between">
+      <div>
+        <h2 class="as-h3">{{ T.cart[lang] }}</h2>
+        <p class="lead">1 Artikel für CHF 25.00</p>
+      </div>
+      <div>
+        <div class="flex-list">
+          <a href="{{ T.pathCart[lang] }}" class="button button--outlined">{{ T.gotoCart[lang] }}</a>
+          <a href="{{ T.pathCheckout[lang] }}" class="button">{{ T.gotoCheckout[lang] }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
