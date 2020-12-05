@@ -12,7 +12,17 @@ permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/index.html"
 translationKey: "shopPage"
 ---
 
+{% set T = {
+  sizes: {
+    'de-ch': 'Grössen',
+    'en-gb': 'Sizes'
+  }
+}%}
+
 {% set data = localisedPage.data %}
+{% set lang = localisedPage.lang %}
+{% set pathPrefix = nav.shop[lang].pathPrefix %}
+
 {% block content %}
   
   <div class="stack stack--5 container">
@@ -23,11 +33,65 @@ translationKey: "shopPage"
     </div>
 
     {% for group in data.product_groups %}
+    <section class="stack stack--3">
       {{ group.product_group_name | renderAsHTML | safe }}
+      <div>
+        <ul class="grid">
+          {% for item in shop.subPagesPrismic %}
+            {% if item.lang == lang and item.data.type == group.product_group_type %}
+              {% set mainSKU = item.data.product_group[0].sku %}
+              {% set mainPath = pathPrefix+"/"+mainSKU | lower %}
+              {% set airtableData = '' %}
+
+              {% for airtableItem in shop.subPagesAirtable %}
+                {% if airtableItem.productNumber == mainSKU %}
+                  {% set airtableData = airtableItem %}
+                {% endif %}
+              {% endfor %}
+
+              <div class="product-card">
+
+                {% from 'components/responsive-image.njk' import responsiveImage %}
+                <a href="{{ mainPath }}">
+                  {{ responsiveImage(image=item.data.main_image, rounded=true, alt="") }}
+                </a>
+
+                <div class="product-card__body">
+                  <div class="stack stack--2">
+                    <a href="{{ mainPath }}">
+                      <h3 class="as-h4">{{ item.data.product_name | renderAsText }}</h3>
+                    </a>
+                    <p class="lead">CHF {{ airtableData.basePrice }}</p>
+                    <div class="stack stack--1">
+                      <p class="uppercase">{{ T.sizes[lang] }}</p>
+                      <div>
+                        <ul class="flex-list">
+                          {% for variant in item.data.product_group %}
+                            {% set variantPath = pathPrefix+"/"+variant.sku | lower %}
+                            {% set class = '' %}
+                            {% if variant.sku == mainSKU %}
+                              {% set class = ' variants-button--active' %}
+                            {% endif %}
+                            <li>
+                              <a href="{{ variantPath }}" class="variants-button variants-button--small{{ class }}">
+                                {{ variant.product_label }}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
     {% endfor %}
 
   </div>
 
 {% endblock %}
-
 {% extends 'layouts/base.njk' %}
