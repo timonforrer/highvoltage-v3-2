@@ -37,7 +37,11 @@
       cart = cart != null ? JSON.parse(cart) : null;
 
       function cartNotEmpty() {
-        return cart.length !== 0 && cart != null;
+        if(cart != null) {
+          return cart.length !== 0;
+        } else {
+          return false
+        }
       }
 
       // function to update value of cart variable
