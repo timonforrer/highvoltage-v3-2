@@ -216,6 +216,8 @@ eleventyComputed:
     function addToCart(sku) {
       // get current cart
       var cart = localStorage.getItem('cart');
+      // reset scroll position to make user aware of banner
+      location.hash = '#cartHeader';
 
       // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
       cart = cart != null ? JSON.parse(cart) : [];
