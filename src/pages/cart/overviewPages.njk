@@ -55,8 +55,9 @@ translationKey: "Warenkorb"
         <div>
           <ul id="cartWrapper" class="cart"></ul>
         </div>
+
+        <a href="{{ T.nextPage[lang] }}" class="button" id="continueButton">{{ T.continue[lang] }}</a>
       </div>
-      <a href="{{ T.nextPage[lang] }}" class="button">{{ T.continue[lang] }}</a>
     </div>
   </section>
 {% endblock %}
@@ -67,8 +68,10 @@ translationKey: "Warenkorb"
   // import custom localStorage which fires an event on calling setItem
   const setLocalStorageWithEvent = require('./src/_includes/frontend-utils/set-item.js');
 
-  // get reference to main wrapper
+  // get references to dom elements
   const cartWrapper = document.querySelector('#cartWrapper');
+  const continueButton = document.querySelector('#continueButton');
+
   // get contents of localstorage
   let cart = localStorage.getItem('cart');
   // if items in cart, parse them as json
@@ -131,7 +134,7 @@ translationKey: "Warenkorb"
                 <p class="uppercase">'+textQuantity+'</p> \
                 <div class="flex-list"> \
                   <button data-sku="'+productSKU+'" data-operator="-1" class="button">-</button> \
-                  <span class="button">'+productQuantity+'</span>\
+                  <span class="button button--not-interactive">'+productQuantity+'</span>\
                   <button data-sku="'+productSKU+'" data-operator="+1" class="button">+</button> \
                 </div> \
               </div> \
@@ -165,7 +168,9 @@ translationKey: "Warenkorb"
 
     if(cart == null || cart.length === 0) {
       cartWrapper.innerHTML = '<p>{{ T.cartEmpty[lang] }}</p>'
+      continueButton.style.display = 'none';
     } else {
+      continueButton.style.display = 'inline-block';
       // iterate over all items and create/append list item
       cart.forEach(function(cartItem) {
         createItem({
