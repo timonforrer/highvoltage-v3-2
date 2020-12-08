@@ -49,7 +49,7 @@ translationKey: "shopPage"
                 {% endif %}
               {% endfor %}
 
-              <div class="product-card">
+              <li class="product-card">
 
                 {% from 'components/responsive-image.njk' import responsiveImage %}
                 <a href="{{ mainPath }}">
@@ -83,7 +83,7 @@ translationKey: "shopPage"
                     </div>
                   </div>
                 </div>
-              </div>
+              </li>
             {% endif %}
           {% endfor %}
         </ul>
