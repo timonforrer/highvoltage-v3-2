@@ -13,6 +13,45 @@ eleventyComputed:
   lastMod: "11-11-2020"
 ---
 
+{% set T = {
+  addToCart: {
+    'de-ch': 'In den Warenkorb',
+    'en-gb': 'Add to cart'
+  },
+  articleNumber: {
+    'de-ch': 'Artikelnummer',
+    'en-gb': 'Article number'
+  },
+  height: {
+    'de-ch': 'Höhe',
+    'en-gb': 'Height'
+  },
+  inCM: {
+    'de-ch': 'in cm',
+    'en-gb': 'in cm'
+  },
+  price: {
+    'de-ch': 'Preis (exklusiv Porto-Kosten)',
+    'en-gb': 'Price (excluding shipping costs)'
+  },
+  stock: {
+    'de-ch': 'Lagerbestand',
+    'en-gb': 'Amount in Stock'
+  },
+  size: {
+    'de-ch': 'Grösse',
+    'en-gb': 'Size'
+  },
+  sizes: {
+    'de-ch': 'Grössen',
+    'en-gb': 'Sizes'
+  },
+  width: {
+    'de-ch': 'Breite',
+    'en-gb': 'Width'
+  }
+}%}
+
 {% block content %}
 
   {% set prismicContent = shop.subPagesPrismic | contentFilter(localisedPage) %}
@@ -22,44 +61,6 @@ eleventyComputed:
 
   {% set pathPrefix = nav.shop[localisedPage.lang].pathPrefix %}
 
-  {% set TRANSLATIONS = {
-    addToCart: {
-      'de-ch': 'In den Warenkorb',
-      'en-gb': 'Add to cart'
-    },
-    articleNumber: {
-      'de-ch': 'Artikelnummer',
-      'en-gb': 'Article number'
-    },
-    height: {
-      'de-ch': 'Höhe',
-      'en-gb': 'Height'
-    },
-    inCM: {
-      'de-ch': 'in cm',
-      'en-gb': 'in cm'
-    },
-    price: {
-      'de-ch': 'Preis (exklusiv Porto-Kosten)',
-      'en-gb': 'Price (excluding postage)'
-    },
-    stock: {
-      'de-ch': 'Lagerbestand',
-      'en-gb': 'Amount in Stock'
-    },
-    size: {
-      'de-ch': 'Grösse',
-      'en-gb': 'Size'
-    },
-    sizes: {
-      'de-ch': 'Grössen',
-      'en-gb': 'Sizes'
-    },
-    width: {
-      'de-ch': 'Breite',
-      'en-gb': 'Width'
-    }
-  }%}
 
   <div class="stack stack--7">
 
@@ -76,13 +77,13 @@ eleventyComputed:
             {% endfor %}
             {% for size in data.product_group %}
               {% if size.sku == localisedPage.productNumber %}
-                <li>{{TRANSLATIONS.size[lang]}}: {{ size.product_label }}</li>
+                <li>{{T.size[lang]}}: {{ size.product_label }}</li>
               {% endif %}
             {% endfor %}
           </ul>
 
           <div class="stack stack--1">
-            <p class="uppercase">{{ TRANSLATIONS.sizes[lang] }}</p>
+            <p class="uppercase">{{ T.sizes[lang] }}</p>
             <div>
               <ul class="flex-list">
                 {% for size in data.product_group %}
@@ -106,7 +107,7 @@ eleventyComputed:
 
           <div class="stack stack--1">
             <p class="uppercase">
-              {{ TRANSLATIONS.price[lang] }}
+              {{ T.price[lang] }}
             </p>
 
             <div>
@@ -121,7 +122,7 @@ eleventyComputed:
                   data-name="{{ data.product_name | renderAsText }}"
                   data-sku="{{ localisedPage.productNumber }}"
                   data-stock="{{ localisedPage.stock }}"
-                  data-text="{{ TRANSLATIONS.addToCart[lang] }}"
+                  data-text="{{ T.addToCart[lang] }}"
                 >
                 </div>
               </div>
@@ -146,19 +147,19 @@ eleventyComputed:
               {% endfor %}
             </tr>
             <tr>
-              <th>A: {{ TRANSLATIONS.width[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+              <th>A: {{ T.width[lang] }} ({{ T.inCM[lang] }})</th>
               {% for size in data.sizes %}
                 <td>{{ size.width_in_cm }}</td>
               {% endfor %}
             </tr>
             <tr>
-              <th>B: {{ TRANSLATIONS.height[lang] }} ({{ TRANSLATIONS.inCM[lang] }})</th>
+              <th>B: {{ T.height[lang] }} ({{ T.inCM[lang] }})</th>
               {% for size in data.sizes %}
                 <td>{{ size.height_in_cm }}</td>
               {% endfor %}
             </tr>
             {# <tr>
-              <th>{{ TRANSLATIONS.articleNumber[lang] }}</th>
+              <th>{{ T.articleNumber[lang] }}</th>
               {% for size in data.sizes %}
                 {{ size.skz }}
               {% endfor %}
