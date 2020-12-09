@@ -38,13 +38,24 @@
   z-index: 777;
 }
 
+/*@supports(scroll-margin-top:0) {
+  .cart-header {
+    scroll-margin-top: 4rem;
+    &:target {
+      margin-top: 0;
+    }
+  }
+}*/
+
 .cart-header {
   background-color: $c_main_2;
   color: $c_fg_1;
   margin-bottom: 1.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  scroll-margin-top: 4rem;
+  /*&:target {
+    padding-top: 5.5rem;
+  }*/
 }
 
 nav {
