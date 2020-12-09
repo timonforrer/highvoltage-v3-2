@@ -210,14 +210,14 @@ eleventyComputed:
   };
 
   // check if localStorage is supported and if item is in stock
-  if(window.localStorage !== undefined && stock > 0) {
+  if(window.localStorage !== undefined && typeof window.localStorage.setItem !== 'string' && stock > 0) {
 
     // function to add the item to cart
     function addToCart(sku) {
       // get current cart
       var cart = localStorage.getItem('cart');
       // reset scroll position to make user aware of banner
-      location.hash = '#cartHeader';
+      location.hash = '#header';
 
       // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
       cart = cart != null ? JSON.parse(cart) : [];
