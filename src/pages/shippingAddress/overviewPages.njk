@@ -20,6 +20,10 @@ translationKey: "shippingAddress"
     'de-ch': 'Adresse',
     'en-gb': 'Address'
   },
+  checkout: {
+    'de-ch': 'Zur Bezahlung mit Kreditkarte',
+    'en-gb': 'Go to checkout with credit card'
+  },
   chooseCountry: {
     'de-ch': 'Wähle ein Land',
     'en-gb': 'Choose a country'
@@ -28,9 +32,9 @@ translationKey: "shippingAddress"
     'de-ch': 'Stadt',
     'en-gb': 'City'
   },
-  checkout: {
-    'de-ch': 'Zur Bezahlung mit Kreditkarte',
-    'en-gb': 'Go to checkout with credit card'
+  shippingAddress: {
+    'de-ch': 'Lieferadresse',
+    'en-gb': 'Shipping address'
   },
   country: {
     'de-ch': 'Land',
@@ -41,16 +45,8 @@ translationKey: "shippingAddress"
     'en-gb': 'E-mail'
   },
   error: {
-    'de-ch': 'Fehler',
-    'en-gb': 'Error'
-  },
-  errorIntroduction: {
-    'de-ch': 'Das Formular wurde nicht richtig ausgefüllt. Bitte überprüfe folgende Punkte:',
-    'en-gb': 'The form was not correctly filled in. Please check the following:'
-  },
-  errorNotFilled: {
-    'de-ch': 'Fülle alle Felder aus',
-    'en-gb': "Fill in all fields"
+    'de-ch': 'Fehler: bitte überprüfe das Formular.',
+    'en-gb': 'Error: please check the form.'
   },
   firstName: {
     'de-ch': 'Vorname',
@@ -63,6 +59,10 @@ translationKey: "shippingAddress"
   nameEmail: {
     'de-ch': 'Name & E-Mail',
     'en-gb': 'Name & email'
+  },
+  pleaseWait: {
+    'de-ch': 'Daten werden übermittelt. Bitte warten.',
+    'en-gb': 'Transferring data. Please wait.'
   },
   street: {
     'de-ch': 'Strasse, Nummer',
@@ -82,7 +82,7 @@ translationKey: "shippingAddress"
     <div class="container">
       <form action="">
         <div class="stack stack--4">
-          <h2>Kontaktdaten</h2>
+          <h2>{{ T.shippingAddress[lang] }}</h2>
           {# Personel #}
           <fieldset>
             <legend class="as-h3">{{ T.nameEmail[lang] }}</legend>
@@ -134,7 +134,10 @@ translationKey: "shippingAddress"
             </div>
           </fieldset>
 
-          <button id="checkout-button" class="button">{{ T.checkout[lang] }}</button>
+          <div class="stack stack--3">
+            <button id="checkout-button" class="button">{{ T.checkout[lang] }}</button>
+            <p id="statusMessage"></p>
+          </div>
         </div>
       </form>
     </div>
@@ -147,17 +150,22 @@ translationKey: "shippingAddress"
   const validateForm = require('./src/_includes/frontend-utils/validate-form.js');
   const getFormData = require('./src/_includes/frontend-utils/get-form-data.js');
 
+  const statusMessage = document.querySelector('#statusMessage');
+
   const resetForm = () => {
     // remove data-attributes
     const errorFields = document.querySelectorAll('[data-error=true]');
     errorFields.forEach(field => field.removeAttribute('data-error'));
-
+    
+    // delete errorMessages
     const errorMessages = document.querySelectorAll('[data-error-message=true]');
     errorMessages.forEach(node => node.remove());
+
+    statusMessage.innerText = '';
   }
 
   // Create an instance of the Stripe object with your publishable API key
-  {# let stripe = Stripe('pk_test_51HqjRwDeD8oJRtClc8Rks6IaszPqVLjA3rhO91QLmCsPGCpuk2rIgisXbB43xEqFWkNirxbxvYaMacP7WdNI7V9I00a3QRG2Gv'); #}
+  let stripe = Stripe('pk_test_51HqjRwDeD8oJRtClc8Rks6IaszPqVLjA3rhO91QLmCsPGCpuk2rIgisXbB43xEqFWkNirxbxvYaMacP7WdNI7V9I00a3QRG2Gv');
   let checkoutButton = document.getElementById('checkout-button');
 
   // all the fields of the form
@@ -181,8 +189,6 @@ translationKey: "shippingAddress"
     resetForm();
     // get references to nodes
     const form = document.querySelector('form');
-    const errorSummary = document.querySelector('#errorSummary');
-    const errorList = document.querySelector('#errorList');
 
     // get and parse data from from
     const formData = getFormData(form, fields);
@@ -191,7 +197,9 @@ translationKey: "shippingAddress"
 
     // check if any errors are returned
     if(Object.keys(errors).length !== 0) {
-      // todo: add message next to button to make user aware of error
+
+      statusMessage.innerText = "{{ T.error[lang] }}";
+
       for (let errorType in errors) {
         switch(errorType) {
           case "emptyFields":
@@ -218,23 +226,33 @@ translationKey: "shippingAddress"
       };
     } else {
       // submit form
-      console.log('hurray');
-    };
 
-    const body = {
-      cart: cart,
-      address: formData
-    };
-    const strBody = JSON.stringify(body);
+      // create body object to send
+      const body = {
+        lang: '{{ lang }}',
+        cart: cart,
+        address: formData
+      };
+      // create string from object
+      const strBody = JSON.stringify(body);
 
-    {# fetch('/api/create-stripe-session', {
-      method: 'POST',
-      body: strBody
-    })
-    .then((res) => res.json())
-    .then(session => {
-      return stripe.redirectToCheckout({ sessionId: session.id })
-    }) #}
+      statusMessage.innerText = "{{ T.pleaseWait[lang] }}"
+
+      // send the data to the internal api
+      fetch('/api/create-stripe-session', {
+        method: 'POST',
+        body: strBody
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.error) {
+          statusMessage.innerText = data.error["{{ lang }}"];
+        } else {
+          console.log(data)
+          stripe.redirectToCheckout({ sessionId: data.id });
+        }
+      });
+    };
   };
 
   checkoutButton.addEventListener('click', function(e) {
