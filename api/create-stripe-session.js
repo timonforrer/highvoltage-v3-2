@@ -123,8 +123,8 @@ module.exports = async (req, res) => {
     }).catch(err => console.error(err));
 
     // create a customer
-    // const customer = await createCustomer(address).catch(err => console.error(err));
-    // await createSale(customer, session.id, cart).catch(err => console.error(err));
+    const customer = await createCustomer(address).catch(err => console.error(err));
+    await createSale(customer, session.payment_intent, cart).catch(err => console.error(err));
     res.json({ id: session.id });
   };
 };
