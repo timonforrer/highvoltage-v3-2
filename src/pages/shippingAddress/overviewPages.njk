@@ -248,7 +248,7 @@ translationKey: "shippingAddress"
         if(data.error) {
           statusMessage.innerText = data.error["{{ lang }}"];
         } else {
-          console.log(data)
+          localStorage.clear();
           stripe.redirectToCheckout({ sessionId: data.id });
         }
       });
