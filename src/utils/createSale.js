@@ -1,6 +1,6 @@
 const base = require('./airtableShop.js');
 
-module.exports = async (customerId, stripeSessionID, products) => {
+module.exports = async (customerId, paymentIntent, products) => {
 
   // create new promise for new sale entry
   let createSale = new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ module.exports = async (customerId, stripeSessionID, products) => {
         "Customer Number": [customerId],
         "Vendor": "Online Shop",
         "Factured": false,
-        "stripeSessionID": stripeSessionID
+        "_stripe_payment_intent": paymentIntent
       }, (err, record) => {
       if (err) reject(err);
       resolve(record.getId());
