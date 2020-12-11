@@ -49,6 +49,16 @@
       "title": "Galerie"
     }
   },
+  "shop": {
+    "en-gb": {
+      "pathPrefix": "/en/shop",
+      "title": "Shop"
+    },
+    "de-ch": {
+      "pathPrefix": "/shop",
+      "title": "Shop"
+    }
+  },
   "contact": {
     "inactive": true,
     "en-gb": {

@@ -1,0 +1,275 @@
+---
+pagination:
+  data: shop.subPagesAirtable
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/{{ localisedPage.productNumber | lower }}/index.html"
+eleventyComputed:
+  translationKey: "{{ localisedPage.productNumber }}"
+  title: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).data.meta_title }}"
+  metaDescription: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).data.meta_description }}"
+  lastMod: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).last_publication_date }}"
+---
+
+{% set T = {
+  addToCart: {
+    'de-ch': 'In den Warenkorb',
+    'en-gb': 'Add to cart'
+  },
+  articleNumber: {
+    'de-ch': 'Artikelnummer',
+    'en-gb': 'Article number'
+  },
+  height: {
+    'de-ch': 'Höhe',
+    'en-gb': 'Height'
+  },
+  inCM: {
+    'de-ch': 'in cm',
+    'en-gb': 'in cm'
+  },
+  price: {
+    'de-ch': 'Preis (exklusiv Porto-Kosten)',
+    'en-gb': 'Price (excluding shipping costs)'
+  },
+  stock: {
+    'de-ch': 'Lagerbestand',
+    'en-gb': 'Amount in Stock'
+  },
+  size: {
+    'de-ch': 'Grösse',
+    'en-gb': 'Size'
+  },
+  sizes: {
+    'de-ch': 'Grössen',
+    'en-gb': 'Sizes'
+  },
+  width: {
+    'de-ch': 'Breite',
+    'en-gb': 'Width'
+  }
+}%}
+
+{% block content %}
+
+  {% set prismicContent = shop.subPagesPrismic | contentFilter(localisedPage) %}
+  {% set data = prismicContent.data %}
+  {% set lang = localisedPage.lang %}
+  {% from 'components/responsive-image.njk' import responsiveImage %}
+
+  {% set pathPrefix = nav.shop[localisedPage.lang].pathPrefix %}
+
+
+  <div class="stack stack--7">
+
+    <section class="container">
+      <div class="two-columns">
+        <div>
+          {{ responsiveImage(data.main_image,alt="",rounded=true) }}
+        </div>
+        <div class="product-info stack stack--4">
+          <h1 class="as-h2">{{ data.product_name | renderAsText | safe }}</h1>
+          <ul>  
+            {% for usp in data.usps %}
+              <li>{{ usp.usp | renderAsHTML | safe }}</li>
+            {% endfor %}
+            {% for size in data.product_group %}
+              {% if size.sku == localisedPage.productNumber %}
+                <li>{{T.size[lang]}}: {{ size.product_label }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+          <div class="stack stack--1">
+            <p class="uppercase">{{ T.sizes[lang] }}</p>
+            <div>
+              <ul class="flex-list">
+                {% for size in data.product_group %}
+                  {% set variantsUrl = pathPrefix+"/"+size.sku+"/" %}
+                  <li>
+                    <a
+                      class="variants-button uppercase"
+                      href="{{ variantsUrl | lower }}"
+                      {% if page.url == (variantsUrl | lower) %}
+                        aria-current="true"
+                      {% endif %}
+                    >
+                      {{ size.product_label }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="stack stack--1">
+            <p class="uppercase">
+              {{ T.price[lang] }}
+            </p>
+
+            <div>
+              <div class="flex-list flex-list--bigger-gap">
+                <p class="as-h3">
+                  CHF {{ localisedPage.basePrice }}
+                </p>
+                <div
+                  id="buttonWrapper"
+                  data-description="{{ localisedPage.description }}"
+                  data-base-price="{{ localisedPage.basePrice }}"
+                  data-name="{{ data.product_name | renderAsText }}"
+                  data-sku="{{ localisedPage.productNumber }}"
+                  data-stock="{{ localisedPage.stock }}"
+                  data-text="{{ T.addToCart[lang] }}"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% if data.type === 'T-Shirt' %}
+    <section>
+      <div class="container">
+        <div class="two-columns two-columns--v-center">
+          {% include 'assets/t-shirt.svg' %}
+
+          <table class="table">
+            <tr>
+              <th>&nbsp;</th>
+              {% for size in data.sizes %}
+                <th>{{ size.size_label }}</th>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>A: {{ T.width[lang] }} ({{ T.inCM[lang] }})</th>
+              {% for size in data.sizes %}
+                <td>{{ size.width_in_cm }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>B: {{ T.height[lang] }} ({{ T.inCM[lang] }})</th>
+              {% for size in data.sizes %}
+                <td>{{ size.height_in_cm }}</td>
+              {% endfor %}
+            </tr>
+            {# <tr>
+              <th>{{ T.articleNumber[lang] }}</th>
+              {% for size in data.sizes %}
+                {{ size.skz }}
+              {% endfor %}
+            </tr> #}
+          </table>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <section>
+      <div class="container">
+        <ul class="grid">
+          {% for image in data.supplemental_images %}
+            <li>
+              {{ responsiveImage(image.square_image,alt="",rounded=true) }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+  </div>
+
+{% endblock %}
+
+<script>
+{% javascript %}
+  // import custom localStorage which fires an event on calling setItem
+  const setLocalStorageWithEvent = require('./src/_includes/frontend-utils/set-item.js');
+
+  // get reference to wrapper element
+  var wrapper = document.querySelector('#buttonWrapper');
+
+  // get stock, sku and base price of item and text for cart button
+  var {
+    description,
+    basePrice,
+    name,
+    sku,
+    stock,
+    text
+  } = wrapper.dataset;
+
+  // check if any of the supplied items has the same sku as the item to add
+  function alreadyInCart(arr, itemToCheck) {
+    return arr.some(function(item) {
+      return item.sku === itemToCheck.sku;
+    });
+  };
+
+  // check if localStorage is supported and if item is in stock
+  if(window.localStorage !== undefined && typeof window.localStorage.setItem !== 'string' && stock > 0) {
+
+    // function to add the item to cart
+    function addToCart(sku) {
+      // get current cart
+      var cart = localStorage.getItem('cart');
+      // reset scroll position to make user aware of banner
+      location.hash = '#header';
+
+      // if already some values in cart stored, parse the data string of the cart, otherwise create an empty array
+      cart = cart != null ? JSON.parse(cart) : [];
+
+      // create new item to add to cart
+      var itemToAdd = {
+        description: description,
+        basePrice: Number(basePrice),
+        name,
+        sku: sku,
+        quantity: 1
+      };
+
+      // check if already some items in cart
+      if(cart.length > 0) {
+        // if items in cart, check if item to add is already in cart
+        if(alreadyInCart(cart, itemToAdd)) {
+          cart.forEach(function(item) {
+            if(item.sku === itemToAdd.sku) {
+              item.quantity++;
+            };
+          });
+        } else {
+          // item not present in cart, push entire object
+          cart.push(itemToAdd);
+        };
+      } else {
+        // cart is empty, push entire object to cart
+        cart.push(itemToAdd);
+      };
+
+      // create string from object
+      var strCart = JSON.stringify(cart);
+
+      // add the cart string to localStorage
+      // localStorage.setItem('cart',strCart);
+      setLocalStorageWithEvent('cart',strCart);
+    };
+
+    // create the button node
+    var button = document.createElement('button');
+    // set text on button
+    button.textContent = text;
+    // set class on button
+    button.setAttribute('class', 'button');
+    // add eventListener on button
+    button.addEventListener('click', function(e) {
+      addToCart(sku);
+    });
+    wrapper.appendChild(button);
+  };
+{% endjavascript %}
+</script>
+
+{% extends 'layouts/base.njk' %}

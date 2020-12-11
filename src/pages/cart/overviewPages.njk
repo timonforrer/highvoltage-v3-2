@@ -1,0 +1,204 @@
+---
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  - lang: "de-ch"
+    pathPrefix: "/warenkorb/"
+    pageTitle: "Warenkorb"
+  - lang: "en-gb"
+    pathPrefix: "/en/cart/"
+    pageTitle: "Cart"
+translationKey: "Warenkorb"
+eleventyComputed:
+  title: "{{ localisedPage.pageTitle }}"
+---
+
+{% set T = {
+  article: {
+    'de-ch': 'Artikel',
+    'en-gb': 'Article'
+  },
+  cart: {
+    'de-ch': 'Warenkorb',
+    'en-gb': 'Cart'
+  },
+  cartEmpty: {
+    'de-ch': 'Dein Warenkorb ist leer.',
+    'en-gb': 'Your cart is empty.'
+  },
+  continue: {
+    'de-ch': 'Weiter',
+    'en-gb': 'Continue'
+  },
+  nextPage: {
+    'de-ch': '/lieferadresse/',
+    'en-gb': '/en/shipping-address/'
+  },
+  quantity: {
+    'de-ch': 'Anzahl',
+    'en-gb': 'Quantity'
+  },
+  remove: {
+    'de-ch': 'Entfernen',
+    'en-gb': 'Remove'
+  }
+}%}
+{% set lang = localisedPage.lang %}
+
+{% block content %}
+  <section>
+    <div class="container">
+      <div class="stack stack--5">
+        <h1>{{ T.cart[lang] }}</h1>
+        <div>
+          <ul id="cartWrapper" class="cart"></ul>
+        </div>
+
+        <a href="{{ T.nextPage[lang] }}" class="button" id="continueButton">{{ T.continue[lang] }}</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{# Todo: more up-to-date version using webcomponents / only loading the following on older browsers #}
+<script>
+  {% javascript %}
+  // import custom localStorage which fires an event on calling setItem
+  const setLocalStorageWithEvent = require('./src/_includes/frontend-utils/set-item.js');
+
+  // get references to dom elements
+  const cartWrapper = document.querySelector('#cartWrapper');
+  const continueButton = document.querySelector('#continueButton');
+
+  // get contents of localstorage
+  let cart = localStorage.getItem('cart');
+  // if items in cart, parse them as json
+  cart = cart != null ? JSON.parse(cart) : null;
+
+  // utility to get index of item in array
+  function findIndex(array, sku) {
+    return array.findIndex(function(item) {
+      return item.sku === sku;
+    });
+  };
+
+  // function to mutate quantity of item in array
+  function mutateQuantity({ sku, operator }) {
+    let index = findIndex(cart, sku);
+    switch(operator) {
+      case "+1":
+        cart[index].quantity++;
+        break;
+      case "-1":
+        if(cart[index].quantity > 1) cart[index].quantity--;
+        break;
+      case "remove":
+        cart.splice(index,1);
+        break;
+    }
+    // save the mutations made to cart in localStorage
+    saveCart();
+    // rerender the cart
+    renderItems();
+  };
+
+  // function to create a list item from data
+  function createItem({
+      // named parameters
+      textArticle,
+      textRemove,
+      textQuantity,
+      productName,
+      productDescription,
+      productSKU,
+      productQuantity
+    }={}) {
+      // create the list item to insert
+      var li = document.createElement('li');
+      // set classes
+      li.setAttribute('class', 'cart__item flex-list');
+      // create HTML string with populated content
+      var content = '<div> \
+          <div class="stack stack--1"> \
+            <p class="uppercase">'+textArticle+'</p> \
+            <h2 class="as-h3">'+productName+'</h2> \
+            <p>'+productDescription+'</p> \
+          </div> \
+        </div> \
+        <div> \
+          <div class="flex-list flex-list--bigger-gap flex-list--end"> \
+            <div> \
+              <div class="stack stack--1"> \
+                <p class="uppercase">'+textQuantity+'</p> \
+                <div class="flex-list"> \
+                  <button data-sku="'+productSKU+'" data-operator="-1" class="button">-</button> \
+                  <span class="button button--not-interactive">'+productQuantity+'</span>\
+                  <button data-sku="'+productSKU+'" data-operator="+1" class="button">+</button> \
+                </div> \
+              </div> \
+            </div> \
+            <div> \
+              <button data-operator="remove" data-sku="'+productSKU+'" class="button">'+textRemove+'</button> \
+            </div> \
+          </div> \
+        </div>';
+
+      // insert HTML string in list item
+      li.innerHTML = content;
+
+      // get buttons inside list-item
+      let mutationButtons = li.querySelectorAll('button[data-operator]');
+      // add an event listener to each mutation button
+      mutationButtons.forEach(function(mutationButton){
+        mutationButton.addEventListener('click', function(e){
+          mutateQuantity(e.target.dataset);
+        });
+      });
+
+      // add the list item to the cartWrapper
+      cartWrapper.appendChild(li);
+  };
+
+  // main function to render the items
+  function renderItems() {
+    // remove any pre-existing items
+    cartWrapper.innerHTML = '';
+
+    if(cart == null || cart.length === 0) {
+      cartWrapper.innerHTML = '<p>{{ T.cartEmpty[lang] }}</p>'
+      continueButton.style.display = 'none';
+    } else {
+      continueButton.style.display = 'inline-block';
+      // iterate over all items and create/append list item
+      cart.forEach(function(cartItem) {
+        createItem({
+          textArticle: '{{ T.article[lang] }}',
+          textRemove: '{{ T.remove[lang] }}',
+          textQuantity: '{{ T.quantity[lang] }}',
+          productName: cartItem.name,
+          productDescription: cartItem.description,
+          productSKU: cartItem.sku,
+          productQuantity: cartItem.quantity
+        });
+      });
+    };
+  };
+
+  // function to save mutated cart to localStorage
+  function saveCart() {
+    // create string from json cart variable
+    let strCart = JSON.stringify(cart);
+    // save cart string
+    setLocalStorageWithEvent('cart',strCart);
+  }
+
+  // render all items
+  renderItems();
+  {% endjavascript %}
+</script>
+
+{% extends 'layouts/base.njk' %}
