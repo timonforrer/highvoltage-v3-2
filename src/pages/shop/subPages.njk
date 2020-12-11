@@ -6,11 +6,10 @@ pagination:
   addAllPagesToCollections: true
 permalink: "{{ nav.shop[localisedPage.lang].pathPrefix }}/{{ localisedPage.productNumber | lower }}/index.html"
 eleventyComputed:
-  data: ""
   translationKey: "{{ localisedPage.productNumber }}"
-  title: ""
-  metaDescription: ""
-  lastMod: "11-11-2020"
+  title: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).data.meta_title }}"
+  metaDescription: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).data.meta_description }}"
+  lastMod: "{{ (shop.subPagesPrismic | contentFilter(localisedPage)).last_publication_date }}"
 ---
 
 {% set T = {

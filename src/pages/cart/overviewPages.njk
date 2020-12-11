@@ -6,13 +6,15 @@ pagination:
   addAllPagesToCollections: true
 permalink: "{{ localisedPage.pathPrefix }}/index.html"
 data:
-  -
-    lang: "de-ch"
+  - lang: "de-ch"
     pathPrefix: "/warenkorb/"
-  -
-    lang: "en-gb"
+    pageTitle: "Warenkorb"
+  - lang: "en-gb"
     pathPrefix: "/en/cart/"
+    pageTitle: "Cart"
 translationKey: "Warenkorb"
+eleventyComputed:
+  title: "{{ localisedPage.pageTitle }}"
 ---
 
 {% set T = {

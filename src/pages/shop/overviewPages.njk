@@ -52,7 +52,7 @@ translationKey: "shopPage"
               <li class="product-card">
 
                 {% from 'components/responsive-image.njk' import responsiveImage %}
-                <a href="{{ mainPath }}">
+                <a href="{{ mainPath }}" title="{{ item.data.product_name | renderAsText }}">
                   {{ responsiveImage(image=item.data.main_image, rounded=true, alt="") }}
                 </a>
 
