@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_51HqjRwDeD8oJRtClnY2hI3JMX1Y2TTWh68smI5IKEr8bLTsv7SwmAFb77S2dvK8aJW9nV7SiYTcZh0o85xRGX88z00HttRq6Mz');
+const stripe = require('stripe')(process.env.STRIPE_API_LIVE_SECRET);
 const base = require('../src/utils/airtableShop.js');
 const createCustomer = require('../src/utils/createCustomer.js');
 const createSale = require('../src/utils/createSale.js');
