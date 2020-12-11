@@ -58,9 +58,59 @@ ul.flex-list,
 .flex-list {
   display: flex;
   flex-wrap: wrap;
-  margin: -0.25rem -0.25rem;
+  margin: -0.25rem;
+
+  & a {
+    display: block;
+  }
 
   & > * {
-    margin: 0.25rem 0.25rem;
+    margin: 0.25rem;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--end {
+    align-items: flex-end;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &--bigger-gap {
+    margin: -0.5rem;
+
+    & > * {
+      margin: 0.5rem;
+    }
+  }
+}
+
+.two-columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem;
+
+  & > * {
+    flex-basis: 17rem;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 1rem;
+  }
+  &--v-center {
+    align-items: center;
+  }
+}
+
+.table {
+  border-collapse: collapse;
+
+  & th,
+  & td {
+    border: 1px solid $c_fg_2;
+    text-align: center;
   }
 }

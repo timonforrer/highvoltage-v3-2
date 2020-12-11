@@ -6,6 +6,7 @@
 @import 'components/button.css';
 @import 'components/cover.css';
 @import 'components/footer.css';
+@import 'components/form.css';
 @import 'components/grid.css';
 @import 'components/icon.css';
 @import 'components/nav.css';
@@ -15,6 +16,8 @@
 
 @import 'macros.css';
 
+@import 'pages/cart.css';
 @import 'pages/home.css';
 @import 'pages/music.css';
+@import 'pages/shop.css';
 @import 'pages/videos.css';

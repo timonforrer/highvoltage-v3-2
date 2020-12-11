@@ -6,14 +6,85 @@
   {% include 'components/meta-info.njk' %}
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/static/shortcut.png" type="image/png" />
+  {% if page.url == '/lieferadresse/' or page.url == '/en/shipping-address/' %}
+    <script src="https://js.stripe.com/v3/"></script>
+  {% endif %}
+
 </head>
 <body>
   {% include 'components/nav.njk' %}
+
   <main>
     {% block content %}
     {% endblock content %}
   </main>
   {% include 'components/footer.njk' %}
   <script src="/assets/bundle.js"></script>
+
+  <script>
+    {% javascript %}
+      // declare variables
+      let totalQuantityInCart;
+      let totalValueInCart;
+
+      // get refs to nodes
+      let nodeQuantity = document.querySelector('#cartTotalQuantity');
+      let nodeValue = document.querySelector('#cartTotalValue');
+      let cartHeader = document.querySelector('#cartHeader');
+
+      // set initial value for cart
+      let cart = localStorage.getItem('cart');
+      cart = cart != null ? JSON.parse(cart) : null;
+
+      function cartNotEmpty() {
+        if(cart != null) {
+          return cart.length !== 0;
+        } else {
+          return false
+        }
+      }
+
+      // function to update value of cart variable
+      function updateCart() {
+        cart = JSON.parse(localStorage.getItem('cart'));
+      }
+
+      function getTotales() {
+        if(cartNotEmpty()) {
+          // calculate the total value of each variant (e.g. 5 pcs. of size M for 25 CHF ==> 5 * 25 === 125)
+          let totalValuePerVariant = cart.map(item => ({ value: item.quantity * item.basePrice }));
+          // calculate the total value of all variants
+          totalValueInCart = totalValuePerVariant.reduce((a, b) => ({ value: a.value + b.value }));
+          // calculate the total quantity of all variants
+          let totalQuantityInCart = cart.reduce((a, b) => ({ quantity: a.quantity + b.quantity }));
+
+          nodeQuantity.innerText = totalQuantityInCart.quantity;
+          nodeValue.innerText = totalValueInCart.value;
+        }
+      }
+
+      function displayCartHeader() {
+        if(cartNotEmpty()) {
+          cartHeader.style.display = 'block';
+        } else {
+          cartHeader.style.display = 'none';
+        }
+      }
+
+      function handleChange() {
+        updateCart();
+        getTotales();
+        displayCartHeader();
+      }
+
+      document.addEventListener('itemInserted', (e) => handleChange(), false);
+      getTotales();
+      displayCartHeader();
+    {% endjavascript %}
+  </script>
+
+  <script>
+    {% script page.url | safe %}
+  </script>
 </body>
 </html>

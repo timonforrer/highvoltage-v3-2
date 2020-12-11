@@ -1,0 +1,52 @@
+form {
+  fieldset {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .input-group {
+    input,
+    select {
+      background-color: $c_bg_3;
+      border: none;
+      border-radius: 3px;
+      color: $c_fg_1;
+      padding: 0.2rem 0.8rem;
+
+      &:focus {
+        box-shadow: 0 0 0 2px #fff inset;
+        outline: none;
+      }
+    }
+
+    label {
+      display: block;
+    }
+
+    select {
+      padding: 0.25rem 1rem;
+    }
+
+    & * ~ * {
+      margin-top: 0.25rem;
+    }
+
+    & + * {
+      margin-top: 0.75rem;
+    }
+
+    &[data-error="true"] {
+      label {
+        color: $c_main_0;
+      }
+      input,
+      select {
+        box-shadow: $c_main_1 0 0 0 2px;
+      }
+    }
+  }
+
+  *.hidden {
+    display: none;
+  }
+}

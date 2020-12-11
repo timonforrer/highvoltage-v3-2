@@ -1,0 +1,267 @@
+---
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  - lang: "de-ch"
+    pathPrefix: "/lieferadresse/"
+    pageTitle: "Lieferadresse"
+  - lang: "en-gb"
+    pathPrefix: "/en/shipping-address/"
+    pageTitle: "Shipping address"
+translationKey: "shippingAddress"
+eleventyComputed:
+  title: "{{ localisedPage.pageTitle }}"
+---
+
+{% set T = {
+  address: {
+    'de-ch': 'Adresse',
+    'en-gb': 'Address'
+  },
+  checkout: {
+    'de-ch': 'Zur Bezahlung mit Kreditkarte',
+    'en-gb': 'Go to checkout with credit card'
+  },
+  chooseCountry: {
+    'de-ch': 'Wähle ein Land',
+    'en-gb': 'Choose a country'
+  },
+  city: {
+    'de-ch': 'Stadt',
+    'en-gb': 'City'
+  },
+  shippingAddress: {
+    'de-ch': 'Lieferadresse',
+    'en-gb': 'Shipping address'
+  },
+  country: {
+    'de-ch': 'Land',
+    'en-gb': 'Country'
+  },
+  email: {
+    'de-ch': 'E-Mail',
+    'en-gb': 'E-mail'
+  },
+  error: {
+    'de-ch': 'Fehler: bitte überprüfe das Formular.',
+    'en-gb': 'Error: please check the form.'
+  },
+  firstName: {
+    'de-ch': 'Vorname',
+    'en-gb': 'First name'
+  },
+  lastName: {
+    'de-ch': 'Nachname',
+    'en-gb': 'Last name'
+  },
+  nameEmail: {
+    'de-ch': 'Name & E-Mail',
+    'en-gb': 'Name & email'
+  },
+  pleaseWait: {
+    'de-ch': 'Daten werden übermittelt. Bitte warten.',
+    'en-gb': 'Transferring data. Please wait.'
+  },
+  street: {
+    'de-ch': 'Strasse, Nummer',
+    'en-gb': 'Street, number'
+  },
+  zip: {
+    'de-ch': 'PLZ',
+    'en-gb': 'ZIP'
+  }
+} %}
+
+{% set lang = localisedPage.lang %}
+
+{% block content %}
+
+  <section>
+    <div class="container">
+      <form action="">
+        <div class="stack stack--4">
+          <h2>{{ T.shippingAddress[lang] }}</h2>
+          {# Personel #}
+          <fieldset>
+            <legend class="as-h3">{{ T.nameEmail[lang] }}</legend>
+            <div role="group">
+              <div class="input-group">
+                <label for="firstName">{{ T.firstName[lang] }}*</label>
+                <input type="text" name="firstName" id="firstName">
+              </div>
+              <div class="input-group">
+                <label for="lastName">{{ T.lastName[lang] }}*</label>
+                <input type="text" name="lastName" id="lastName">
+              </div>
+              <div class="input-group">
+                <label for="email">{{ T.email[lang] }}*</label>
+                <input type="text" name="email" id="email">
+              </div>
+              <div class="input-group hidden">
+                <label for="phone">Telefon</label>
+                <input type="tel" name="phone" id="phone">
+              </div>
+            </div>
+          </fieldset>
+
+          {# Address #}
+          <fieldset>
+            <legend class="as-h3">{{ T.address[lang] }}</legend>
+            <div role="group">
+              <div class="input-group">
+                <label for="street">{{ T.street[lang] }}*</label>
+                <input type="text" name="street" id="street">
+              </div>
+              <div class="input-group">
+                <label for="zip">{{ T.zip[lang] }}*</label>
+                <input type="number" name="zip" id="zip">
+              </div>
+              <div class="input-group">
+                <label for="city">{{ T.city[lang] }}*</label>
+                <input type="text" name="city" id="city">
+              </div>
+              <div class="input-group">
+                <label for="country">{{ T.country[lang] }}*</label>
+                <select name="country" id="country">
+                  <option value="">{{ T.chooseCountry[lang] }}</option>
+                  {% for country in shop.freightCost %}
+                  <option value="{{ country.country.code }}">{{ country.country.name[lang] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="stack stack--3">
+            <button id="checkout-button" class="button">{{ T.checkout[lang] }}</button>
+            <p id="statusMessage"></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+
+
+<script>
+  {% javascript %}
+  const validateForm = require('./src/_includes/frontend-utils/validate-form.js');
+  const getFormData = require('./src/_includes/frontend-utils/get-form-data.js');
+
+  const statusMessage = document.querySelector('#statusMessage');
+
+  const resetForm = () => {
+    // remove data-attributes
+    const errorFields = document.querySelectorAll('[data-error=true]');
+    errorFields.forEach(field => field.removeAttribute('data-error'));
+    
+    // delete errorMessages
+    const errorMessages = document.querySelectorAll('[data-error-message=true]');
+    errorMessages.forEach(node => node.remove());
+
+    statusMessage.innerText = '';
+  }
+
+  // Create an instance of the Stripe object with your publishable API key
+  let stripe = Stripe('pk_live_51HqjRwDeD8oJRtClr4gUCrtzQNdaxsaUBSv1Xdr6GOWs6DAae9BK3VLgYernEaBffWMT4LpKgJocu9SQjNPI9sdh00oDXL0dbO');
+  let checkoutButton = document.getElementById('checkout-button');
+
+  // all the fields of the form
+  let fields = [
+    'firstName',
+    'lastName',
+    'email',
+    'street',
+    'zip',
+    'city',
+    'country',
+    'phone'
+  ];
+
+  // get contents of localstorage
+  var cart = localStorage.getItem('cart');
+  // if items in cart, parse them as json
+  cart = cart != null ? JSON.parse(cart) : null;
+
+  const postForm = () => {
+    resetForm();
+    // get references to nodes
+    const form = document.querySelector('form');
+
+    // get and parse data from from
+    const formData = getFormData(form, fields);
+    // check if form is filled in correctly
+    const errors = validateForm(formData, 'phone');
+
+    // check if any errors are returned
+    if(Object.keys(errors).length !== 0) {
+
+      statusMessage.innerText = "{{ T.error[lang] }}";
+
+      for (let errorType in errors) {
+        switch(errorType) {
+          case "emptyFields":
+            // get references to all invalid fields
+            const refsEmptyFields = errors[errorType].map(field => document.getElementById(field));
+            // add attribute 'data-error="true"' to all invalid fields
+            refsEmptyFields.forEach(field => field.parentElement.setAttribute('data-error', 'true'));
+            break;
+          case "invalidFields":
+            const refsInvalidFields = errors[errorType].map(field => {
+              return {
+                node: document.getElementById(field.fieldName),
+                errorMessage: field.message
+              }
+            });
+            refsInvalidFields.forEach(field => {
+              let p = document.createElement('p');
+              p.setAttribute('data-error-message', true);
+              p.innerText = field.errorMessage["{{ lang }}"];
+              field.node.parentElement.setAttribute('data-error', true);
+              field.node.parentElement.appendChild(p);
+            });
+        }
+      };
+    } else {
+      // submit form
+
+      // create body object to send
+      const body = {
+        lang: '{{ lang }}',
+        cart: cart,
+        address: formData
+      };
+      // create string from object
+      const strBody = JSON.stringify(body);
+
+      statusMessage.innerText = "{{ T.pleaseWait[lang] }}"
+
+      // send the data to the internal api
+      fetch('/api/create-stripe-session', {
+        method: 'POST',
+        body: strBody
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.error) {
+          statusMessage.innerText = data.error["{{ lang }}"];
+        } else {
+          localStorage.clear();
+          stripe.redirectToCheckout({ sessionId: data.id });
+        }
+      });
+    };
+  };
+
+  checkoutButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    postForm();
+  });
+{% endjavascript %}
+</script>
+
+{% extends 'layouts/base.njk' %}
