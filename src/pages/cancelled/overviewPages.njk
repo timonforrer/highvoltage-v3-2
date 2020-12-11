@@ -1,0 +1,40 @@
+---
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  - lang: "de-ch"
+    pathPrefix: "/cancelled/"
+    pageTitle: "Zahlung abgebrochen"
+  - lang: "en-gb"
+    pathPrefix: "/en/cancelled/"
+    pageTitle: "Payment cancelled"
+translationKey: "CancelledPayment"
+eleventyComputed:
+  title: "{{ localisedPage.pageTitle }}"
+---
+
+{% set T = {
+  intro: {
+    'de-ch': 'Die Zahlung wurde abgebrochen.',
+    'en-gb': "The payment got cancelled."
+  },
+  pageTitle: {
+    'de-ch': 'Zahlung abgebrochen',
+    'en-gb': 'Payment cancelled'
+  }
+} %}
+{% set lang = localisedPage.lang %}
+
+{% block content %}
+  <div class="container">
+    <div class="stack stack--3">
+      <h1>{{ T.pageTitle[lang] }}</h1>
+      <p class="lead">{{ T.intro[lang] }}</p>
+    </div>
+  </div>
+{% endblock %}
+{% extends 'layouts/base.njk' %}

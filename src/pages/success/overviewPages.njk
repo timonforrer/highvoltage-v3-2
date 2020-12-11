@@ -1,0 +1,40 @@
+---
+pagination:
+  data: data
+  size: 1
+  alias: localisedPage
+  addAllPagesToCollections: true
+permalink: "{{ localisedPage.pathPrefix }}/index.html"
+data:
+  - lang: "de-ch"
+    pathPrefix: "/success/"
+    pageTitle: "Zahlung erfolgreich"
+  - lang: "en-gb"
+    pathPrefix: "/en/success/"
+    pageTitle: "Payment successful"
+translationKey: "SuccessfulPayment"
+eleventyComputed:
+  title: "{{ localisedPage.pageTitle }}"
+---
+
+{% set T = {
+  intro: {
+    'de-ch': 'Vielen Dank für deine Bezahlung. Du erhälst in Kürze eine Bestätigungs-Email.',
+    'en-gb': "Thank you for your purchase. You'll shortly receive a confirmation email."
+  },
+  pageTitle: {
+    'de-ch': 'Zahlung erfolgreich',
+    'en-gb': 'Payment successful'
+  }
+} %}
+{% set lang = localisedPage.lang %}
+
+{% block content %}
+  <div class="container">
+    <div class="stack stack--3">
+      <h1>{{ T.pageTitle[lang] }}</h1>
+      <p class="lead">{{ T.intro[lang] }}</p>
+    </div>
+  </div>
+{% endblock %}
+{% extends 'layouts/base.njk' %}
