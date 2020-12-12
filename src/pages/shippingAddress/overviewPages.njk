@@ -54,6 +54,10 @@ eleventyComputed:
     'de-ch': 'Vorname',
     'en-gb': 'First name'
   },
+  freightCostMessage: {
+    'de-ch': 'Bei Bestellung von mehr als 1 Artikel können nachträglich zusätzliche Portokosten in rechnunng gestellt werden',
+    'en-gb': 'By purchasing more than 1 article, you may be charged additional shipping costs.'
+  },
   lastName: {
     'de-ch': 'Nachname',
     'en-gb': 'Last name'
@@ -137,6 +141,7 @@ eleventyComputed:
           </fieldset>
 
           <div class="stack stack--3">
+            <p>{{ T.freightCostMessage[lang] }}</p>
             <button id="checkout-button" class="button">{{ T.checkout[lang] }}</button>
             <p id="statusMessage"></p>
           </div>
