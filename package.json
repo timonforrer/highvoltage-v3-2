@@ -51,9 +51,11 @@
     "dotenv": "^8.2.0",
     "markdown-it": "^12.0.3",
     "outdent": "^0.7.1",
+    "promise-polyfill": "8.2.0",
     "string-strip-html": "^7.0.3",
     "stripe": "^8.125.0",
     "tinyify": "^3.0.0",
-    "uglify": "^0.1.5"
+    "uglify": "^0.1.5",
+    "whatwg-fetch": "^3.5.0"
   }
 }

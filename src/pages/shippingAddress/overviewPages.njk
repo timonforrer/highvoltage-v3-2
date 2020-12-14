@@ -154,6 +154,8 @@ eleventyComputed:
 
 <script>
   {% javascript %}
+  require('./src/_includes/frontend-utils/promisePolyfill.js');
+  require('whatwg-fetch');
   const validateForm = require('./src/_includes/frontend-utils/validate-form.js');
   const getFormData = require('./src/_includes/frontend-utils/get-form-data.js');
 
