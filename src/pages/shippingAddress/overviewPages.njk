@@ -55,7 +55,7 @@ eleventyComputed:
     'en-gb': 'First name'
   },
   freightCostMessage: {
-    'de-ch': 'Bei Bestellung von mehr als 1 Artikel können nachträglich zusätzliche Portokosten in rechnunng gestellt werden',
+    'de-ch': 'Bei Bestellung von mehr als 1 Artikel können nachträglich zusätzliche Portokosten in Rechnung gestellt werden',
     'en-gb': 'By purchasing more than 1 article, you may be charged additional shipping costs.'
   },
   lastName: {
@@ -154,7 +154,6 @@ eleventyComputed:
 
 <script>
   {% javascript %}
-  require('./src/_includes/frontend-utils/promisePolyfill.js');
   require('whatwg-fetch');
   const validateForm = require('./src/_includes/frontend-utils/validate-form.js');
   const getFormData = require('./src/_includes/frontend-utils/get-form-data.js');
