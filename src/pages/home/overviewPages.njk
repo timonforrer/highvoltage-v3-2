@@ -36,7 +36,7 @@ translationKey: "homePage"
           <h1 class="display">{{ data.hero_title | renderAsText }}</h1>
           <div class="stack stack--2">
             <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
-            {% if data.cta %}
+            {% if data.cta !== null %}
               {{ macros.button(data.cta, href='#play-video') }}
             {% endif %}
           </div>
@@ -46,7 +46,7 @@ translationKey: "homePage"
     </div>
   </section>
 
-  {% if data.cta %}
+  {% if data.cta !== null %}
     <section id="play-video">
       <div class="container">
       {% set videoId = data.cta_content.embed_url | getYoutubeID %}
