@@ -46,50 +46,52 @@ translationKey: "homePage"
     </div>
   </section>
 
-  <section id="play-video">
-    <div class="container">
-    {% set videoId = data.cta_content.embed_url | getYoutubeID %}
-      <sp-video
-        provider="youtube-nocookie"
-        video-id="{{ videoId }}"
-      >
-        <!-- Custom thumbnail image, declared as slot="thumbnail" -->
-        {%
-          image
-          src="https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg",
-          alt="",
-          attributes=[{
-            name: "slot",
-            value: "thumbnail"
-          }]
-        %}
-        <!-- Custom video controller, declared as slot="controller", iframe loads on click -->
-        <button
-          slot="controller"
-          class="button uppercase hidden-when-undefined"
+  {% if data.cta %}
+    <section id="play-video">
+      <div class="container">
+      {% set videoId = data.cta_content.embed_url | getYoutubeID %}
+        <sp-video
+          provider="youtube-nocookie"
+          video-id="{{ videoId }}"
         >
-          {% if localisedPage.lang === 'de-ch' %}
-            Video abspielen
-          {% else %}
-            Play video
-          {% endif %}
-        </button>
-        <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
-        <a
-          href="https://www.youtube.com/watch?v={{ localisedVideo.id }}"
-          class="fallback-link"
-          target="blank"
-          rel="noopener noreferrer"
-        >
-          {% if localisedPage.lang === 'de-ch' %}
-            Video in neuem Tab öffnen
-          {% else %}
-            Open video in new Tab
-          {% endif %}
-        </a>
-      </sp-video>
-    </div>
-  </section>
+          <!-- Custom thumbnail image, declared as slot="thumbnail" -->
+          {%
+            image
+            src="https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg",
+            alt="",
+            attributes=[{
+              name: "slot",
+              value: "thumbnail"
+            }]
+          %}
+          <!-- Custom video controller, declared as slot="controller", iframe loads on click -->
+          <button
+            slot="controller"
+            class="button uppercase hidden-when-undefined"
+          >
+            {% if localisedPage.lang === 'de-ch' %}
+              Video abspielen
+            {% else %}
+              Play video
+            {% endif %}
+          </button>
+          <!-- Fallback for browsers that don't support custom elements, has to use class="fallback-link" -->
+          <a
+            href="https://www.youtube.com/watch?v={{ localisedVideo.id }}"
+            class="fallback-link"
+            target="blank"
+            rel="noopener noreferrer"
+          >
+            {% if localisedPage.lang === 'de-ch' %}
+              Video in neuem Tab öffnen
+            {% else %}
+              Open video in new Tab
+            {% endif %}
+          </a>
+        </sp-video>
+      </div>
+    </section>
+    {% endif %}
 
   {% from 'svg/flash.njk' import flashIcon %}
   {% for item in data.body %}
