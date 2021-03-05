@@ -3,7 +3,7 @@ const fetchData = require('../../../utils/airtableDataController.js');
 const saveSeed = require('../../../utils/saveSeed.js');
 
 module.exports = async () => {
-  const response = await fetchData(base('Products'), 'Default', '');
+  const response = await fetchData(base('Products'), 'Active', '');
 
   const returnArray = [];
 
