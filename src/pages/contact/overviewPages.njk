@@ -12,9 +12,183 @@ eleventyComputed:
   lastMod: "{{ localisedPage.last_publication_date }}"
 ---
 
+{% set lang = localisedPage.lang %}
+
+{% set T = {
+  contactInfo: {
+    'de-ch': 'Kontaktangaben',
+    'en-gb': 'Contact info'
+  },
+  fullName: {
+    'de-ch': 'Ganzer Name',
+    'en-gb': 'Full name'
+  },
+  email: {
+    'de-ch': 'E-Mail Adresse',
+    'en-gb': 'Email address'
+  },
+  error: {
+    'de-ch': 'Fehler: bitte überprüfe das Formular.',
+    'en-gb': 'Error: please check the form.'
+  },
+  pleaseWait: {
+    'de-ch': 'Daten werden übermittelt. Bitte warten.',
+    'en-gb': 'Transferring data. Please wait.'
+  },
+  message: {
+    'de-ch': 'Deine Nachricht',
+    'en-gb': 'Your Message'
+  },
+  submit: {
+    'de-ch': 'Abschicken',
+    'en-gb': 'Submit'
+  },
+  success: {
+    'de-ch': 'Übermittlung erfolgreich. Vielen Dank für deine Nachricht.',
+    'en-gb': 'Success. Thanks für you message.'
+  }
+}%}
+
 {% block content %}
   <div class="container">
-    {{ localisedPage.data.page_title | renderAsHTML | safe }}
+    <form>
+      <div class="stack stack--4">
+        {{ localisedPage.data.page_title | renderAsHTML | safe }}
+        
+        <fieldset>
+          <legend>{{ T.contactInfo[lang] }}</legend>
+          <div class="input-group">
+            <label for="name">{{ T.fullName[lang] }}</label>
+            <input type="text" name="name" id="name">
+          </div>
+          <div class="input-group">
+            <label for="email">{{ T.email[lang] }}</label>
+            <input type="email" name="email" id="email">
+          </div>
+          <div class="input-group hidden">
+            <label for="phone">Telefon</label>
+            <input type="tel" name="phone" id="phone">
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="input-group">
+            <label for="message">{{ T.message[lang] }}</label>
+            <textarea name="message" id="message" cols="30" rows="10"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="stack stack--3">
+          <button class="button" type="submit" id="submit">{{ T.submit[lang] }}</button>
+          <p id="statusMessage"></p>
+        </div>
+      </div>
+    </form>
   </div>
 {% endblock %}
+
+<script>
+  {% javascript %}
+  require('whatwg-fetch');
+  const validateForm = require('./src/_includes/frontend-utils/validate-form.js');
+  const getFormData = require('./src/_includes/frontend-utils/get-form-data.js');
+
+  const statusMessage = document.querySelector('#statusMessage');
+  const submitButton = document.getElementById('submit');
+
+  const resetForm = () => {
+    // remove data-attributes
+    const errorFields = document.querySelectorAll('[data-error=true]');
+    errorFields.forEach(field => field.removeAttribute('data-error'));
+    
+    // delete errorMessages
+    const errorMessages = document.querySelectorAll('[data-error-message=true]');
+    errorMessages.forEach(node => node.remove());
+
+    statusMessage.innerText = '';
+  }
+
+  // all the fields of the form
+  let fields = [
+    'name',
+    'email',
+    'phone',
+    'message'
+  ];
+
+  const postForm = () => {
+    resetForm();
+    // get references to nodes
+    const form = document.querySelector('form');
+
+    // get and parse data from from
+    const formData = getFormData(form, fields);
+    // check if form is filled in correctly
+    const errors = validateForm(formData, 'phone');
+
+    // check if any errors are returned
+    if(Object.keys(errors).length !== 0) {
+
+      statusMessage.innerText = "{{ T.error[lang] }}";
+
+      for (let errorType in errors) {
+        switch(errorType) {
+          case "emptyFields":
+            // get references to all invalid fields
+            const refsEmptyFields = errors[errorType].map(field => document.getElementById(field));
+            // add attribute 'data-error="true"' to all invalid fields
+            refsEmptyFields.forEach(field => field.parentElement.setAttribute('data-error', 'true'));
+            break;
+          case "invalidFields":
+            const refsInvalidFields = errors[errorType].map(field => {
+              return {
+                node: document.getElementById(field.fieldName),
+                errorMessage: field.message
+              }
+            });
+            refsInvalidFields.forEach(field => {
+              let p = document.createElement('p');
+              p.setAttribute('data-error-message', true);
+              p.innerText = field.errorMessage["{{ lang }}"];
+              field.node.parentElement.setAttribute('data-error', true);
+              field.node.parentElement.appendChild(p);
+            });
+        }
+      };
+    } else {
+      // submit form
+
+      // create body object to send
+      const body = {
+        name: formData.name,
+        emailFrom: formData.email,
+        message: formData.message
+      };
+      // create string from object
+      const strBody = JSON.stringify(body);
+
+      statusMessage.innerText = "{{ T.pleaseWait[lang] }}"
+
+      // send the data to the internal api
+      fetch('/api/send-message', {
+        method: 'POST',
+        body: strBody
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.error) {
+          statusMessage.innerText = data.error;
+          console.error(data.error);
+        } else {
+          statusMessage.innerText = '{{ T.success[lang] }}'
+        }
+      });
+    };
+  };
+
+  submitButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    postForm();
+  });
+  {% endjavascript %}
+</script>
 {% extends 'layouts/base.njk' %}
