@@ -6,7 +6,8 @@ form {
 
   .input-group {
     input,
-    select {
+    select,
+    textarea {
       background-color: $c_bg_3;
       border: none;
       border-radius: 3px;
