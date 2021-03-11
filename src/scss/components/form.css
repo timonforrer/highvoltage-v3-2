@@ -20,6 +20,10 @@ form {
       }
     }
 
+    textarea {
+      width: 100%;
+    }
+
     label {
       display: block;
     }
