@@ -1,5 +1,6 @@
 footer {
   background-color: $c_bg_2;
 
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
