@@ -52,6 +52,7 @@ h3,
 h4 {
   font-family: 'Barlow';
   font-weight: 900;
+  hyphens: auto;
 }
 
 .display {
