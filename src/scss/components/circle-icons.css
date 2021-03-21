@@ -1,0 +1,10 @@
+.circle-icons {
+  * {
+    transition: fill-opacity 300ms ease;
+  }
+  &:hover {
+    * {
+      fill-opacity: 1;
+    }
+  }
+}
