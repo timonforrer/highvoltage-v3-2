@@ -74,35 +74,38 @@ eleventyComputed:
             {% for usp in data.usps %}
               <li>{{ usp.usp | renderAsHTML | safe }}</li>
             {% endfor %}
-            {% for size in data.product_group %}
-              {% if size.sku == localisedPage.productNumber %}
-                <li>{{T.size[lang]}}: {{ size.product_label }}</li>
-              {% endif %}
-            {% endfor %}
+            {% if (data.product_group | length > 1) %}
+              {% for size in data.product_group %}
+                {% if size.sku == localisedPage.productNumber %}
+                  <li>{{T.size[lang]}}: {{ size.product_label }}</li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           </ul>
 
-          <div class="stack stack--1">
-            <p class="uppercase">{{ T.sizes[lang] }}</p>
-            <div>
-              <ul class="flex-list">
-                {% for size in data.product_group %}
-                  {% set variantsUrl = pathPrefix+"/"+size.sku+"/" %}
-                  <li>
-                    <a
-                      class="variants-button uppercase"
-                      href="{{ variantsUrl | lower }}"
-                      {% if page.url == (variantsUrl | lower) %}
-                        aria-current="true"
-                      {% endif %}
-                    >
-                      {{ size.product_label }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
+          {% if (data.product_group | length > 1) %}
+            <div class="stack stack--1">
+              <p class="uppercase">{{ T.sizes[lang] }}</p>
+              <div>
+                <ul class="flex-list">
+                  {% for size in data.product_group %}
+                    {% set variantsUrl = pathPrefix+"/"+size.sku+"/" %}
+                    <li>
+                      <a
+                        class="variants-button uppercase"
+                        href="{{ variantsUrl | lower }}"
+                        {% if page.url == (variantsUrl | lower) %}
+                          aria-current="true"
+                        {% endif %}
+                      >
+                        {{ size.product_label }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
             </div>
-
-          </div>
+          {% endif %}
 
           <div class="stack stack--1">
             <p class="uppercase">
@@ -169,17 +172,19 @@ eleventyComputed:
     </section>
     {% endif %}
 
-    <section>
-      <div class="container">
-        <ul class="grid">
-          {% for image in data.supplemental_images %}
-            <li>
-              {{ responsiveImage(image.square_image,alt="",rounded=true) }}
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </section>
+    {% if (data.supplemental_images[0].square_image.tablet|length !== 0) %}
+      <section>
+        <div class="container">
+          <ul class="grid">
+            {% for image in data.supplemental_images %}
+              <li>
+                {{ responsiveImage(image.square_image,alt="",rounded=true) }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    {% endif %}
   </div>
 
 {% endblock %}

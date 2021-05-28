@@ -40,6 +40,7 @@ translationKey: "shopPage"
           {% for item in shop.subPagesPrismic %}
             {% if item.lang == lang and item.data.type == group.product_group_type %}
               {% set mainSKU = item.data.product_group[0].sku %}
+              {{ item.data.product_group[0] | log }}
               {% set mainPath = pathPrefix+"/"+mainSKU | lower %}
               {% set airtableData = '' %}
 
@@ -62,25 +63,27 @@ translationKey: "shopPage"
                       <h3 class="as-h4">{{ item.data.product_name | renderAsText }}</h3>
                     </a>
                     <p class="lead">CHF {{ airtableData.basePrice }}</p>
-                    <div class="stack stack--1">
-                      <p class="uppercase">{{ T.sizes[lang] }}</p>
-                      <div>
-                        <ul class="flex-list">
-                          {% for variant in item.data.product_group %}
-                            {% set variantPath = pathPrefix+"/"+variant.sku | lower %}
-                            {% set class = '' %}
-                            {% if variant.sku == mainSKU %}
-                              {% set class = ' variants-button--active' %}
-                            {% endif %}
-                            <li>
-                              <a href="{{ variantPath }}" class="variants-button variants-button--small{{ class }}">
-                                {{ variant.product_label }}
-                              </a>
-                            </li>
-                          {% endfor %}
-                        </ul>
+                    {% if (item.data.product_group | length > 1 ) %}
+                      <div class="stack stack--1">
+                        <p class="uppercase">{{ T.sizes[lang] }}</p>
+                        <div>
+                          <ul class="flex-list">
+                            {% for variant in item.data.product_group %}
+                              {% set variantPath = pathPrefix+"/"+variant.sku | lower %}
+                              {% set class = '' %}
+                              {% if variant.sku == mainSKU %}
+                                {% set class = ' variants-button--active' %}
+                              {% endif %}
+                              <li>
+                                <a href="{{ variantPath }}" class="variants-button variants-button--small{{ class }}">
+                                  {{ variant.product_label }}
+                                </a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
                       </div>
-                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </li>
