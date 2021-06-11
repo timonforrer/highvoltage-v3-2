@@ -5,6 +5,9 @@ body {
 
 main {
   margin-bottom: 10vw;
+  & a {
+    text-decoration: underline;
+  }
 }
 
 .pin {
@@ -52,6 +55,20 @@ image.rounded {
   max-width: 75ch;
   transform: translateX(-50%);
   width: 100vw;
+}
+
+ol.emphasized {
+  margin-left: 3rem;
+
+  & li {
+    font-family: 'Barlow';
+    font-weight: 900;
+    font-size: 1.5rem;
+    font-size: calc(1.25vw + 1rem);
+    line-height: 1.75rem;
+    line-height: calc(1.25vw + 1.125rem);
+    list-style: decimal;
+  }
 }
 
 ul.flex-list,
