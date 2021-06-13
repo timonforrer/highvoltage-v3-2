@@ -46,7 +46,7 @@
         <div>
           <ul class="flex-list">
             {% for provider in data.data.providers %}
-            <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
+            <li>{{ button(text=provider.provider_name, outlined=true, href=provider.link.url) }}</li>
             {% endfor %}
           </ul>
         </div>

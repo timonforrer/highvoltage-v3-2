@@ -67,7 +67,7 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
         <div>
           <ul class="flex-list">
             {% for provider in data.providers %}
-            <li>{{ button(text=provider.provider_name, href=provider.link.url) }}</li>
+            <li>{{ button(text=provider.provider_name, outlined=true, href=provider.link.url) }}</li>
             {% endfor %}
           </ul>
         </div>
