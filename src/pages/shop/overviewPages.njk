@@ -40,7 +40,6 @@ translationKey: "shopPage"
           {% for item in shop.subPagesPrismic %}
             {% if item.lang == lang and item.data.type == group.product_group_type %}
               {% set mainSKU = item.data.product_group[0].sku %}
-              {{ item.data.product_group[0] | log }}
               {% set mainPath = pathPrefix+"/"+mainSKU | lower %}
               {% set airtableData = '' %}
 

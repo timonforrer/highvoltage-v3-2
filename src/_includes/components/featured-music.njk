@@ -1,4 +1,4 @@
-{% macro featuredMusic(data, lang) %}
+{% macro featuredMusic(data, lang, headingLevelDecreaser=0) %}
 
   {% if lang == 'de-ch' %}
     {% set deeplink = "/musik/" + data.uid %}
@@ -12,12 +12,12 @@
     {{ responsiveImage(image=data.data.cover_photo, rounded=false, alt=data.data.title+" cover") }}
 
     <div class="stack stack--3">
-
-      <h2>
+      
+      <h{{ 2 + headingLevelDecreaser}}>
         <a href="{{ deeplink }}">
           {{ data.data.title | renderAsText | safe }}
         </a>
-      </h2>
+      </h{{ 2 + headingLevelDecreaser}}>
 
       {# <div>
         <h3>Tracks</h3>
@@ -34,13 +34,13 @@
       </div> #}
 
       <div class="stack stack--2">
-        <h3>
+        <h{{ 3 + headingLevelDecreaser}}>
           {% if lang == 'de-ch' %}
             Erhältlich auf
           {% else %}
             Available on
           {% endif %}
-        </h3>
+        </h{{ 3 + headingLevelDecreaser}}>
 
         {% from 'macros.njk' import button %}
         <div>

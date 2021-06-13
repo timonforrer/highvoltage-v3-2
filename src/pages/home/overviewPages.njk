@@ -14,6 +14,15 @@ translationKey: "homePage"
 
 {% import 'macros.njk' as macros %}
 {% set data = localisedPage.data %}
+{% set lang = localisedPage.lang %}
+
+{% set T = {
+    discoverMusic: {
+      'de-ch': 'Unser neuster Release',
+      'en-gb': 'Our newest release'
+    }
+  }
+%}
 
 {% block content %}
 <div class="stack stack--7">
@@ -37,7 +46,7 @@ translationKey: "homePage"
           <div class="stack stack--2">
             <p class="lead">{{ data.hero_introduction | renderAsText }}</p>
             {% if data.cta !== null %}
-              {{ macros.button(data.cta, href='#play-video') }}
+              <a href="#play-video" class="button uppercase" id="scrollToVideo">{{ data.cta }}</a>
             {% endif %}
           </div>
 
@@ -69,7 +78,7 @@ translationKey: "homePage"
             slot="controller"
             class="button uppercase hidden-when-undefined"
           >
-            {% if localisedPage.lang === 'de-ch' %}
+            {% if lang === 'de-ch' %}
               Video abspielen
             {% else %}
               Play video
@@ -82,7 +91,7 @@ translationKey: "homePage"
             target="blank"
             rel="noopener noreferrer"
           >
-            {% if localisedPage.lang === 'de-ch' %}
+            {% if lang === 'de-ch' %}
               Video in neuem Tab öffnen
             {% else %}
               Open video in new Tab
@@ -96,9 +105,25 @@ translationKey: "homePage"
   {% from 'svg/flash.njk' import flashIcon %}
   {% for item in data.body %}
 
-    {% if item.slice_type == 'musicians' %}
-      <section>
-        <div class="container">
+    <section>
+      <div class="container">
+
+        {% if item.slice_type == "featured_music" %}
+
+          <div class="stack stack--4">
+          
+            <h2>{{ T.discoverMusic[lang] }}</h2>
+
+            <div>
+              {% from 'components/featured-music.njk' import featuredMusic %}
+              {{ featuredMusic(data=item.primary.link, lang=lang, headingLevelDecreaser=1) }}
+            </div>
+          </div>
+
+        {% endif %}
+
+        {% if item.slice_type == 'musicians' %}
+          
           <div class="stack stack--4">
 
             <h2>{{ item.primary.title }}</h2>
@@ -126,11 +151,10 @@ translationKey: "homePage"
                 {% endfor %}
               </ul>
             </div>
-
           </div>
-        </div>
-      </section>
-    {% endif %}
+        {% endif %}
+      </div>
+    </section>
 
   {% endfor %}
 
@@ -138,7 +162,8 @@ translationKey: "homePage"
 <script>
 
   if('querySelector' in document) {
-    var button = document.querySelector('a.button');
+
+    var button = document.getElementById('scrollToVideo');
     var video = document.querySelector('sp-video');
     button.addEventListener('click', () => video.setAttribute('video-loaded', ''));
   }
