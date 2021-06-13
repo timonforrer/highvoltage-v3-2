@@ -2,7 +2,14 @@ const fetchData = require('../../../utils/prismic.js');
 const saveSeed = require('../../../utils/saveSeed.js');
 
 module.exports = async () => {
-  const response = await fetchData('home');
+  let options = {
+    'fetchLinks': [
+      'music.title',
+      'music.cover_photo',
+      'music.providers',
+    ]
+  }
+  const response = await fetchData('home', options);
   saveSeed(response, `${__dirname}/../../dev/home/overviewPages.json`);
   return response;
 };
