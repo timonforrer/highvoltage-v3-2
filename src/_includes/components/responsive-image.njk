@@ -10,6 +10,7 @@
       {% set tablet = image.tablet %}
     {% else %}
       {{ "ERROR in responsiveImage: no source for Tablet" | log }}
+      {{ "url:" + image.url | log }}
     {% endif %}
 
     {% if image.Mobile != undefined %}
@@ -18,6 +19,7 @@
       {% set phone = image.phone %}
     {% else %}
       {{ "ERROR in responsiveImage: no source for Phone" | log }}
+      {{ "url:" + image.url | log }}
     {% endif %}
 
       <picture {% if rounded %} class="rounded" {% endif %}>
