@@ -11,6 +11,13 @@ ul.grid,
     margin: 0.75em;
   }
 
+  &--bigger-gap {
+    margin: -1.5em;
+    & > * {
+      margin: -1.5em;
+    }
+  }
+
   &--reverse { flex-direction: row-reverse; }
 
   &--dense {
@@ -30,6 +37,10 @@ ul.grid,
     &--dense { --size: 10rem }
   
     &--extended { --size: 30rem }
+
+    &--bigger-gap {
+      gap: 3rem 1.5rem;
+    }
 
     display: grid;
     gap: 1.5rem;

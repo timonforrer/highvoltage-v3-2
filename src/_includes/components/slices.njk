@@ -34,3 +34,8 @@
   {% from 'components/featured-music.njk' import featuredMusic %}
   {{ featuredMusic(data, lang) }}
 {% endmacro %}
+
+{% macro mention(data, lang) %}
+  {% from 'components/mentions.njk' import mentions %}
+  {{ mentions(data, lang) }}
+{% endmacro %}

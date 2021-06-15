@@ -1,0 +1,34 @@
+{% macro mentions(data, lang) %}
+
+  {% from 'components/responsive-image.njk' import responsiveImage %}
+
+  {% set T = {
+    entireReview: {
+      'de-ch': 'Ganzes Review lesesn auf:',
+      'en-gb': 'Read the entire review on:'
+    }
+  } %}
+
+  <div class="stack stack--4">
+    <h2>Reviews</h2>
+    <div>
+      <ul class="grid grid--bigger-gap">
+        {% for mention in data.items %}
+        <li>
+          <div class="stack stack--3">
+            <div>
+              {{ mention.quote_image | log }}
+              {{ responsiveImage(image=mention.quote_image, rounded=true, alt=mention.quote_photo.alt) }}
+            </div>
+            <div class="stack stack--1">
+              <p class="uppercase">{{ T.entireReview[lang] }}</p>
+              <a href="{{ mention.post_url.url }}" class="button button--outline">{{ mention.magazine }}</a>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+{% endmacro %}
