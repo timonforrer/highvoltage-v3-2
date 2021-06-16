@@ -18,7 +18,7 @@
           <div class="stack stack--3">
             <div>
               {{ mention.quote_image | log }}
-              {{ responsiveImage(image=mention.quote_image, rounded=true, alt=mention.quote_photo.alt) }}
+              {{ responsiveImage(image=mention.quote_image, rounded=true, alt=mention.quote_image.alt) }}
             </div>
             <div class="stack stack--1">
               <p class="uppercase">{{ T.entireReview[lang] }}</p>
