@@ -1,8 +1,10 @@
-{% macro responsiveImage(image, rounded=false, caption=false) %}
+{% macro responsiveImage(image, rounded=false, caption=false, alt) %}
 
   {% if caption %}
     <figure>
   {% endif %}
+
+    {{ alt | log }}
 
     {% if image.Tablet != undefined %}
       {% set tablet = image.Tablet %}

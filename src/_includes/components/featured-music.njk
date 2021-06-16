@@ -9,7 +9,8 @@
   <div class="m-preview__columns">
 
     {% from 'components/responsive-image.njk' import responsiveImage %}
-    {{ responsiveImage(image=data.data.cover_photo, rounded=false, alt=data.data.title+" cover") }}
+    {% set alt = data.data.title | renderAsText %}
+    {{ responsiveImage(image=data.data.cover_photo, rounded=false, alt=alt+" cover") }}
 
     <div class="stack stack--3">
       

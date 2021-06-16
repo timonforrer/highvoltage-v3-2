@@ -17,7 +17,7 @@
         <li>
           <div class="stack stack--3">
             <div>
-              {{ mention.quote_image | log }}
+              {# {{ mention.quote_image.alt | log }} #}
               {{ responsiveImage(image=mention.quote_image, rounded=true, alt=mention.quote_image.alt) }}
             </div>
             <div class="stack stack--1">
