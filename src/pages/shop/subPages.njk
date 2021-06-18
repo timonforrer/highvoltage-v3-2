@@ -172,6 +172,31 @@ eleventyComputed:
     </section>
     {% endif %}
 
+    {{ data.music_content | log }}
+
+    {% if data.music_content != undefined %}
+
+      {% set music_data = data.music_content.data %}
+
+      <div class="container container--narrow stack stack--5">
+        {% if music_data.songs != undefined %}
+        <div class="stack stack--4">
+          <h2>Tracks</h2>
+          <div>
+            <ol class="emphasized music-tracks stack stack--3">
+              {% for song in music_data.songs %}
+              <li class="stack stack--2">
+                <h3>{{ song.name }}</h3>
+                <audio controls src="{{ song.preview.url }}"></audio>
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
     {% if (data.supplemental_images[0].square_image.tablet|length !== 0) %}
       <section>
         <div class="container">
@@ -185,6 +210,8 @@ eleventyComputed:
         </div>
       </section>
     {% endif %}
+
+    
   </div>
 
 {% endblock %}
