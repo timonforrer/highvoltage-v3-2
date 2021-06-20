@@ -6,7 +6,7 @@ module.exports = async () => {
     'fetchLinks': [
       'music.providers',
       'music.songs',
-      'music.mentions'
+      'music.body'
     ]
   }
   const response = await fetchData('product', options);

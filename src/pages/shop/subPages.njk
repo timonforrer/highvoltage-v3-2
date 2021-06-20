@@ -172,8 +172,6 @@ eleventyComputed:
     </section>
     {% endif %}
 
-    {{ data.music_content | log }}
-
     {% if data.music_content != undefined %}
 
       {% set music_data = data.music_content.data %}
@@ -211,7 +209,17 @@ eleventyComputed:
       </section>
     {% endif %}
 
-    
+    {% for sliceItem in music_data.body %}
+      {% set slice_type = sliceItem.slice_type %}
+      {% if slice_type === 'mention' %}
+      <section>
+        <div class="container container--narrow">
+          {% import 'components/slices.njk' as slices %}
+          {{ slices[slice_type](sliceItem, lang=localisedPage.lang) }}
+        </div>
+      </section>
+      {% endif %} 
+    {% endfor %}
   </div>
 
 {% endblock %}
