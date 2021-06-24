@@ -45,6 +45,7 @@
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
     "@sendgrid/mail": "^7.4.0",
+    "@spartan-components/sp-music-player": "^0.0.2",
     "@spartan-components/sp-video": "0.0.8",
     "beautify": "0.0.8",
     "browserify": "^17.0.0",
