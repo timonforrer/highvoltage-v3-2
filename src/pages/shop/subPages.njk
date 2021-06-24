@@ -180,16 +180,16 @@ eleventyComputed:
         {% if music_data.songs != undefined %}
         <div class="stack stack--4">
           <h2>Tracks</h2>
-          <div>
+          <sp-music-player>
             <ol class="emphasized music-tracks stack stack--3">
               {% for song in music_data.songs %}
               <li class="stack stack--2">
-                <h3>{{ song.name }}</h3>
+                <p>{{ song.name }}</p>
                 <audio controls src="{{ song.preview.url }}"></audio>
               </li>
               {% endfor %}
             </ol>
-          </div>
+          </sp-music-player>
         </div>
         {% endif %}
       </div>

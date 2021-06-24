@@ -40,16 +40,16 @@ permalink: "{{ nav.music[localisedPage.lang].pathPrefix }}/{{ localisedPage.uid 
     {% if data.songs != undefined %}
     <div class="stack stack--4">
       <h2>Tracks</h2>
-      <div>
+      <sp-music-player style="--primary-color:white;--secondary-color:black">
         <ol class="emphasized music-tracks stack stack--3">
           {% for song in data.songs %}
           <li class="stack stack--2">
-            <h3>{{ song.name }}</h3>
+            <p>{{ song.name }}</p>
             <audio controls src="{{ song.preview.url }}"></audio>
           </li>
           {% endfor %}
         </ol>
-      </div>
+      </sp-music-player>
     </div>
     {% endif %}
     
