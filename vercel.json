@@ -12,6 +12,11 @@
       "src": "/video",
       "status": 308,
       "headers": { "Location": "https://www.youtube.com/watch?v=QcdNe7C69OY" }
+    },
+    {
+      "src": "/fonts/(.*)",
+      "headers": { "Cache-Control": "max-age=31536000" },
+      "dest": "/fonts/$1"
     }
   ]
 }
