@@ -1,4 +1,4 @@
-const Prismic = require('prismic-javascript');
+const Prismic = require('@prismicio/client');
 
 module.exports = async (documentType, customOptions) => {
   let api = await Prismic.getApi('https://voltagearc.prismic.io/api/v2');
