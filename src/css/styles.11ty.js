@@ -23,7 +23,6 @@ module.exports = class {
       // require('postcss-comment'),
       require('precss'),
       require('postcss-import'),
-      require('postcss-mixins'),
       require('postcss-color-mix'),
       require('cssnano')
     ])
