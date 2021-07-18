@@ -5,6 +5,11 @@ Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY
 });
 
-const base = Airtable.base(process.env.AIRTABLE_API_BASE_SHOP);
+// for development, always connect to the test database
+const baseID = process.env.NODE_ENV === 'development'
+  ? process.env.AIRTABLE_API_BASE_SHOP_V2_TESTENV
+  : process.env.AIRTABLE_API_BASE_SHOP_V2;
+
+const base = Airtable.base(baseID);
 
 module.exports = base;

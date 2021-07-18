@@ -28,13 +28,13 @@ module.exports = async (req, res) => {
       
       // get the sale to modify
       let sale = (await fetchData(
-        base('Sales'),
+        base('Verkäufe'),
         'Grid view',
         `{_stripe_payment_intent}="${paymentIntent.payment_intent}"`
       ))[0];
       sale = {
         id: sale.id,
-        items: sale.fields['Articles Shortinfo']
+        items: sale.fields['Artikelinfos']
       };
 
       let amountReceived = (paymentIntent.amount / 100);

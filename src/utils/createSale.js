@@ -1,14 +1,33 @@
 const base = require('./airtableShop.js');
 
-module.exports = async (customerId, paymentIntent, products) => {
+module.exports = async (address, paymentIntent, products, shippingCosts) => {
+
+  const {
+    firstName,
+    lastName,
+    email,
+    street,
+    zip,
+    city,
+    country
+  } = address;
 
   // create new promise for new sale entry
   let createSale = new Promise((resolve, reject) => {
-    base('Sales').create(
+    base('Verkäufe').create(
       {
-        "Customer Number": [customerId],
-        "Vendor": "Online Shop",
-        "Factured": false,
+        // "Customer Number": [customerId],
+        "Datum": (new Date()).toISOString().split('T')[0],
+        "E-Mail": email,
+        "Vorname, Name": `${firstName} ${lastName}`,
+        "Strasse": street,
+        "PLZ": Number(zip),
+        "Ort": city,
+        // "Kanton": 'TODO',
+        "Land": country,
+        "Porto": shippingCosts,
+        "Verkäufer": "Online Shop",
+        "_stripe_payment_success": false,
         "_stripe_payment_intent": paymentIntent
       }, (err, record) => {
       if (err) reject(err);
@@ -22,14 +41,15 @@ module.exports = async (customerId, paymentIntent, products) => {
     const productsFormatted = products.map(product => {
       return {
         "fields": {
-          "Products": [product.recordId],
-          "Quantity": Number(product.quantity),
-          "Sales": [saleId]
+          "Artikel": [product.recordId],
+          "Preis pro Artikel": product.basePrice,
+          "Anzahl": Number(product.quantity),
+          "Gehört zu Verkauf": [saleId]
         }
       };
     });
 
-    base('Products in Sales').create(productsFormatted, (err) => {
+    base('Artikel in Verkäufen').create(productsFormatted, (err) => {
       if (err) reject(err);
       resolve('all good');
     });

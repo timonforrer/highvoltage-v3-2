@@ -3,18 +3,18 @@ const fetchData = require('../../../utils/airtableDataController.js');
 const saveSeed = require('../../../utils/saveSeed.js');
 
 module.exports = async () => {
-  const response = await fetchData(base('Freight Cost'), 'Default', '');
+  const response = await fetchData(base('Portokosten'), 'Default', '');
 
-  const constructBaseFields = (data) => {
+  const constructBaseFields = data => {
     return {
       country: {
-        code: data['Country Code'],
+        code: data['Ländercode'],
         name: {
           'de-ch': data['Name de-ch'],
           'en-gb': data['Name en-gb']
         }
       },
-      freightCost: data['Freight Cost']
+      freightCost: data['Portokosten']
     };
   };
 

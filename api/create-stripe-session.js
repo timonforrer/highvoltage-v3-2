@@ -1,6 +1,8 @@
-const stripe = require('stripe')(process.env.STRIPE_API_LIVE_SECRET);
+const stripe = process.env.NODE_ENV === 'development'
+  ? require('stripe')(process.env.STRIPE_API_TEST_SECRET)
+  : require('stripe')(process.env.STRIPE_API_LIVE_SECRET);
 const base = require('../src/utils/airtableShop.js');
-const createCustomer = require('../src/utils/createCustomer.js');
+// const createCustomer = require('../src/utils/createCustomer.js');
 const createSale = require('../src/utils/createSale.js');
 const fetchData = require('../src/utils/airtableDataController.js');
 
@@ -29,23 +31,23 @@ module.exports = async (req, res) => {
   } = JSON.parse(body);
 
   // get all products from airtable base
-  let airtableProducts = await fetchData(base('Products'), 'Default', '');
-  let shippingCosts = await fetchData(base('Freight Cost'), 'Default', '');
+  let airtableProducts = await fetchData(base('Artikel'), 'Online', '');
+  let shippingCosts = await fetchData(base('Portokosten'), 'Default', '');
 
   // remap airtable products
   airtableProducts = airtableProducts.map(product => {
     let fields = product.fields;
     return {
-      sku: fields['Product Number'],
-      basePrice: fields['Base Price'],
-      maxQuantity: fields['Inventory'],
+      sku: fields['Artikelnummer'],
+      basePrice: fields['Verkaufspreis Onlineshop'],
+      maxQuantity: fields['Lager ist'],
       recordId: product.id
     };
   });
 
   // very ugly..
   shippingCosts = shippingCosts.filter(item => {
-    return item.fields['Country Code'] === address.country;
+    return item.fields['Ländercode'] === address.country;
   });
 
   // overwrite prices with data from airtable and add additional info
@@ -104,7 +106,7 @@ module.exports = async (req, res) => {
         product_data: {
           name: T.shippingCosts[lang],
         },
-        unit_amount: shippingCosts[0].fields['Freight Cost'] * 100
+        unit_amount: shippingCosts[0].fields['Portokosten'] * 100
       },
       quantity: 1
     }
@@ -123,8 +125,10 @@ module.exports = async (req, res) => {
     }).catch(err => console.error(err));
 
     // create a customer
-    const customer = await createCustomer(address).catch(err => console.error(err));
-    await createSale(customer, session.payment_intent, cart).catch(err => console.error(err));
+    // TODO: add shipping address in line with order
+    // const customer = await createCustomer(address).catch(err => console.error(err));
+    await createSale(address, session.payment_intent, cart, shippingCosts[0].fields['Portokosten']).catch(err => console.error(err));
+    // await createSale(customer, session.payment_intent, cart).catch(err => console.error(err));
     res.json({ id: session.id });
   };
 };

@@ -173,7 +173,12 @@ eleventyComputed:
   }
 
   // Create an instance of the Stripe object with your publishable API key
-  let stripe = Stripe('pk_live_51HqjRwDeD8oJRtClr4gUCrtzQNdaxsaUBSv1Xdr6GOWs6DAae9BK3VLgYernEaBffWMT4LpKgJocu9SQjNPI9sdh00oDXL0dbO');
+    {{ siteData | log }}
+    {% if siteData.environment == 'prod' %}
+      let stripe = Stripe('pk_live_51HqjRwDeD8oJRtClr4gUCrtzQNdaxsaUBSv1Xdr6GOWs6DAae9BK3VLgYernEaBffWMT4LpKgJocu9SQjNPI9sdh00oDXL0dbO');
+    {% else %}
+      let stripe = Stripe('pk_test_51HqjRwDeD8oJRtClc8Rks6IaszPqVLjA3rhO91QLmCsPGCpuk2rIgisXbB43xEqFWkNirxbxvYaMacP7WdNI7V9I00a3QRG2Gv');
+    {% endif %}
   let checkoutButton = document.getElementById('checkout-button');
 
   // all the fields of the form
@@ -202,6 +207,7 @@ eleventyComputed:
     const formData = getFormData(form, fields);
     // check if form is filled in correctly
     const errors = validateForm(formData, 'phone');
+    console.log(formData);
 
     // check if any errors are returned
     if(Object.keys(errors).length !== 0) {

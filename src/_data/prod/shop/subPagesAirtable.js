@@ -3,17 +3,17 @@ const fetchData = require('../../../utils/airtableDataController.js');
 const saveSeed = require('../../../utils/saveSeed.js');
 
 module.exports = async () => {
-  const response = await fetchData(base('Products'), 'Active', '');
+  const response = await fetchData(base('Artikel'), 'Online', '');
 
   const returnArray = [];
 
   const constructBaseFields = (data) => {
     return {
-      basePrice: data['Base Price'],
-      description: data['Description'],
-      productNumber: data['Product Number'],
-      prismicUID: data['prismicUID'],
-      stock: data['Inventory']
+      basePrice: data['Verkaufspreis Onlineshop'],
+      description: data['Zusatzinfos'],
+      productNumber: data['Artikelnummer'],
+      prismicUID: data['Gruppen ID'],
+      stock: data['Lager ist']
     };
   };
 
