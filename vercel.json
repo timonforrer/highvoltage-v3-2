@@ -18,14 +18,23 @@
       "headers": { "Cache-Control": "max-age=31536000" },
       "dest": "/fonts/$1"
     },
-    { "src": "va-p-1", "status": 308, "dest": "tshirt-blk-logo-unisex-s" },
-    { "src": "va-p-2", "status": 308, "dest": "tshirt-blk-logo-unisex-m" },
-    { "src": "va-p-3", "status": 308, "dest": "tshirt-blk-logo-unisex-l" },
-    { "src": "va-p-4", "status": 308, "dest": "tshirt-blk-logo-unisex-xl" },
-    { "src": "va-p-5", "status": 308, "dest": "tshirt-blk-logo-female-s" },
-    { "src": "va-p-6", "status": 308, "dest": "tshirt-blk-logo-female-m" },
-    { "src": "va-p-7", "status": 308, "dest": "tshirt-blk-logo-female-l" },
-    { "src": "va-p-9", "status": 308, "dest": "sticker-logo" },
-    { "src": "va-p-10", "status": 308, "dest": "rebels-cd" }
+    { "src": "/shop/va-p-1", "status": 308, "dest": "/shop/tshirt-blk-logo-unisex-s" },
+    { "src": "/shop/va-p-2", "status": 308, "dest": "/shop/tshirt-blk-logo-unisex-m" },
+    { "src": "/shop/va-p-3", "status": 308, "dest": "/shop/tshirt-blk-logo-unisex-l" },
+    { "src": "/shop/va-p-4", "status": 308, "dest": "/shop/tshirt-blk-logo-unisex-xl" },
+    { "src": "/shop/va-p-5", "status": 308, "dest": "/shop/tshirt-blk-logo-female-s" },
+    { "src": "/shop/va-p-6", "status": 308, "dest": "/shop/tshirt-blk-logo-female-m" },
+    { "src": "/shop/va-p-7", "status": 308, "dest": "/shop/tshirt-blk-logo-female-l" },
+    { "src": "/shop/va-p-9", "status": 308, "dest": "/shop/sticker-logo" },
+    { "src": "/shop/va-p-10", "status": 308, "dest": "/shop/rebels-cd" },
+    { "src": "/en/shop/va-p-1", "status": 308, "dest": "/en/shop/tshirt-blk-logo-unisex-s" },
+    { "src": "/en/shop/va-p-2", "status": 308, "dest": "/en/shop/tshirt-blk-logo-unisex-m" },
+    { "src": "/en/shop/va-p-3", "status": 308, "dest": "/en/shop/tshirt-blk-logo-unisex-l" },
+    { "src": "/en/shop/va-p-4", "status": 308, "dest": "/en/shop/tshirt-blk-logo-unisex-xl" },
+    { "src": "/en/shop/va-p-5", "status": 308, "dest": "/en/shop/tshirt-blk-logo-female-s" },
+    { "src": "/en/shop/va-p-6", "status": 308, "dest": "/en/shop/tshirt-blk-logo-female-m" },
+    { "src": "/en/shop/va-p-7", "status": 308, "dest": "/en/shop/tshirt-blk-logo-female-l" },
+    { "src": "/en/shop/va-p-9", "status": 308, "dest": "/en/shop/sticker-logo" },
+    { "src": "/en/shop/va-p-10", "status": 308, "dest": "/en/shop/rebels-cd" }
   ]
 }
