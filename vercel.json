@@ -17,17 +17,15 @@
       "src": "/fonts/(.*)",
       "headers": { "Cache-Control": "max-age=31536000" },
       "dest": "/fonts/$1"
-    }
-  ],
-  "redirects": [
-    { "source": "va-p-1", "destination": "tshirt-blk-logo-unisex-s" },
-    { "source": "va-p-2", "destination": "tshirt-blk-logo-unisex-m" },
-    { "source": "va-p-3", "destination": "tshirt-blk-logo-unisex-l" },
-    { "source": "va-p-4", "destination": "tshirt-blk-logo-unisex-xl" },
-    { "source": "va-p-5", "destination": "tshirt-blk-logo-female-s" },
-    { "source": "va-p-6", "destination": "tshirt-blk-logo-female-m" },
-    { "source": "va-p-7", "destination": "tshirt-blk-logo-female-l" },
-    { "source": "va-p-9", "destination": "sticker-logo" },
-    { "source": "va-p-10", "destination": "rebels-cd" }
+    },
+    { "src": "va-p-1", "status": 308, "dest": "tshirt-blk-logo-unisex-s" },
+    { "src": "va-p-2", "status": 308, "dest": "tshirt-blk-logo-unisex-m" },
+    { "src": "va-p-3", "status": 308, "dest": "tshirt-blk-logo-unisex-l" },
+    { "src": "va-p-4", "status": 308, "dest": "tshirt-blk-logo-unisex-xl" },
+    { "src": "va-p-5", "status": 308, "dest": "tshirt-blk-logo-female-s" },
+    { "src": "va-p-6", "status": 308, "dest": "tshirt-blk-logo-female-m" },
+    { "src": "va-p-7", "status": 308, "dest": "tshirt-blk-logo-female-l" },
+    { "src": "va-p-9", "status": 308, "dest": "sticker-logo" },
+    { "src": "va-p-10", "status": 308, "dest": "rebels-cd" }
   ]
 }
